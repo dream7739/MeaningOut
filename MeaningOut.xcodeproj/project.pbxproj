@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		880448762C1B0E6C00DB7B26 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880448752C1B0E6C00DB7B26 /* Constant.swift */; };
 		883A7DC32C1B0A6C00A4665E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883A7DC22C1B0A6C00A4665E /* AppDelegate.swift */; };
 		883A7DC52C1B0A6C00A4665E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883A7DC42C1B0A6C00A4665E /* SceneDelegate.swift */; };
 		883A7DC72C1B0A6C00A4665E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883A7DC62C1B0A6C00A4665E /* ViewController.swift */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		880448752C1B0E6C00DB7B26 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		883A7DBF2C1B0A6C00A4665E /* MeaningOut.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeaningOut.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		883A7DC22C1B0A6C00A4665E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		883A7DC42C1B0A6C00A4665E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -49,6 +51,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		880448742C1B0E5800DB7B26 /* Enum */ = {
+			isa = PBXGroup;
+			children = (
+				880448752C1B0E6C00DB7B26 /* Constant.swift */,
+			);
+			path = Enum;
+			sourceTree = "<group>";
+		};
 		883A7DB62C1B0A6C00A4665E = {
 			isa = PBXGroup;
 			children = (
@@ -69,6 +79,7 @@
 		883A7DC12C1B0A6C00A4665E /* MeaningOut */ = {
 			isa = PBXGroup;
 			children = (
+				880448742C1B0E5800DB7B26 /* Enum */,
 				883A7DC22C1B0A6C00A4665E /* AppDelegate.swift */,
 				883A7DC42C1B0A6C00A4665E /* SceneDelegate.swift */,
 				883A7DC62C1B0A6C00A4665E /* ViewController.swift */,
@@ -169,6 +180,7 @@
 				883A7DC72C1B0A6C00A4665E /* ViewController.swift in Sources */,
 				883A7DC32C1B0A6C00A4665E /* AppDelegate.swift in Sources */,
 				883A7DC52C1B0A6C00A4665E /* SceneDelegate.swift in Sources */,
+				880448762C1B0E6C00DB7B26 /* Constant.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
