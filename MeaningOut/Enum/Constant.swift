@@ -16,4 +16,21 @@ enum Constant {
         static let black = UIColor.black
         static let white = UIColor.white
     }
+    
+    enum FontType {
+        static let primary = UIFont.systemFont(ofSize: 16)
+        static let secondary = UIFont.systemFont(ofSize: 15)
+        static let tertiary = UIFont.systemFont(ofSize: 14)
+        static let quaternary = UIFont.systemFont(ofSize: 13)
+
+    }
+    
+    enum ImageType {
+        static let start = UIImage(named: "launch")
+    }
+    
+    enum ViewType: String {
+        case start = "시작하기"
+        case nickname = "완료"
+    }
 }

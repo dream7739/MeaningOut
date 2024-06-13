@@ -20,6 +20,10 @@
 		883A7DE02C1B0B8A00A4665E /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 883A7DDF2C1B0B8A00A4665E /* Alamofire */; };
 		883A7DE32C1B0B9700A4665E /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 883A7DE22C1B0B9700A4665E /* Toast */; };
 		883A7DE62C1B0BA400A4665E /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 883A7DE52C1B0BA400A4665E /* Kingfisher */; };
+		887B29982C1B133C009F3630 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887B29972C1B133C009F3630 /* OnboardingViewController.swift */; };
+		887B299B2C1B1424009F3630 /* BaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887B299A2C1B1424009F3630 /* BaseProtocol.swift */; };
+		887B299E2C1B14A9009F3630 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887B299D2C1B14A9009F3630 /* UIViewController+Extension.swift */; };
+		887B29A12C1B1592009F3630 /* RoundButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887B29A02C1B1592009F3630 /* RoundButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +37,10 @@
 		883A7DCE2C1B0A6D00A4665E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		883A7DD02C1B0A6D00A4665E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		883A7DD62C1B0B5C00A4665E /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		887B29972C1B133C009F3630 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		887B299A2C1B1424009F3630 /* BaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseProtocol.swift; sourceTree = "<group>"; };
+		887B299D2C1B14A9009F3630 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
+		887B29A02C1B1592009F3630 /* RoundButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +87,10 @@
 		883A7DC12C1B0A6C00A4665E /* MeaningOut */ = {
 			isa = PBXGroup;
 			children = (
+				887B299F2C1B1582009F3630 /* Custom */,
+				887B299C2C1B149E009F3630 /* Extension */,
+				887B29992C1B1407009F3630 /* Protocol */,
+				887B29962C1B1323009F3630 /* ViewController */,
 				880448742C1B0E5800DB7B26 /* Enum */,
 				883A7DC22C1B0A6C00A4665E /* AppDelegate.swift */,
 				883A7DC42C1B0A6C00A4665E /* SceneDelegate.swift */,
@@ -89,6 +101,38 @@
 				883A7DD02C1B0A6D00A4665E /* Info.plist */,
 			);
 			path = MeaningOut;
+			sourceTree = "<group>";
+		};
+		887B29962C1B1323009F3630 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				887B29972C1B133C009F3630 /* OnboardingViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		887B29992C1B1407009F3630 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				887B299A2C1B1424009F3630 /* BaseProtocol.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		887B299C2C1B149E009F3630 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				887B299D2C1B14A9009F3630 /* UIViewController+Extension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		887B299F2C1B1582009F3630 /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+				887B29A02C1B1592009F3630 /* RoundButton.swift */,
+			);
+			path = Custom;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -177,8 +221,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				887B29A12C1B1592009F3630 /* RoundButton.swift in Sources */,
+				887B299B2C1B1424009F3630 /* BaseProtocol.swift in Sources */,
 				883A7DC72C1B0A6C00A4665E /* ViewController.swift in Sources */,
 				883A7DC32C1B0A6C00A4665E /* AppDelegate.swift in Sources */,
+				887B29982C1B133C009F3630 /* OnboardingViewController.swift in Sources */,
+				887B299E2C1B14A9009F3630 /* UIViewController+Extension.swift in Sources */,
 				883A7DC52C1B0A6C00A4665E /* SceneDelegate.swift in Sources */,
 				880448762C1B0E6C00DB7B26 /* Constant.swift in Sources */,
 			);
