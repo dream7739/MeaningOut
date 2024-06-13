@@ -13,6 +13,12 @@
 		883A7DCA2C1B0A6C00A4665E /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 883A7DC92C1B0A6C00A4665E /* Base */; };
 		883A7DCC2C1B0A6D00A4665E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 883A7DCB2C1B0A6D00A4665E /* Assets.xcassets */; };
 		883A7DCF2C1B0A6D00A4665E /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 883A7DCE2C1B0A6D00A4665E /* Base */; };
+		883A7DD72C1B0B5C00A4665E /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 883A7DD62C1B0B5C00A4665E /* .gitignore */; };
+		883A7DDA2C1B0B7700A4665E /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 883A7DD92C1B0B7700A4665E /* IQKeyboardManagerSwift */; };
+		883A7DDD2C1B0B8000A4665E /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 883A7DDC2C1B0B8000A4665E /* SnapKit */; };
+		883A7DE02C1B0B8A00A4665E /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 883A7DDF2C1B0B8A00A4665E /* Alamofire */; };
+		883A7DE32C1B0B9700A4665E /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 883A7DE22C1B0B9700A4665E /* Toast */; };
+		883A7DE62C1B0BA400A4665E /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 883A7DE52C1B0BA400A4665E /* Kingfisher */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +30,7 @@
 		883A7DCB2C1B0A6D00A4665E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		883A7DCE2C1B0A6D00A4665E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		883A7DD02C1B0A6D00A4665E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		883A7DD62C1B0B5C00A4665E /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +38,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				883A7DE32C1B0B9700A4665E /* Toast in Frameworks */,
+				883A7DE02C1B0B8A00A4665E /* Alamofire in Frameworks */,
+				883A7DDA2C1B0B7700A4665E /* IQKeyboardManagerSwift in Frameworks */,
+				883A7DDD2C1B0B8000A4665E /* SnapKit in Frameworks */,
+				883A7DE62C1B0BA400A4665E /* Kingfisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,6 +52,7 @@
 		883A7DB62C1B0A6C00A4665E = {
 			isa = PBXGroup;
 			children = (
+				883A7DD62C1B0B5C00A4665E /* .gitignore */,
 				883A7DC12C1B0A6C00A4665E /* MeaningOut */,
 				883A7DC02C1B0A6C00A4665E /* Products */,
 			);
@@ -83,6 +96,13 @@
 			dependencies = (
 			);
 			name = MeaningOut;
+			packageProductDependencies = (
+				883A7DD92C1B0B7700A4665E /* IQKeyboardManagerSwift */,
+				883A7DDC2C1B0B8000A4665E /* SnapKit */,
+				883A7DDF2C1B0B8A00A4665E /* Alamofire */,
+				883A7DE22C1B0B9700A4665E /* Toast */,
+				883A7DE52C1B0BA400A4665E /* Kingfisher */,
+			);
 			productName = MeaningOut;
 			productReference = 883A7DBF2C1B0A6C00A4665E /* MeaningOut.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +131,13 @@
 				Base,
 			);
 			mainGroup = 883A7DB62C1B0A6C00A4665E;
+			packageReferences = (
+				883A7DD82C1B0B7700A4665E /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
+				883A7DDB2C1B0B8000A4665E /* XCRemoteSwiftPackageReference "SnapKit" */,
+				883A7DDE2C1B0B8A00A4665E /* XCRemoteSwiftPackageReference "Alamofire" */,
+				883A7DE12C1B0B9700A4665E /* XCRemoteSwiftPackageReference "Toast-Swift" */,
+				883A7DE42C1B0BA400A4665E /* XCRemoteSwiftPackageReference "Kingfisher" */,
+			);
 			productRefGroup = 883A7DC02C1B0A6C00A4665E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -125,6 +152,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				883A7DD72C1B0B5C00A4665E /* .gitignore in Resources */,
 				883A7DCC2C1B0A6D00A4665E /* Assets.xcassets in Resources */,
 				883A7DCF2C1B0A6D00A4665E /* Base in Resources */,
 				883A7DCA2C1B0A6C00A4665E /* Base in Resources */,
@@ -294,11 +322,12 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MeaningOut/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "홍정민";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -306,9 +335,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jm.MeaningOut;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -321,11 +354,12 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MeaningOut/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "홍정민";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -333,9 +367,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jm.MeaningOut;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -361,6 +399,77 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		883A7DD82C1B0B7700A4665E /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.3;
+			};
+		};
+		883A7DDB2C1B0B8000A4665E /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+		883A7DDE2C1B0B8A00A4665E /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.9.1;
+			};
+		};
+		883A7DE12C1B0B9700A4665E /* XCRemoteSwiftPackageReference "Toast-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scalessec/Toast-Swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.1;
+			};
+		};
+		883A7DE42C1B0BA400A4665E /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.12.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		883A7DD92C1B0B7700A4665E /* IQKeyboardManagerSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 883A7DD82C1B0B7700A4665E /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
+			productName = IQKeyboardManagerSwift;
+		};
+		883A7DDC2C1B0B8000A4665E /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 883A7DDB2C1B0B8000A4665E /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		883A7DDF2C1B0B8A00A4665E /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 883A7DDE2C1B0B8A00A4665E /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		883A7DE22C1B0B9700A4665E /* Toast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 883A7DE12C1B0B9700A4665E /* XCRemoteSwiftPackageReference "Toast-Swift" */;
+			productName = Toast;
+		};
+		883A7DE52C1B0BA400A4665E /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 883A7DE42C1B0BA400A4665E /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 883A7DB72C1B0A6C00A4665E /* Project object */;
 }
