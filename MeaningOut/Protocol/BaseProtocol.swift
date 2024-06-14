@@ -7,9 +7,10 @@
 
 import UIKit
 
+@objc
 protocol BaseProtocol: AnyObject {
     func configureHierarchy()
     func configureLayout()
-    func configureUI()
+    @objc optional func configureUI()
 }
 

@@ -22,7 +22,7 @@ enum Constant {
         static let secondary = UIFont.systemFont(ofSize: 15)
         static let tertiary = UIFont.systemFont(ofSize: 14)
         static let quaternary = UIFont.systemFont(ofSize: 13)
-
+        
     }
     
     enum ImageType {
@@ -34,7 +34,37 @@ enum Constant {
         static let time = UIImage(systemName: "clock")
         static let close = UIImage(systemName: "xmark")
         static let photo = UIImage(systemName: "camera.fill")
+        
+        enum ProfileType {
+            static let profile_0 = UIImage(named: "profile_0")!
+            static let profile_1 = UIImage(named: "profile_1")!
+            static let profile_2 = UIImage(named: "profile_2")!
+            static let profile_3 = UIImage(named: "profile_3")!
+            static let profile_4 = UIImage(named: "profile_4")!
+            static let profile_5 = UIImage(named: "profile_5")!
+            static let profile_6 = UIImage(named: "profile_6")!
+            static let profile_7 = UIImage(named: "profile_7")!
+            static let profile_8 = UIImage(named: "profile_8")!
+            static let profile_9 = UIImage(named: "profile_9")!
+            static let profile_10 = UIImage(named: "profile_10")!
+            static let profile_11 = UIImage(named: "profile_11")!
+            
+            static let profileList: [UIImage] = [Constant.ImageType.ProfileType.profile_0,
+                                                 Constant.ImageType.ProfileType.profile_1,
+                                                 Constant.ImageType.ProfileType.profile_2,
+                                                 Constant.ImageType.ProfileType.profile_3,
+                                                 Constant.ImageType.ProfileType.profile_4,
+                                                 Constant.ImageType.ProfileType.profile_5,
+                                                 Constant.ImageType.ProfileType.profile_6,
+                                                 Constant.ImageType.ProfileType.profile_7,
+                                                 Constant.ImageType.ProfileType.profile_8,
+                                                 Constant.ImageType.ProfileType.profile_9,
+                                                 Constant.ImageType.ProfileType.profile_10,
+                                                 Constant.ImageType.ProfileType.profile_11]
+
+        }
     }
+    
     
     enum RoundImageType {
         case regular
@@ -46,36 +76,27 @@ enum Constant {
         case specialcharRegex = #"[@#$%]"#
         case numberRegex = #"[0-9]"#
     }
-
+    
+    enum ButtonType: String {
+        case onboard =  "시작하기"
+        case nickname = "완료"
+    }
+    
+    enum PlaceholderType: String {
+        case nickname = "닉네임을 입력해주세요 :)"
+    }
+    
     enum ViewType {
-        case onboard
         case nickname
-        
-        var buttonTitle: String {
-            switch self{
-            case .onboard:
-                return "시작하기"
-            case .nickname:
-                return "완료"
-            }
-        }
+        case profile
         
         var navigationTitle: String {
             switch self {
-            case .onboard:
-                return ""
-            case .nickname:
+            case .nickname, .profile:
                 return "PROFILE SETTING"
             }
         }
         
-        var placeholderTitle: String {
-            switch self {
-            case .onboard:
-                return ""
-            case .nickname:
-                return "닉네임을 입력해주세요 :)"
-            }
-        }
+ 
     }
 }

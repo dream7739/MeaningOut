@@ -9,9 +9,9 @@ import UIKit
 import SnapKit
 
 class UnderLineTextField : UITextField {
-    init(viewType : Constant.ViewType){
+    init(placeholderType : Constant.PlaceholderType){
         super.init(frame: .zero)
-        placeholder = viewType.placeholderTitle
+        placeholder = placeholderType.rawValue
         tintColor = Constant.ColorType.theme
         textColor = Constant.ColorType.primary
         

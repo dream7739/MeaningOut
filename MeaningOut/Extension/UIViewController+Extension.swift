@@ -24,7 +24,7 @@ extension UIViewController {
         
         if firstVC != self {
             let backButton = UIBarButtonItem(image: Constant.ImageType.back, style: .plain, target: self, action: #selector(backButtonClicked))
-            nav.navigationItem.leftBarButtonItem = backButton
+            navigationItem.leftBarButtonItem = backButton
         }
         
     }

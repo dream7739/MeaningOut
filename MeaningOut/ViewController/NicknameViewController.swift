@@ -12,9 +12,9 @@ class NicknameViewController: UIViewController {
     
     let profileImage = RoundImageView(imageType: .highlight)
     let cameraImage = UIImageView()
-    let nicknameField = UnderLineTextField(viewType: .nickname)
+    let nicknameField = UnderLineTextField(placeholderType: .nickname)
     let validLabel = UILabel()
-    let completeButton = RoundButton(viewType: .nickname)
+    let completeButton = RoundButton(buttonType: .nickname)
     
     var isValid = false
     
@@ -56,6 +56,8 @@ class NicknameViewController: UIViewController {
     
     @objc func completeButtonClicked(){
         if isValid {
+            let vc = ProfileViewController()
+            navigationController?.pushViewController(vc, animated: true)
         }
     }
     
@@ -104,8 +106,6 @@ extension NicknameViewController: BaseProtocol {
     }
     
     func configureUI() {
-        nicknameField.clearButtonMode = .whileEditing
-        
         profileImage.image = UIImage(named: "profile_0")
         
         cameraImage.image = Constant.ImageType.photo
@@ -114,6 +114,8 @@ extension NicknameViewController: BaseProtocol {
         cameraImage.backgroundColor = Constant.ColorType.theme
         cameraImage.layer.cornerRadius = 13
         cameraImage.clipsToBounds = true
+        
+        nicknameField.clearButtonMode = .whileEditing
 
         validLabel.font = Constant.FontType.tertiary
         validLabel.textColor = Constant.ColorType.theme

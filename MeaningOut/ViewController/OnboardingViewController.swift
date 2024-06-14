@@ -12,12 +12,11 @@ class OnboardingViewController: UIViewController {
 
     let titleLabel = UILabel()
     let launchImage = UIImageView()
-    let startButton = RoundButton(viewType: .onboard)
+    let startButton = RoundButton(buttonType: .onboard)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
-        configureNav(.onboard)
         configureHierarchy()
         configureLayout()
         configureUI()
@@ -26,8 +25,8 @@ class OnboardingViewController: UIViewController {
     }
     
     @objc func startButtonClicked(){
-        let nicknameVC = NicknameViewController()
-        navigationController?.pushViewController(nicknameVC, animated: true)
+        let vc = NicknameViewController()
+        navigationController?.pushViewController(vc, animated: true)
     }
   
 
