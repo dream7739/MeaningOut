@@ -40,6 +40,12 @@ enum Constant {
         case regular
         case highlight
     }
+    
+    enum RegexType: String {
+        case countRegex
+        case specialcharRegex = #"[@#$%]"#
+        case numberRegex = #"[0-9]"#
+    }
 
     enum ViewType {
         case onboard
