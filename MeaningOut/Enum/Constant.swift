@@ -36,6 +36,11 @@ enum Constant {
         static let photo = UIImage(systemName: "camera.fill")
     }
     
+    enum RoundImageType {
+        case regular
+        case highlight
+    }
+
     enum ViewType {
         case onboard
         case nickname
@@ -56,7 +61,15 @@ enum Constant {
             case .nickname:
                 return "PROFILE SETTING"
             }
-            
+        }
+        
+        var placeholderTitle: String {
+            switch self {
+            case .onboard:
+                return ""
+            case .nickname:
+                return "닉네임을 입력해주세요 :)"
+            }
         }
     }
 }

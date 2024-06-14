@@ -10,9 +10,9 @@ import SnapKit
 
 class NicknameViewController: UIViewController {
 
-    let profileImage = UIImageView()
+    let profileImage = RoundImageView(imageType: .highlight)
     let cameraImage = UIImageView()
-    let nicknameField = UITextField()
+    let nicknameField = UnderLineTextField(viewType: .nickname)
     let validLabel = UILabel()
     let completeButton = RoundButton(viewType: .nickname)
     
@@ -25,6 +25,9 @@ class NicknameViewController: UIViewController {
         configureUI()
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
 }
 
 extension NicknameViewController : BaseProtocol {
@@ -68,11 +71,6 @@ extension NicknameViewController : BaseProtocol {
     
     func configureUI() {
         profileImage.image = UIImage(named: "profile_0")
-        profileImage.contentMode = .scaleAspectFill
-        profileImage.layer.cornerRadius = 65
-        profileImage.layer.borderWidth = 3
-        profileImage.layer.borderColor = Constant.ColorType.theme.cgColor
-        profileImage.clipsToBounds = true
         
         cameraImage.image = Constant.ImageType.photo
         cameraImage.contentMode = .center
@@ -81,10 +79,6 @@ extension NicknameViewController : BaseProtocol {
         cameraImage.layer.cornerRadius = 13
         cameraImage.clipsToBounds = true
 
-        nicknameField.placeholder = "닉네임을 입력해주세요 :)"
-        nicknameField.font = Constant.FontType.secondary
-        nicknameField.textColor = Constant.ColorType.secondary
-        
         validLabel.font = Constant.FontType.tertiary
         validLabel.textColor = Constant.ColorType.theme
         validLabel.text = "닉네임에 @는 포함할 수 없어요"

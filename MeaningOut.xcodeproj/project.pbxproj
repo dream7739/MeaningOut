@@ -25,6 +25,8 @@
 		887B299E2C1B14A9009F3630 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887B299D2C1B14A9009F3630 /* UIViewController+Extension.swift */; };
 		887B29A12C1B1592009F3630 /* RoundButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887B29A02C1B1592009F3630 /* RoundButton.swift */; };
 		887B29A32C1B1AEE009F3630 /* NicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887B29A22C1B1AEE009F3630 /* NicknameViewController.swift */; };
+		8899152D2C1BEA460088C795 /* RoundImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8899152C2C1BEA460088C795 /* RoundImageView.swift */; };
+		8899152F2C1BEA5C0088C795 /* UnderLineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8899152E2C1BEA5C0088C795 /* UnderLineTextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +45,8 @@
 		887B299D2C1B14A9009F3630 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		887B29A02C1B1592009F3630 /* RoundButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundButton.swift; sourceTree = "<group>"; };
 		887B29A22C1B1AEE009F3630 /* NicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewController.swift; sourceTree = "<group>"; };
+		8899152C2C1BEA460088C795 /* RoundImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundImageView.swift; sourceTree = "<group>"; };
+		8899152E2C1BEA5C0088C795 /* UnderLineTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderLineTextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +138,8 @@
 			isa = PBXGroup;
 			children = (
 				887B29A02C1B1592009F3630 /* RoundButton.swift */,
+				8899152C2C1BEA460088C795 /* RoundImageView.swift */,
+				8899152E2C1BEA5C0088C795 /* UnderLineTextField.swift */,
 			);
 			path = Custom;
 			sourceTree = "<group>";
@@ -227,11 +233,13 @@
 				887B29A12C1B1592009F3630 /* RoundButton.swift in Sources */,
 				887B299B2C1B1424009F3630 /* BaseProtocol.swift in Sources */,
 				883A7DC72C1B0A6C00A4665E /* ViewController.swift in Sources */,
+				8899152D2C1BEA460088C795 /* RoundImageView.swift in Sources */,
 				883A7DC32C1B0A6C00A4665E /* AppDelegate.swift in Sources */,
 				887B29982C1B133C009F3630 /* OnboardingViewController.swift in Sources */,
 				887B299E2C1B14A9009F3630 /* UIViewController+Extension.swift in Sources */,
 				883A7DC52C1B0A6C00A4665E /* SceneDelegate.swift in Sources */,
 				887B29A32C1B1AEE009F3630 /* NicknameViewController.swift in Sources */,
+				8899152F2C1BEA5C0088C795 /* UnderLineTextField.swift in Sources */,
 				880448762C1B0E6C00DB7B26 /* Constant.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
