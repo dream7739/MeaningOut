@@ -10,7 +10,7 @@ import UIKit
 class RoundButton: UIButton {
     init(viewType: Constant.ViewType){
         super.init(frame: .zero)
-        setTitle(viewType.rawValue, for: .normal)
+        setTitle(viewType.buttonTitle, for: .normal)
         setTitleColor(.white, for: .normal)
         backgroundColor = Constant.ColorType.theme
         layer.cornerRadius = 20

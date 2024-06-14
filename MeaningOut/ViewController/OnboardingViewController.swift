@@ -8,20 +8,32 @@
 import UIKit
 import SnapKit
 
-class OnboardingViewController: UIViewController, BaseProtocol {
+class OnboardingViewController: UIViewController {
 
     let titleLabel = UILabel()
     let launchImage = UIImageView()
-    let startButton = RoundButton(viewType: Constant.ViewType.start)
+    let startButton = RoundButton(viewType: .onboard)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
+        configureNav(.onboard)
         configureHierarchy()
         configureLayout()
         configureUI()
+        
+        startButton.addTarget(self, action: #selector(startButtonClicked), for: .touchUpInside)
     }
     
+    @objc func startButtonClicked(){
+        let nicknameVC = NicknameViewController()
+        navigationController?.pushViewController(nicknameVC, animated: true)
+    }
+  
+
+}
+
+extension OnboardingViewController: BaseProtocol {
     func configureHierarchy() {
         view.addSubview(titleLabel)
         view.addSubview(launchImage)
@@ -58,5 +70,4 @@ class OnboardingViewController: UIViewController, BaseProtocol {
         launchImage.image = Constant.ImageType.start
         
     }
-
 }

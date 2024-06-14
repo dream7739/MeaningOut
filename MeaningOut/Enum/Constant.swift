@@ -27,10 +27,36 @@ enum Constant {
     
     enum ImageType {
         static let start = UIImage(named: "launch")
+        static let search = UIImage(systemName: "magnifyingglass")
+        static let profile = UIImage(systemName: "person")
+        static let next = UIImage(systemName: "chevron.right")
+        static let back = UIImage(systemName: "chevron.left")
+        static let time = UIImage(systemName: "clock")
+        static let close = UIImage(systemName: "xmark")
+        static let photo = UIImage(systemName: "camera.fill")
     }
     
-    enum ViewType: String {
-        case start = "시작하기"
-        case nickname = "완료"
+    enum ViewType {
+        case onboard
+        case nickname
+        
+        var buttonTitle: String {
+            switch self{
+            case .onboard:
+                return "시작하기"
+            case .nickname:
+                return "완료"
+            }
+        }
+        
+        var navigationTitle: String {
+            switch self {
+            case .onboard:
+                return ""
+            case .nickname:
+                return "PROFILE SETTING"
+            }
+            
+        }
     }
 }
