@@ -16,6 +16,10 @@ class RoundImageView: UIImageView {
         configureUI(imageType)
     }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     func configureUI(_ imageType: Constant.RoundImageType){
         switch imageType {
         case .regular:
@@ -34,7 +38,4 @@ class RoundImageView: UIImageView {
         layer.cornerRadius = frame.width / 2
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 }

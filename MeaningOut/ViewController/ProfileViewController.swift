@@ -10,8 +10,7 @@ import SnapKit
 
 class ProfileViewController: UIViewController {
     
-    let profileImage = RoundImageView(imageType: .highlight)
-    let cameraImage = UIImageView()
+    let profileView = RoundProfileView()
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
     
     var selectedIndexPath: IndexPath?
@@ -39,7 +38,6 @@ class ProfileViewController: UIViewController {
         configureNav(.profile)
         configureHierarchy()
         configureLayout()
-        configureUI()
         configureCollectionView()
     }
     
@@ -54,39 +52,23 @@ class ProfileViewController: UIViewController {
 
 extension ProfileViewController: BaseProtocol {
     func configureHierarchy() {
-        view.addSubview(profileImage)
-        view.addSubview(cameraImage)
+        view.addSubview(profileView)
         view.addSubview(collectionView)
     }
     
     func configureLayout() {
-        profileImage.snp.makeConstraints { make in
+        profileView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
             make.size.equalTo(130)
             make.centerX.equalTo(view.safeAreaLayoutGuide)
         }
         
-        cameraImage.snp.makeConstraints { make in
-            make.size.equalTo(30)
-            make.trailing.bottom.equalTo(profileImage).inset(5)
-        }
-        
         collectionView.snp.makeConstraints { make in
-            make.top.equalTo(profileImage.snp.bottom)
+            make.top.equalTo(profileView.snp.bottom)
             make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
         }
     }
     
-    func configureUI() {
-        profileImage.image = UIImage(named: "profile_0")
-        
-        cameraImage.image = Constant.ImageType.photo
-        cameraImage.contentMode = .center
-        cameraImage.tintColor = .white
-        cameraImage.backgroundColor = Constant.ColorType.theme
-        cameraImage.layer.cornerRadius = 13
-        cameraImage.clipsToBounds = true
-    }
     
 }
 
@@ -113,7 +95,7 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! ProfileCollectionViewCell
-        profileImage.image = Constant.ImageType.ProfileType.profileList[indexPath.row]
+        profileView.profileImage.image = Constant.ImageType.ProfileType.profileList[indexPath.row]
         cell.delegate?.profileClicked(indexPath: indexPath)
     }
     

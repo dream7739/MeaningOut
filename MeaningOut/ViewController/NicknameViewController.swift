@@ -10,8 +10,7 @@ import SnapKit
 
 class NicknameViewController: UIViewController {
     
-    let profileImage = RoundImageView(imageType: .highlight)
-    let cameraImage = UIImageView()
+    let profileView = RoundProfileView()
     let nicknameField = UnderLineTextField(placeholderType: .nickname)
     let validLabel = UILabel()
     let completeButton = RoundButton(buttonType: .nickname)
@@ -26,8 +25,18 @@ class NicknameViewController: UIViewController {
         configureLayout()
         configureUI()
         
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(profileImageClicked))
+        profileView.addGestureRecognizer(tapRecognizer)
+        
         nicknameField.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
+        
         completeButton.addTarget(self, action: #selector(completeButtonClicked), for: .touchUpInside)
+    }
+    
+    @objc func profileImageClicked(){
+        //프로필 화면으로 이동
+        let vc = ProfileViewController()
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func textFieldChanged(){
@@ -56,8 +65,13 @@ class NicknameViewController: UIViewController {
     
     @objc func completeButtonClicked(){
         if isValid {
-            let vc = ProfileViewController()
-            navigationController?.pushViewController(vc, animated: true)
+            let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+            let sceneDelegate = windowScene?.delegate as? SceneDelegate
+
+            let tabBarController = TabBarController()
+            sceneDelegate?.window?.rootViewController = tabBarController
+            sceneDelegate?.window?.makeKeyAndVisible()
+            
         }
     }
     
@@ -68,27 +82,21 @@ class NicknameViewController: UIViewController {
 
 extension NicknameViewController: BaseProtocol {
     func configureHierarchy() {
-        view.addSubview(profileImage)
-        view.addSubview(cameraImage)
+        view.addSubview(profileView)
         view.addSubview(nicknameField)
         view.addSubview(validLabel)
         view.addSubview(completeButton)
     }
     
     func configureLayout() {
-        profileImage.snp.makeConstraints { make in
+        profileView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
-            make.size.equalTo(130)
+            make.size.equalTo(140)
             make.centerX.equalTo(view.safeAreaLayoutGuide)
         }
         
-        cameraImage.snp.makeConstraints { make in
-            make.size.equalTo(30)
-            make.trailing.bottom.equalTo(profileImage).inset(5)
-        }
-
         nicknameField.snp.makeConstraints { make in
-            make.top.equalTo(profileImage.snp.bottom).offset(24)
+            make.top.equalTo(profileView.snp.bottom).offset(24)
             make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(20)
             make.height.equalTo(50)
         }
@@ -106,15 +114,6 @@ extension NicknameViewController: BaseProtocol {
     }
     
     func configureUI() {
-        profileImage.image = UIImage(named: "profile_0")
-        
-        cameraImage.image = Constant.ImageType.photo
-        cameraImage.contentMode = .center
-        cameraImage.tintColor = .white
-        cameraImage.backgroundColor = Constant.ColorType.theme
-        cameraImage.layer.cornerRadius = 13
-        cameraImage.clipsToBounds = true
-        
         nicknameField.clearButtonMode = .whileEditing
 
         validLabel.font = Constant.FontType.tertiary

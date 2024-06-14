@@ -22,6 +22,9 @@
 		883A7DE62C1B0BA400A4665E /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 883A7DE52C1B0BA400A4665E /* Kingfisher */; };
 		8871F65F2C1C510300A7A36B /* ProfileCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8871F65E2C1C510300A7A36B /* ProfileCollectionViewCell.swift */; };
 		8871F6612C1C513E00A7A36B /* ReusableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8871F6602C1C513E00A7A36B /* ReusableProtocol.swift */; };
+		8871F6632C1C63D800A7A36B /* RoundProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8871F6622C1C63D800A7A36B /* RoundProfileView.swift */; };
+		8871F6672C1C6DAA00A7A36B /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8871F6662C1C6DAA00A7A36B /* SearchViewController.swift */; };
+		8871F6692C1C6DD600A7A36B /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8871F6682C1C6DD600A7A36B /* SettingViewController.swift */; };
 		887B29982C1B133C009F3630 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887B29972C1B133C009F3630 /* OnboardingViewController.swift */; };
 		887B299B2C1B1424009F3630 /* BaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887B299A2C1B1424009F3630 /* BaseProtocol.swift */; };
 		887B299E2C1B14A9009F3630 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887B299D2C1B14A9009F3630 /* UIViewController+Extension.swift */; };
@@ -47,6 +50,9 @@
 		883A7DD62C1B0B5C00A4665E /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		8871F65E2C1C510300A7A36B /* ProfileCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCollectionViewCell.swift; sourceTree = "<group>"; };
 		8871F6602C1C513E00A7A36B /* ReusableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableProtocol.swift; sourceTree = "<group>"; };
+		8871F6622C1C63D800A7A36B /* RoundProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundProfileView.swift; sourceTree = "<group>"; };
+		8871F6662C1C6DAA00A7A36B /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		8871F6682C1C6DD600A7A36B /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		887B29972C1B133C009F3630 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		887B299A2C1B1424009F3630 /* BaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseProtocol.swift; sourceTree = "<group>"; };
 		887B299D2C1B14A9009F3630 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
@@ -135,6 +141,8 @@
 				887B29A22C1B1AEE009F3630 /* NicknameViewController.swift */,
 				88B875392C1C2AFE00F19CE6 /* ProfileViewController.swift */,
 				88B8753B2C1C2B7100F19CE6 /* TabBarController.swift */,
+				8871F6662C1C6DAA00A7A36B /* SearchViewController.swift */,
+				8871F6682C1C6DD600A7A36B /* SettingViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -163,6 +171,7 @@
 				887B29A02C1B1592009F3630 /* RoundButton.swift */,
 				8899152C2C1BEA460088C795 /* RoundImageView.swift */,
 				8899152E2C1BEA5C0088C795 /* UnderLineTextField.swift */,
+				8871F6622C1C63D800A7A36B /* RoundProfileView.swift */,
 			);
 			path = Custom;
 			sourceTree = "<group>";
@@ -257,7 +266,9 @@
 				887B299B2C1B1424009F3630 /* BaseProtocol.swift in Sources */,
 				883A7DC72C1B0A6C00A4665E /* ViewController.swift in Sources */,
 				8899152D2C1BEA460088C795 /* RoundImageView.swift in Sources */,
+				8871F6672C1C6DAA00A7A36B /* SearchViewController.swift in Sources */,
 				8871F65F2C1C510300A7A36B /* ProfileCollectionViewCell.swift in Sources */,
+				8871F6632C1C63D800A7A36B /* RoundProfileView.swift in Sources */,
 				88B875382C1C199C00F19CE6 /* String+Extension.swift in Sources */,
 				8871F6612C1C513E00A7A36B /* ReusableProtocol.swift in Sources */,
 				883A7DC32C1B0A6C00A4665E /* AppDelegate.swift in Sources */,
@@ -267,6 +278,7 @@
 				887B29A32C1B1AEE009F3630 /* NicknameViewController.swift in Sources */,
 				88B8753A2C1C2AFE00F19CE6 /* ProfileViewController.swift in Sources */,
 				88B8753C2C1C2B7100F19CE6 /* TabBarController.swift in Sources */,
+				8871F6692C1C6DD600A7A36B /* SettingViewController.swift in Sources */,
 				8899152F2C1BEA5C0088C795 /* UnderLineTextField.swift in Sources */,
 				880448762C1B0E6C00DB7B26 /* Constant.swift in Sources */,
 			);
