@@ -14,6 +14,8 @@ class ProfileViewController: UIViewController {
     let cameraImage = UIImageView()
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
     
+    var selectedIndexPath: IndexPath?
+    
     func layout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -95,7 +97,31 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProfileCollectionViewCell.identifier, for: indexPath) as! ProfileCollectionViewCell
+        
+        cell.delegate = self
+        
         cell.profileImage.image = Constant.ImageType.ProfileType.profileList[indexPath.row]
+        
+        if indexPath == selectedIndexPath {
+            cell.isClicked = true
+        }else{
+            cell.isClicked = false
+        }
+        
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as! ProfileCollectionViewCell
+        profileImage.image = Constant.ImageType.ProfileType.profileList[indexPath.row]
+        cell.delegate?.profileClicked(indexPath: indexPath)
+    }
+    
+}
+
+extension ProfileViewController: ProfileProtocol {
+    func profileClicked(indexPath: IndexPath) {
+        selectedIndexPath = indexPath
+        collectionView.reloadData()
     }
 }

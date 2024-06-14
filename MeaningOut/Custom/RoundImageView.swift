@@ -13,10 +13,10 @@ class RoundImageView: UIImageView {
         super.init(frame: .zero)
         contentMode = .scaleAspectFill
         clipsToBounds = true
-        addCorner(imageType)
+        configureUI(imageType)
     }
     
-    private func addCorner(_ imageType: Constant.RoundImageType){
+    func configureUI(_ imageType: Constant.RoundImageType){
         switch imageType {
         case .regular:
             layer.borderWidth = 1
@@ -25,6 +25,7 @@ class RoundImageView: UIImageView {
         case .highlight:
             layer.borderWidth = 3
             layer.borderColor = Constant.ColorType.theme.cgColor
+            alpha = 1.0
         }
     }
     

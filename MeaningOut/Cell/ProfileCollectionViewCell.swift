@@ -8,9 +8,25 @@
 import UIKit
 import SnapKit
 
+protocol ProfileProtocol {
+    func profileClicked(indexPath: IndexPath)
+}
+
 class ProfileCollectionViewCell: UICollectionViewCell {
     
     let profileImage = RoundImageView(imageType: .regular)
+    
+    var delegate: ProfileProtocol?
+    
+    var isClicked = false {
+        didSet{
+            if isClicked {
+                profileImage.configureUI(.highlight)
+            }else{
+                profileImage.configureUI(.regular)
+            }
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
