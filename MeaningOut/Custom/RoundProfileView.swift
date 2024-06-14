@@ -40,7 +40,7 @@ class RoundProfileView: UIView {
     }
     
     func configureUI(){
-        profileImage.image = UIImage(named: "profile_0")
+        profileImage.image = UIImage(named: UserManager.profileImage)
 
         cameraImage.image = Constant.ImageType.photo
         cameraImage.contentMode = .center
@@ -48,7 +48,6 @@ class RoundProfileView: UIView {
         cameraImage.backgroundColor = Constant.ColorType.theme
         cameraImage.layer.cornerRadius = 13
         cameraImage.clipsToBounds = true
-
     }
     
     override func layoutSubviews() {

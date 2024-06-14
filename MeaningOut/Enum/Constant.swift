@@ -35,32 +35,37 @@ enum Constant {
         static let close = UIImage(systemName: "xmark")
         static let photo = UIImage(systemName: "camera.fill")
         
-        enum ProfileType {
-            static let profile_0 = UIImage(named: "profile_0")!
-            static let profile_1 = UIImage(named: "profile_1")!
-            static let profile_2 = UIImage(named: "profile_2")!
-            static let profile_3 = UIImage(named: "profile_3")!
-            static let profile_4 = UIImage(named: "profile_4")!
-            static let profile_5 = UIImage(named: "profile_5")!
-            static let profile_6 = UIImage(named: "profile_6")!
-            static let profile_7 = UIImage(named: "profile_7")!
-            static let profile_8 = UIImage(named: "profile_8")!
-            static let profile_9 = UIImage(named: "profile_9")!
-            static let profile_10 = UIImage(named: "profile_10")!
-            static let profile_11 = UIImage(named: "profile_11")!
+        enum ProfileType:String, CaseIterable {
+            case profile_0
+            case profile_1
+            case profile_2
+            case profile_3
+            case profile_4
+            case profile_5
+            case profile_6
+            case profile_7
+            case profile_8
+            case profile_9
+            case profile_10
+            case profile_11
+
+
+            static let profileList: [UIImage] = [UIImage(named: Constant.ImageType.ProfileType.profile_0.rawValue)!,
+                                                 UIImage(named: Constant.ImageType.ProfileType.profile_1.rawValue)!,
+                                                 UIImage(named: Constant.ImageType.ProfileType.profile_2.rawValue)!,
+                                                 UIImage(named: Constant.ImageType.ProfileType.profile_3.rawValue)!,
+                                                 UIImage(named: Constant.ImageType.ProfileType.profile_4.rawValue)!,
+                                                 UIImage(named: Constant.ImageType.ProfileType.profile_5.rawValue)!,
+                                                 UIImage(named: Constant.ImageType.ProfileType.profile_6.rawValue)!,
+                                                 UIImage(named: Constant.ImageType.ProfileType.profile_7.rawValue)!,
+                                                 UIImage(named: Constant.ImageType.ProfileType.profile_8.rawValue)!,
+                                                 UIImage(named: Constant.ImageType.ProfileType.profile_9.rawValue)!,
+                                                 UIImage(named: Constant.ImageType.ProfileType.profile_10.rawValue)!,
+                                                 UIImage(named: Constant.ImageType.ProfileType.profile_11.rawValue)! ]
             
-            static let profileList: [UIImage] = [Constant.ImageType.ProfileType.profile_0,
-                                                 Constant.ImageType.ProfileType.profile_1,
-                                                 Constant.ImageType.ProfileType.profile_2,
-                                                 Constant.ImageType.ProfileType.profile_3,
-                                                 Constant.ImageType.ProfileType.profile_4,
-                                                 Constant.ImageType.ProfileType.profile_5,
-                                                 Constant.ImageType.ProfileType.profile_6,
-                                                 Constant.ImageType.ProfileType.profile_7,
-                                                 Constant.ImageType.ProfileType.profile_8,
-                                                 Constant.ImageType.ProfileType.profile_9,
-                                                 Constant.ImageType.ProfileType.profile_10,
-                                                 Constant.ImageType.ProfileType.profile_11]
+            static var randomTitle: String {
+                return ProfileType.allCases.randomElement()!.rawValue
+            }
 
         }
     }

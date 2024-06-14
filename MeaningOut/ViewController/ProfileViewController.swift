@@ -14,12 +14,13 @@ class ProfileViewController: UIViewController {
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
     
     var selectedIndexPath: IndexPath?
+    var selectedProfileImage: String?
     
     func layout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.collectionView?.isScrollEnabled = false
-
+        
         let spacing: CGFloat = 10
         let sectionInset: CGFloat = 20
         let width = (view.bounds.width - (spacing * 3) - (sectionInset * 2)) / 4
@@ -31,7 +32,7 @@ class ProfileViewController: UIViewController {
         
         return layout
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
@@ -41,13 +42,18 @@ class ProfileViewController: UIViewController {
         configureCollectionView()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        guard let image = selectedProfileImage else { return }
+        UserManager.profileImage = image
+    }
+    
     func configureCollectionView(){
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(ProfileCollectionViewCell.self, forCellWithReuseIdentifier: ProfileCollectionViewCell.identifier)
     }
     
-
+    
 }
 
 extension ProfileViewController: BaseProtocol {
@@ -74,7 +80,7 @@ extension ProfileViewController: BaseProtocol {
 
 extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return Constant.ImageType.ProfileType.profileList.count
+        return Constant.ImageType.ProfileType.allCases.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -82,7 +88,7 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
         
         cell.delegate = self
         
-        cell.profileImage.image = Constant.ImageType.ProfileType.profileList[indexPath.row]
+        cell.profileImage.image = UIImage(named: Constant.ImageType.ProfileType.allCases[indexPath.row].rawValue)
         
         if indexPath == selectedIndexPath {
             cell.isClicked = true
@@ -95,7 +101,9 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! ProfileCollectionViewCell
-        profileView.profileImage.image = Constant.ImageType.ProfileType.profileList[indexPath.row]
+        let imageName = Constant.ImageType.ProfileType.allCases[indexPath.row].rawValue
+        selectedProfileImage = imageName
+        profileView.profileImage.image = UIImage(named: imageName)
         cell.delegate?.profileClicked(indexPath: indexPath)
     }
     

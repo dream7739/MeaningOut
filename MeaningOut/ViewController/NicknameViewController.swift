@@ -17,6 +17,10 @@ class NicknameViewController: UIViewController {
     
     var isValid = false
     
+    override func viewWillAppear(_ animated: Bool) {
+        profileView.profileImage.image = UIImage(named: UserManager.profileImage)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
@@ -34,7 +38,6 @@ class NicknameViewController: UIViewController {
     }
     
     @objc func profileImageClicked(){
-        //프로필 화면으로 이동
         let vc = ProfileViewController()
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -65,6 +68,9 @@ class NicknameViewController: UIViewController {
     
     @objc func completeButtonClicked(){
         if isValid {
+            UserManager.isUser = true
+            UserManager.nickname = nicknameField.text!.trimmingCharacters(in: .whitespaces)
+            
             let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
             let sceneDelegate = windowScene?.delegate as? SceneDelegate
 
