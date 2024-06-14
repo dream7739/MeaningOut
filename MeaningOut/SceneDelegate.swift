@@ -15,8 +15,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
-        let onboardVC = OnboardingViewController()
-        window?.rootViewController = UINavigationController(rootViewController: onboardVC)
+        
+        let onboardVC = UINavigationController(rootViewController: OnboardingViewController())
+        let tabBarVC = TabBarController()
+        
+        if UserManager.isUser {
+            window?.rootViewController = tabBarVC
+        }else{
+            window?.rootViewController = onboardVC
+        }
+        
         window?.makeKeyAndVisible()
     }
 

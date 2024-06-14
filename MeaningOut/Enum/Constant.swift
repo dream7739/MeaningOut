@@ -94,11 +94,21 @@ enum Constant {
     enum ViewType {
         case nickname
         case profile
-        
+        case search
+        case result
+        case detail
+        case setting
+
         var navigationTitle: String {
             switch self {
             case .nickname, .profile:
                 return "PROFILE SETTING"
+            case .search:
+                return "\(UserManager.nickname)`s MEANING OUT"
+            case .result, .detail:
+                return ""
+            case .setting:
+                return "SETTING"
             }
         }
         

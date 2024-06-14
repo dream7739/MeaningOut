@@ -11,8 +11,9 @@ class SearchViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureView()
+        configureNav(.search)
 
-        // Do any additional setup after loading the view.
     }
     
 

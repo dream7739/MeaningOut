@@ -11,7 +11,8 @@ class SettingViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        configureView()
+        configureNav(.setting)
         // Do any additional setup after loading the view.
     }
     
