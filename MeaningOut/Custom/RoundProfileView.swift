@@ -40,7 +40,11 @@ class RoundProfileView: UIView {
     }
     
     func configureUI(){
-        profileImage.image = UIImage(named: UserManager.profileImage)
+        if UserManager.profileImage.isEmpty {
+            profileImage.image = UIImage(named: Constant.ImageType.ProfileType.randomTitle)!
+        }else{
+            profileImage.image = UIImage(named: UserManager.profileImage)
+        } 
 
         cameraImage.image = Constant.ImageType.photo
         cameraImage.contentMode = .center

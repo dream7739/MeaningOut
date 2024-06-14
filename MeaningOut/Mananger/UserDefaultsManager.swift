@@ -33,7 +33,7 @@ class UserManager {
 
     
     @UserDefaultsManager(
-        defaultValue: Constant.ImageType.ProfileType.randomTitle,
+        defaultValue: "",
         key: "profile",
         storage: .standard
     )

@@ -16,9 +16,16 @@ class NicknameViewController: UIViewController {
     let completeButton = RoundButton(buttonType: .nickname)
     
     var isValid = false
+    var selectedProfileImage: String?
     
     override func viewWillAppear(_ animated: Bool) {
-        profileView.profileImage.image = UIImage(named: UserManager.profileImage)
+        nicknameField.becomeFirstResponder()
+        nicknameField.text = ""
+        
+        if let selectedProfileImage {
+            profileView.profileImage.image = UIImage(named: selectedProfileImage)
+        }
+
     }
     
     override func viewDidLoad() {
@@ -39,6 +46,12 @@ class NicknameViewController: UIViewController {
     
     @objc func profileImageClicked(){
         let vc = ProfileViewController()
+        
+        vc.profileDataSender = { profile in
+            guard let image = profile else { return }
+            self.selectedProfileImage = image
+        }
+        
         navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -68,8 +81,13 @@ class NicknameViewController: UIViewController {
     
     @objc func completeButtonClicked(){
         if isValid {
+
             UserManager.isUser = true
             UserManager.nickname = nicknameField.text!.trimmingCharacters(in: .whitespaces)
+            
+            if let image = selectedProfileImage {
+                UserManager.profileImage = image
+            }
             
             let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
             let sceneDelegate = windowScene?.delegate as? SceneDelegate

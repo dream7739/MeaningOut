@@ -14,8 +14,9 @@ class ProfileViewController: UIViewController {
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
     
     var selectedIndexPath: IndexPath?
-    var selectedProfileImage: String?
-    
+    var selectedProfile: String?
+    var profileDataSender: ((_ data: String?) -> Void)?
+
     func layout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -43,8 +44,7 @@ class ProfileViewController: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        guard let image = selectedProfileImage else { return }
-        UserManager.profileImage = image
+        profileDataSender?(selectedProfile)
     }
     
     func configureCollectionView(){
@@ -101,9 +101,11 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! ProfileCollectionViewCell
-        let imageName = Constant.ImageType.ProfileType.allCases[indexPath.row].rawValue
-        selectedProfileImage = imageName
-        profileView.profileImage.image = UIImage(named: imageName)
+        
+        let image = Constant.ImageType.ProfileType.allCases[indexPath.row].rawValue
+        selectedProfile = image
+        profileView.profileImage.image = UIImage(named: image)
+        
         cell.delegate?.profileClicked(indexPath: indexPath)
     }
     
