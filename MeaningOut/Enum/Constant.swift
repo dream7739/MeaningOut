@@ -34,6 +34,7 @@ enum Constant {
         static let time = UIImage(systemName: "clock")
         static let close = UIImage(systemName: "xmark")
         static let photo = UIImage(systemName: "camera.fill")
+        static let empty = UIImage(named: "empty")
         
         enum ProfileType:String, CaseIterable {
             case profile_0
@@ -89,6 +90,7 @@ enum Constant {
     
     enum PlaceholderType: String {
         case nickname = "닉네임을 입력해주세요 :)"
+        case search = "브랜드, 상품 등을 입력하세요"
     }
     
     enum ViewType {
