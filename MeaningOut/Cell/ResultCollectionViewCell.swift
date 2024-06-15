@@ -34,7 +34,7 @@ class ResultCollectionViewCell: UICollectionViewCell {
     func configureData(_ data: Shop){
         itemImage.kf.setImage(with: URL(string: data.image))
         companyLabel.text = data.mallName
-        nameLabel.text = data.title
+        nameLabel.text = data.titleDescription
         priceLabel.text = Int(data.lprice)!.formatted(.number) + "원"
     }
 }
@@ -81,14 +81,14 @@ extension ResultCollectionViewCell: BaseProtocol {
         itemImage.clipsToBounds = true
         itemImage.contentMode = .scaleAspectFill
         
-        companyLabel.font = Constant.FontType.tertiary
+        companyLabel.font = Constant.FontType.quaternary
         companyLabel.textColor = Constant.ColorType.tertiary
         
-        nameLabel.font = Constant.FontType.secondary
+        nameLabel.font = Constant.FontType.tertiary
         nameLabel.textColor = Constant.ColorType.black
         nameLabel.numberOfLines = 2
         
-        priceLabel.font = Constant.FontType.secondary
+        priceLabel.font = .systemFont(ofSize: 16, weight: .heavy)
         priceLabel.textColor = Constant.ColorType.black
         
         likeButton.setBackgroundImage(UIImage(named: "like_unselected"), for: .normal)

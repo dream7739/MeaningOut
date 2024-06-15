@@ -25,4 +25,8 @@ struct Shop: Decodable {
     let lprice: String
     let mallName: String
     let productId: String
+    
+    var titleDescription: String {
+        return title.htmlToAttributedString()?.string ?? title
+    }
 }
