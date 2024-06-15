@@ -77,6 +77,26 @@ enum Constant {
         case highlight
     }
     
+    enum TagType: Int, CaseIterable {
+        case accurate = 0
+        case date = 1
+        case priceasc = 2
+        case priceDesc = 3
+        
+        var title: String {
+            switch self {
+            case .accurate:
+                return "정확도"
+            case .date:
+                return "날짜순"
+            case .priceasc:
+                return "가격높은순"
+            case .priceDesc:
+                return "가격낮은순"
+            }
+        }
+    }
+    
     enum RegexType: String {
         case countRegex
         case specialcharRegex = #"[@#$%]"#
