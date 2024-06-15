@@ -116,6 +116,10 @@ extension SearchViewController: UISearchBarDelegate {
             }
             
             tableView.reloadData()
+            
+            let vc = ResultViewController()
+            vc.keyword = input
+            navigationController?.pushViewController(vc, animated: true)
         }
     }
 }
@@ -132,10 +136,19 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         cell.delegate = self
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let vc = ResultViewController()
+        vc.keyword = UserManager.recentList[indexPath.row]
+        navigationController?.pushViewController(vc, animated: true)
+        
+        tableView.reloadRows(at: [indexPath], with: .none)
+    }
 }
 
-extension SearchViewController: SearchProtocol {
-    func deleteClicked(indexPath: IndexPath) {
+extension SearchViewController: CellProtocol {
+    func cellItemClicked(indexPath: IndexPath) {
         UserManager.recentList.remove(at: indexPath.row)
         UserManager.savedList = UserManager.recentList
         tableView.reloadData()

@@ -8,10 +8,6 @@
 import UIKit
 import SnapKit
 
-protocol SearchProtocol {
-    func deleteClicked(indexPath: IndexPath)
-}
-
 class SearchTableViewCell: UITableViewCell {
 
     let timeImage = UIImageView()
@@ -22,7 +18,7 @@ class SearchTableViewCell: UITableViewCell {
     
     let deleteImage = UIImageView()
     
-    var delegate: SearchProtocol?
+    var delegate: CellProtocol?
     
     var indexPath: IndexPath?
     
@@ -46,8 +42,7 @@ class SearchTableViewCell: UITableViewCell {
     
     @objc func deleteButtonClicked(){
         guard let indexPath else { return }
-        delegate?.deleteClicked(indexPath: indexPath)
-        
+        delegate?.cellItemClicked(indexPath: indexPath)
     }
     
 }

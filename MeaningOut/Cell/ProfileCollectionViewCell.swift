@@ -8,15 +8,11 @@
 import UIKit
 import SnapKit
 
-protocol ProfileProtocol {
-    func profileClicked(indexPath: IndexPath)
-}
-
 class ProfileCollectionViewCell: UICollectionViewCell {
     
     let profileImage = RoundImageView(imageType: .regular)
     
-    var delegate: ProfileProtocol?
+    var delegate: CellProtocol?
     
     var isClicked = false {
         didSet{

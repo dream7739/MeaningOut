@@ -39,6 +39,8 @@
 		88FBDF632C1D844600AB0BC9 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FBDF622C1D844600AB0BC9 /* EmptyView.swift */; };
 		88FBDF652C1D87DE00AB0BC9 /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FBDF642C1D87DE00AB0BC9 /* SearchTableViewCell.swift */; };
 		88FBDF672C1DA27800AB0BC9 /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FBDF662C1DA27800AB0BC9 /* ResultViewController.swift */; };
+		88FBDF692C1DB3FF00AB0BC9 /* CellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FBDF682C1DB3FF00AB0BC9 /* CellProtocol.swift */; };
+		88FBDF6B2C1DB59400AB0BC9 /* ResultCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FBDF6A2C1DB59400AB0BC9 /* ResultCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -71,6 +73,8 @@
 		88FBDF622C1D844600AB0BC9 /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
 		88FBDF642C1D87DE00AB0BC9 /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
 		88FBDF662C1DA27800AB0BC9 /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
+		88FBDF682C1DB3FF00AB0BC9 /* CellProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellProtocol.swift; sourceTree = "<group>"; };
+		88FBDF6A2C1DB59400AB0BC9 /* ResultCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +144,7 @@
 			children = (
 				8871F65E2C1C510300A7A36B /* ProfileCollectionViewCell.swift */,
 				88FBDF642C1D87DE00AB0BC9 /* SearchTableViewCell.swift */,
+				88FBDF6A2C1DB59400AB0BC9 /* ResultCollectionViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -171,6 +176,7 @@
 			children = (
 				887B299A2C1B1424009F3630 /* BaseProtocol.swift */,
 				8871F6602C1C513E00A7A36B /* ReusableProtocol.swift */,
+				88FBDF682C1DB3FF00AB0BC9 /* CellProtocol.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -289,7 +295,9 @@
 				8871F6672C1C6DAA00A7A36B /* SearchViewController.swift in Sources */,
 				8871F65F2C1C510300A7A36B /* ProfileCollectionViewCell.swift in Sources */,
 				8871F6632C1C63D800A7A36B /* RoundProfileView.swift in Sources */,
+				88FBDF692C1DB3FF00AB0BC9 /* CellProtocol.swift in Sources */,
 				88B875382C1C199C00F19CE6 /* String+Extension.swift in Sources */,
+				88FBDF6B2C1DB59400AB0BC9 /* ResultCollectionViewCell.swift in Sources */,
 				8871F6612C1C513E00A7A36B /* ReusableProtocol.swift in Sources */,
 				88FBDF672C1DA27800AB0BC9 /* ResultViewController.swift in Sources */,
 				883A7DC32C1B0A6C00A4665E /* AppDelegate.swift in Sources */,

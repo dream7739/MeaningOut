@@ -110,13 +110,13 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
         selectedProfile = image
         profileView.profileImage.image = UIImage(named: image)
         
-        cell.delegate?.profileClicked(indexPath: indexPath)
+        cell.delegate?.cellItemClicked(indexPath: indexPath)
     }
     
 }
 
-extension ProfileViewController: ProfileProtocol {
-    func profileClicked(indexPath: IndexPath) {
+extension ProfileViewController: CellProtocol {
+    func cellItemClicked(indexPath: IndexPath) {
         selectedIndexPath = indexPath
         collectionView.reloadData()
     }
