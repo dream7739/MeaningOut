@@ -47,7 +47,7 @@ class SearchViewController: UIViewController {
     }
     
     @objc func resetButtonClicked(){
-        UserManager.recentList = []        
+        UserManager.recentList.removeAll()
         emptyView.isHidden = false
     }
     
@@ -106,6 +106,12 @@ extension SearchViewController: UISearchBarDelegate {
         
         if !input.isEmpty {
             UserManager.recentList.insert(input, at: 0)
+            
+            if !emptyView.isHidden {
+                emptyView.isHidden.toggle()
+            }
+            
+            tableView.reloadData()
         }
     }
 }
@@ -118,6 +124,20 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.identifier, for: indexPath) as! SearchTableViewCell
         cell.configureData(UserManager.recentList[indexPath.row])
+        cell.indexPath = indexPath
+        cell.delegate = self
         return cell
     }
+}
+
+extension SearchViewController: SearchProtocol {
+    func deleteClicked(indexPath: IndexPath) {
+        UserManager.recentList.remove(at: indexPath.row)
+        tableView.reloadData()
+        
+        if UserManager.recentList.isEmpty {
+            emptyView.isHidden = false
+        }
+    }
+    
 }

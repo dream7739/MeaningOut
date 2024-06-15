@@ -8,6 +8,10 @@
 import UIKit
 import SnapKit
 
+protocol SearchProtocol {
+    func deleteClicked(indexPath: IndexPath)
+}
+
 class SearchTableViewCell: UITableViewCell {
 
     let timeImage = UIImageView()
@@ -16,11 +20,18 @@ class SearchTableViewCell: UITableViewCell {
     
     let deleteButton = UIButton()
     
+    let deleteImage = UIImageView()
+    
+    var delegate: SearchProtocol?
+    
+    var indexPath: IndexPath?
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureHierarchy()
         configureLayout()
         configureUI()
+        deleteButton.addTarget(self, action: #selector(deleteButtonClicked), for: .touchUpInside)
     }
     
     required init?(coder: NSCoder) {
@@ -33,6 +44,12 @@ class SearchTableViewCell: UITableViewCell {
         recentLabel.text = data
     }
     
+    @objc func deleteButtonClicked(){
+        guard let indexPath else { return }
+        delegate?.deleteClicked(indexPath: indexPath)
+        
+    }
+    
 }
 
 extension SearchTableViewCell: BaseProtocol {
@@ -40,6 +57,7 @@ extension SearchTableViewCell: BaseProtocol {
         contentView.addSubview(timeImage)
         contentView.addSubview(recentLabel)
         contentView.addSubview(deleteButton)
+        deleteButton.addSubview(deleteImage)
     }
     
     func configureLayout() {
@@ -57,8 +75,15 @@ extension SearchTableViewCell: BaseProtocol {
         
         deleteButton.snp.makeConstraints { make in
             make.centerY.equalTo(recentLabel)
-            make.trailing.equalToSuperview().inset(20)
-            make.size.equalTo(20)
+            make.trailing.equalToSuperview().inset(7.5)
+            make.height.equalToSuperview()
+            make.width.equalTo(40)
+        }
+        
+        deleteImage.snp.makeConstraints { make in
+            make.size.equalTo(15)
+            make.centerY.equalToSuperview()
+            make.centerX.equalToSuperview()
         }
     }
     
@@ -70,8 +95,11 @@ extension SearchTableViewCell: BaseProtocol {
         recentLabel.numberOfLines = 1
         recentLabel.textColor = Constant.ColorType.black
         
-        deleteButton.setImage(Constant.ImageType.close, for: .normal)
-        deleteButton.setTitleColor(Constant.ColorType.black, for: .normal) 
+        deleteButton.setTitleColor(Constant.ColorType.black, for: .normal)
         deleteButton.tintColor = Constant.ColorType.black
+        
+        deleteImage.image = Constant.ImageType.close
+        deleteImage.contentMode = .scaleAspectFill
+
     }
 }
