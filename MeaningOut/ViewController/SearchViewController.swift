@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 class SearchViewController: UIViewController {
-
+    
     let recentLabel = UILabel()
     
     let resetButton = UIButton()
@@ -23,6 +23,7 @@ class SearchViewController: UIViewController {
         configureView()
         configureNav(.search)
         configureSearch()
+        configureTableView()
         configureHierarchy()
         configureLayout()
         configureUI()
@@ -33,6 +34,14 @@ class SearchViewController: UIViewController {
         navigationItem.searchController = searchController
         searchController.searchBar.searchTextField.placeholder = Constant.PlaceholderType.search.rawValue
         searchController.searchBar.delegate = self
+    }
+    
+    func configureTableView(){
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(SearchTableViewCell.self, forCellReuseIdentifier: SearchTableViewCell.identifier)
+        tableView.separatorStyle = .none
+        tableView.rowHeight = 46
     }
     
 }
@@ -47,7 +56,8 @@ extension SearchViewController: BaseProtocol {
     
     func configureLayout() {
         recentLabel.snp.makeConstraints { make in
-            make.top.leading.equalTo(view.safeAreaLayoutGuide).inset(10)
+            make.top.equalTo(view.safeAreaLayoutGuide).inset(10)
+            make.leading.equalTo(view.safeAreaLayoutGuide).inset(20)
         }
         
         resetButton.snp.makeConstraints { make in
@@ -67,23 +77,40 @@ extension SearchViewController: BaseProtocol {
     
     func configureUI() {
         recentLabel.text = "최근 검색"
-        recentLabel.font = .boldSystemFont(ofSize: 16)
+        recentLabel.font = .systemFont(ofSize: 16, weight: .black)
         
         resetButton.setTitle("전체 삭제", for: .normal)
         resetButton.setTitleColor(Constant.ColorType.theme, for: .normal)
+        resetButton.titleLabel?.font = Constant.FontType.tertiary
         
-        tableView.backgroundColor = .red
+        if UserManager.recentList.isEmpty {
+            emptyView.isHidden = false
+        }else{
+            emptyView.isHidden = true
+        }
+        
     }
 }
 
-
 extension SearchViewController: UISearchBarDelegate {
+    //검색 키를 누르면 검색 상세 화면으로 이동
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        print(#function)
+        let input = searchBar.text!.trimmingCharacters(in: .whitespaces)
+        
+        if !input.isEmpty {
+            UserManager.recentList.insert(input, at: 0)
+        }
+    }
+}
+
+extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return UserManager.recentList.count
     }
     
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        print(#function)
-
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.identifier, for: indexPath) as! SearchTableViewCell
+        cell.configureData(UserManager.recentList[indexPath.row])
+        return cell
     }
 }

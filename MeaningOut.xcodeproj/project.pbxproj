@@ -37,6 +37,7 @@
 		88B8753A2C1C2AFE00F19CE6 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B875392C1C2AFE00F19CE6 /* ProfileViewController.swift */; };
 		88B8753C2C1C2B7100F19CE6 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B8753B2C1C2B7100F19CE6 /* TabBarController.swift */; };
 		88FBDF632C1D844600AB0BC9 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FBDF622C1D844600AB0BC9 /* EmptyView.swift */; };
+		88FBDF652C1D87DE00AB0BC9 /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FBDF642C1D87DE00AB0BC9 /* SearchTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -67,6 +68,7 @@
 		88B875392C1C2AFE00F19CE6 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		88B8753B2C1C2B7100F19CE6 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		88FBDF622C1D844600AB0BC9 /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
+		88FBDF642C1D87DE00AB0BC9 /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				8871F65E2C1C510300A7A36B /* ProfileCollectionViewCell.swift */,
+				88FBDF642C1D87DE00AB0BC9 /* SearchTableViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -291,6 +294,7 @@
 				883A7DC52C1B0A6C00A4665E /* SceneDelegate.swift in Sources */,
 				887B29A32C1B1AEE009F3630 /* NicknameViewController.swift in Sources */,
 				88B8753A2C1C2AFE00F19CE6 /* ProfileViewController.swift in Sources */,
+				88FBDF652C1D87DE00AB0BC9 /* SearchTableViewCell.swift in Sources */,
 				88B8753C2C1C2B7100F19CE6 /* TabBarController.swift in Sources */,
 				8871F66F2C1C6F9400A7A36B /* UserDefaultsManager.swift in Sources */,
 				8871F6692C1C6DD600A7A36B /* SettingViewController.swift in Sources */,
