@@ -33,6 +33,5 @@ class PaddingLabel: UILabel {
         let size = super.intrinsicContentSize
         return CGSize(width: size.width + leftInset + rightInset, height: size.height + topInset + bottomInset)
     }
- 
 }
 

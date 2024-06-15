@@ -36,7 +36,7 @@ class ResultViewController: UIViewController {
         let layout = UICollectionViewFlowLayout()
         let spacing: CGFloat = 20
         let horizontalInset: CGFloat = 20
-        let verticalInset: CGFloat = 10
+        let verticalInset: CGFloat = 20
         layout.scrollDirection = .vertical
         layout.minimumLineSpacing = spacing
         layout.minimumInteritemSpacing = spacing
@@ -44,6 +44,8 @@ class ResultViewController: UIViewController {
         
         return layout
     }
+    
+    var selectedIndexPath: IndexPath?
     
     var keyword: String?
     
@@ -113,6 +115,11 @@ class ResultViewController: UIViewController {
                 }
                 
                 self.resultCollectionView.reloadData()
+                
+                if self.start == 1 && self.shopResult.items.count > 0 {
+                    self.resultCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
+                }
+                
             case .failure(let error):
                 print(error)
             }
@@ -167,6 +174,14 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
         if collectionView == tagCollectionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagCollectionViewCell.identifier, for: indexPath) as! TagCollectionViewCell
             cell.tagLabel.text = Constant.TagType.allCases[indexPath.row].title
+            cell.delegate = self
+            
+            if indexPath == selectedIndexPath {
+                cell.isClicked = true
+            }else {
+                cell.isClicked = false
+            }
+            
             return cell
         }else{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ResultCollectionViewCell.identifier, for: indexPath) as! ResultCollectionViewCell
@@ -197,6 +212,24 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
         
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == tagCollectionView {
+            let cell = collectionView.cellForItem(at: indexPath) as! TagCollectionViewCell
+            cell.delegate?.cellItemClicked(indexPath: indexPath)
+            
+            let sortParam = Constant.TagType.allCases[indexPath.row].sortParam
+            sim = sortParam
+            start = 1
+            callNaverShop()
+        }
+    }
+}
+
+extension ResultViewController: CellProtocol {
+    func cellItemClicked(indexPath: IndexPath) {
+        selectedIndexPath = indexPath
+        tagCollectionView.reloadData()
+    }
 }
 
 extension ResultViewController: UICollectionViewDataSourcePrefetching {

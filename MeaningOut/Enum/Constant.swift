@@ -78,22 +78,26 @@ enum Constant {
     }
     
     enum TagType: Int, CaseIterable {
-        case accurate = 0
+        case sim = 0
         case date = 1
-        case priceasc = 2
-        case priceDesc = 3
+        case dsc = 2
+        case asc = 3
         
         var title: String {
             switch self {
-            case .accurate:
+            case .sim:
                 return "정확도"
             case .date:
                 return "날짜순"
-            case .priceasc:
+            case .dsc:
                 return "가격높은순"
-            case .priceDesc:
+            case .asc:
                 return "가격낮은순"
             }
+        }
+        
+        var sortParam: String {
+            return String(describing: self)
         }
     }
     
