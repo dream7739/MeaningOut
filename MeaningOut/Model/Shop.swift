@@ -11,7 +11,11 @@ struct ShopResult: Decodable {
     let total: Int
     let start: Int
     let display: Int
-    let items: [Shop]
+    var items: [Shop]
+    
+    var totalDescription: String {
+        return "\(total)개의 검색 결과"
+    }
 }
 
 struct Shop: Decodable {

@@ -47,7 +47,13 @@ class ResultViewController: UIViewController {
     
     var keyword: String?
     
-    var itemList = ShopResult(total: 0, start: 0, display: 0, items: [])
+    var start = 1
+    
+    var display = 30
+    
+    var sim: String = "sim"
+    
+    var shopResult = ShopResult(total: 0, start: 0, display: 0, items: [])
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,6 +76,7 @@ class ResultViewController: UIViewController {
 
         resultCollectionView.delegate = self
         resultCollectionView.dataSource = self
+        resultCollectionView.prefetchDataSource = self
         resultCollectionView.register(ResultCollectionViewCell.self, forCellWithReuseIdentifier: ResultCollectionViewCell.identifier)
         
     }
@@ -80,11 +87,12 @@ class ResultViewController: UIViewController {
         let header: HTTPHeaders = [
             "X-Naver-Client-Id" : APIKey.clientID,
             "X-Naver-Client-Secret": APIKey.clientSecret]
+        
         let param: Parameters = [
             "query" : keyword,
-            "start": 1,
-            "display": 30,
-            "sort": "sim"
+            "start": start,
+            "display": display,
+            "sort": sim
         ]
 
         AF.request(
@@ -97,7 +105,13 @@ class ResultViewController: UIViewController {
             response in
             switch response.result {
             case .success(let value):
-                self.itemList = value
+                if self.start == 1 {
+                    self.shopResult = value
+                    self.resultLabel.text = self.shopResult.totalDescription
+                }else{
+                    self.shopResult.items.append(contentsOf: value.items)
+                }
+                
                 self.resultCollectionView.reloadData()
             case .failure(let error):
                 print(error)
@@ -134,7 +148,6 @@ extension ResultViewController: BaseProtocol {
     }
     
     func configureUI() {
-        resultLabel.text = "235499개의 검색결과"
         resultLabel.font = Constant.FontType.tertiary
         resultLabel.textColor = Constant.ColorType.theme
 
@@ -146,7 +159,7 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
         if collectionView == tagCollectionView {
             return Constant.TagType.allCases.count
         }else{
-            return itemList.items.count
+            return shopResult.items.count
         }
     }
     
@@ -157,7 +170,7 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
             return cell
         }else{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ResultCollectionViewCell.identifier, for: indexPath) as! ResultCollectionViewCell
-            let data = itemList.items[indexPath.row]
+            let data = shopResult.items[indexPath.row]
             cell.configureData(data)
             return cell
         }
@@ -183,5 +196,21 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
         }
         
     }
+    
+}
+
+extension ResultViewController: UICollectionViewDataSourcePrefetching {
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        for idx in indexPaths {
+            if idx.row == shopResult.items.count - 4 {
+                start += display
+                
+                if start <= 1000 {
+                    callNaverShop()
+                }
+            }
+        }
+    }
+    
     
 }
