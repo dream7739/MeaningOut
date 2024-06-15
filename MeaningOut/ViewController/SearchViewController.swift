@@ -48,6 +48,8 @@ class SearchViewController: UIViewController {
     
     @objc func resetButtonClicked(){
         UserManager.recentList.removeAll()
+        UserManager.savedList = UserManager.recentList
+        
         emptyView.isHidden = false
     }
     
@@ -90,9 +92,10 @@ extension SearchViewController: BaseProtocol {
         resetButton.setTitleColor(Constant.ColorType.theme, for: .normal)
         resetButton.titleLabel?.font = Constant.FontType.tertiary
         
-        if UserManager.recentList.isEmpty {
+        if UserManager.savedList.isEmpty {
             emptyView.isHidden = false
         }else{
+            UserManager.recentList = UserManager.savedList
             emptyView.isHidden = true
         }
         
@@ -106,6 +109,7 @@ extension SearchViewController: UISearchBarDelegate {
         
         if !input.isEmpty {
             UserManager.recentList.insert(input, at: 0)
+            UserManager.savedList = UserManager.recentList
             
             if !emptyView.isHidden {
                 emptyView.isHidden.toggle()
@@ -133,6 +137,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
 extension SearchViewController: SearchProtocol {
     func deleteClicked(indexPath: IndexPath) {
         UserManager.recentList.remove(at: indexPath.row)
+        UserManager.savedList = UserManager.recentList
         tableView.reloadData()
         
         if UserManager.recentList.isEmpty {

@@ -57,6 +57,7 @@ class ProfileViewController: UIViewController {
 }
 
 extension ProfileViewController: BaseProtocol {
+    
     func configureHierarchy() {
         view.addSubview(profileView)
         view.addSubview(collectionView)
@@ -75,6 +76,9 @@ extension ProfileViewController: BaseProtocol {
         }
     }
     
+    func configureUI() {
+        
+    }
     
 }
 

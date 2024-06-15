@@ -38,6 +38,7 @@
 		88B8753C2C1C2B7100F19CE6 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B8753B2C1C2B7100F19CE6 /* TabBarController.swift */; };
 		88FBDF632C1D844600AB0BC9 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FBDF622C1D844600AB0BC9 /* EmptyView.swift */; };
 		88FBDF652C1D87DE00AB0BC9 /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FBDF642C1D87DE00AB0BC9 /* SearchTableViewCell.swift */; };
+		88FBDF672C1DA27800AB0BC9 /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FBDF662C1DA27800AB0BC9 /* ResultViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,6 +70,7 @@
 		88B8753B2C1C2B7100F19CE6 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		88FBDF622C1D844600AB0BC9 /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
 		88FBDF642C1D87DE00AB0BC9 /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
+		88FBDF662C1DA27800AB0BC9 /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,6 +161,7 @@
 				88B8753B2C1C2B7100F19CE6 /* TabBarController.swift */,
 				8871F6662C1C6DAA00A7A36B /* SearchViewController.swift */,
 				8871F6682C1C6DD600A7A36B /* SettingViewController.swift */,
+				88FBDF662C1DA27800AB0BC9 /* ResultViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -288,6 +291,7 @@
 				8871F6632C1C63D800A7A36B /* RoundProfileView.swift in Sources */,
 				88B875382C1C199C00F19CE6 /* String+Extension.swift in Sources */,
 				8871F6612C1C513E00A7A36B /* ReusableProtocol.swift in Sources */,
+				88FBDF672C1DA27800AB0BC9 /* ResultViewController.swift in Sources */,
 				883A7DC32C1B0A6C00A4665E /* AppDelegate.swift in Sources */,
 				887B29982C1B133C009F3630 /* OnboardingViewController.swift in Sources */,
 				887B299E2C1B14A9009F3630 /* UIViewController+Extension.swift in Sources */,

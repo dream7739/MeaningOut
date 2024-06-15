@@ -50,4 +50,9 @@ extension ProfileCollectionViewCell: BaseProtocol {
             make.edges.equalToSuperview()
         }
     }
+    
+    func configureUI() {
+        
+    }
+    
 }

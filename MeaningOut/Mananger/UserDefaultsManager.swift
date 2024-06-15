@@ -46,5 +46,14 @@ class UserManager {
     )
     static var nickname: String
     
+    
+    @UserDefaultsManager(
+        defaultValue: [],
+        key: "savedList",
+        storage: .standard
+    )
+    static var savedList: [String]
+    
+    
     static var recentList: [String] = []
 }
