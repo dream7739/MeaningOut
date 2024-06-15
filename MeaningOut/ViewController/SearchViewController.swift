@@ -27,6 +27,8 @@ class SearchViewController: UIViewController {
         configureHierarchy()
         configureLayout()
         configureUI()
+        
+        resetButton.addTarget(self, action: #selector(resetButtonClicked), for: .touchUpInside)
     }
     
     func configureSearch(){
@@ -42,6 +44,11 @@ class SearchViewController: UIViewController {
         tableView.register(SearchTableViewCell.self, forCellReuseIdentifier: SearchTableViewCell.identifier)
         tableView.separatorStyle = .none
         tableView.rowHeight = 46
+    }
+    
+    @objc func resetButtonClicked(){
+        UserManager.recentList = []        
+        emptyView.isHidden = false
     }
     
 }
