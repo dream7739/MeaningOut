@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Alamofire
+import Kingfisher
 import SnapKit
 
 class ResultViewController: UIViewController {
@@ -45,8 +47,12 @@ class ResultViewController: UIViewController {
     
     var keyword: String?
     
+    var itemList = ShopResult(total: 0, start: 0, display: 0, items: [])
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        callNaverShop()
         configureView()
         configureNav(.result)
         configureHierarchy()
@@ -66,6 +72,37 @@ class ResultViewController: UIViewController {
         resultCollectionView.dataSource = self
         resultCollectionView.register(ResultCollectionViewCell.self, forCellWithReuseIdentifier: ResultCollectionViewCell.identifier)
         
+    }
+    
+    func callNaverShop(){
+        guard let keyword else { return }
+        
+        let header: HTTPHeaders = [
+            "X-Naver-Client-Id" : APIKey.clientID,
+            "X-Naver-Client-Secret": APIKey.clientSecret]
+        let param: Parameters = [
+            "query" : keyword,
+            "start": 1,
+            "display": 30,
+            "sort": "sim"
+        ]
+
+        AF.request(
+            APIURL.naverURL,
+            method: .get,
+            parameters: param,
+            encoding: URLEncoding.queryString,
+            headers: header
+        ).responseDecodable(of: ShopResult.self, completionHandler: {
+            response in
+            switch response.result {
+            case .success(let value):
+                self.itemList = value
+                self.resultCollectionView.reloadData()
+            case .failure(let error):
+                print(error)
+            }
+        })
     }
     
 }
@@ -109,7 +146,7 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
         if collectionView == tagCollectionView {
             return Constant.TagType.allCases.count
         }else{
-            return 50
+            return itemList.items.count
         }
     }
     
@@ -120,6 +157,8 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
             return cell
         }else{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ResultCollectionViewCell.identifier, for: indexPath) as! ResultCollectionViewCell
+            let data = itemList.items[indexPath.row]
+            cell.configureData(data)
             return cell
         }
         

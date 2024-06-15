@@ -43,6 +43,8 @@
 		88FBDF6B2C1DB59400AB0BC9 /* ResultCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FBDF6A2C1DB59400AB0BC9 /* ResultCollectionViewCell.swift */; };
 		88FBDF6D2C1DBD6400AB0BC9 /* TagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FBDF6C2C1DBD6400AB0BC9 /* TagCollectionViewCell.swift */; };
 		88FBDF6F2C1DBDE700AB0BC9 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FBDF6E2C1DBDE700AB0BC9 /* PaddingLabel.swift */; };
+		88FBDF712C1DD13000AB0BC9 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FBDF702C1DD13000AB0BC9 /* APIKey.swift */; };
+		88FBDF742C1DD68F00AB0BC9 /* Shop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FBDF732C1DD68F00AB0BC9 /* Shop.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -79,6 +81,8 @@
 		88FBDF6A2C1DB59400AB0BC9 /* ResultCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultCollectionViewCell.swift; sourceTree = "<group>"; };
 		88FBDF6C2C1DBD6400AB0BC9 /* TagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCollectionViewCell.swift; sourceTree = "<group>"; };
 		88FBDF6E2C1DBDE700AB0BC9 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
+		88FBDF702C1DD13000AB0BC9 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
+		88FBDF732C1DD68F00AB0BC9 /* Shop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shop.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +129,7 @@
 		883A7DC12C1B0A6C00A4665E /* MeaningOut */ = {
 			isa = PBXGroup;
 			children = (
+				88FBDF722C1DD68700AB0BC9 /* Model */,
 				8871F66D2C1C6F7200A7A36B /* Mananger */,
 				8871F65D2C1C4B7E00A7A36B /* Cell */,
 				887B299F2C1B1582009F3630 /* Custom */,
@@ -139,6 +144,7 @@
 				883A7DCB2C1B0A6D00A4665E /* Assets.xcassets */,
 				883A7DCD2C1B0A6D00A4665E /* LaunchScreen.storyboard */,
 				883A7DD02C1B0A6D00A4665E /* Info.plist */,
+				88FBDF702C1DD13000AB0BC9 /* APIKey.swift */,
 			);
 			path = MeaningOut;
 			sourceTree = "<group>";
@@ -206,6 +212,14 @@
 				88FBDF6E2C1DBDE700AB0BC9 /* PaddingLabel.swift */,
 			);
 			path = Custom;
+			sourceTree = "<group>";
+		};
+		88FBDF722C1DD68700AB0BC9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				88FBDF732C1DD68F00AB0BC9 /* Shop.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -316,7 +330,9 @@
 				88FBDF652C1D87DE00AB0BC9 /* SearchTableViewCell.swift in Sources */,
 				88B8753C2C1C2B7100F19CE6 /* TabBarController.swift in Sources */,
 				8871F66F2C1C6F9400A7A36B /* UserDefaultsManager.swift in Sources */,
+				88FBDF712C1DD13000AB0BC9 /* APIKey.swift in Sources */,
 				8871F6692C1C6DD600A7A36B /* SettingViewController.swift in Sources */,
+				88FBDF742C1DD68F00AB0BC9 /* Shop.swift in Sources */,
 				8899152F2C1BEA5C0088C795 /* UnderLineTextField.swift in Sources */,
 				88FBDF6F2C1DBDE700AB0BC9 /* PaddingLabel.swift in Sources */,
 				88FBDF632C1D844600AB0BC9 /* EmptyView.swift in Sources */,

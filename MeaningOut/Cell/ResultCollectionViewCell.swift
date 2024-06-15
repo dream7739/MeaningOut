@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 import SnapKit
 
 class ResultCollectionViewCell: UICollectionViewCell {
@@ -28,6 +29,13 @@ class ResultCollectionViewCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func configureData(_ data: Shop){
+        itemImage.kf.setImage(with: URL(string: data.image))
+        companyLabel.text = data.mallName
+        nameLabel.text = data.title
+        priceLabel.text = Int(data.lprice)!.formatted(.number) + "원"
     }
 }
 
@@ -71,23 +79,22 @@ extension ResultCollectionViewCell: BaseProtocol {
         itemImage.backgroundColor = .gray
         itemImage.layer.cornerRadius = 10
         itemImage.clipsToBounds = true
+        itemImage.contentMode = .scaleAspectFill
         
         companyLabel.font = Constant.FontType.tertiary
         companyLabel.textColor = Constant.ColorType.tertiary
-        companyLabel.text = "네이버"
         
-        nameLabel.font = Constant.FontType.primary
+        nameLabel.font = Constant.FontType.secondary
         nameLabel.textColor = Constant.ColorType.black
-        nameLabel.text = "아이폰 프로 256G"
         nameLabel.numberOfLines = 2
         
-        priceLabel.font = Constant.FontType.primary
+        priceLabel.font = Constant.FontType.secondary
         priceLabel.textColor = Constant.ColorType.black
-        priceLabel.text = "15600원"
         
         likeButton.setBackgroundImage(UIImage(named: "like_unselected"), for: .normal)
     }
     
     
 }
+
 
