@@ -8,7 +8,7 @@
 import UIKit
 
 class SettingViewController: UIViewController {
-
+    
     let headerView = UIView()
     
     let profileImage = RoundImageView(imageType: .highlight)
@@ -26,6 +26,7 @@ class SettingViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         profileImage.image = UIImage(named: UserManager.profileImage)
         nicknameLabel.text = UserManager.nickname
+        tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
     }
     
     override func viewDidLoad() {
@@ -97,7 +98,7 @@ extension SettingViewController: BaseProtocol {
             make.centerY.equalToSuperview()
             make.width.equalTo(18)
             make.height.equalTo(25)
-
+            
         }
         
         sepratorLabel.snp.makeConstraints { make in
@@ -122,7 +123,7 @@ extension SettingViewController: BaseProtocol {
         dateLabel.font = Constant.FontType.tertiary
         dateLabel.textColor = Constant.ColorType.secondary
         dateLabel.text = UserManager.joinDate + " 가입"
-
+        
         indicatorImage.image = Constant.ImageType.next
         indicatorImage.tintColor = Constant.ColorType.secondary
         
@@ -143,5 +144,29 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
         cell.selectionStyle = .none
         cell.configureData(data)
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row == 4 {
+            
+            let alert = UIAlertController(title: "탈퇴하기", message: "탈퇴를 하면 데이터가 모두 초기화됩니다. 탈퇴 하시겠습니까?", preferredStyle: .alert)
+            let confirm = UIAlertAction(title: "확인", style: .default) { _ in
+                UserManager.resetAll()
+                
+                let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+                let sceneDelegate = windowScene?.delegate as? SceneDelegate
+                
+                let vc = UINavigationController(rootViewController: OnboardingViewController())
+                sceneDelegate?.window?.rootViewController = vc
+                sceneDelegate?.window?.makeKeyAndVisible()
+            }
+            
+            let cancel = UIAlertAction(title: "취소", style: .cancel)
+            
+            alert.addAction(confirm)
+            alert.addAction(cancel)
+            
+            present(alert, animated: true)
+        }
     }
 }

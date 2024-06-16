@@ -20,9 +20,6 @@ class NicknameViewController: UIViewController {
     var selectedProfileImage: String?
     
     override func viewWillAppear(_ animated: Bool) {
-        if viewType == .nickname {
-            nicknameField.text = ""
-        }
         
         if let selectedProfileImage {
             profileView.profileImage.image = UIImage(named: selectedProfileImage)
@@ -43,6 +40,8 @@ class NicknameViewController: UIViewController {
             addSaveButton()
             nicknameField.text = UserManager.nickname
             validCheck(UserManager.nickname)
+        }else if viewType == .nickname {
+            nicknameField.text = ""
         }
         
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(profileImageClicked))

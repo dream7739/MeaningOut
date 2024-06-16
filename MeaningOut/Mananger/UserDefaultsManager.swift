@@ -24,6 +24,8 @@ struct UserDefaultsManager<T> {
 }
 
 class UserManager {
+    private init(){}
+    
     @UserDefaultsManager(
         defaultValue: false,
         key: "isUser",
@@ -78,6 +80,12 @@ class UserManager {
     static func removeLikeList(_ productId: String){
         if UserManager.likeList.contains(productId){
             UserManager.likeList.removeAll(where: {$0 == productId })
+        }
+    }
+    
+    static func resetAll(){
+        for key in UserDefaults.standard.dictionaryRepresentation().keys {
+            UserDefaults.standard.removeObject(forKey: key.description)
         }
     }
 }
