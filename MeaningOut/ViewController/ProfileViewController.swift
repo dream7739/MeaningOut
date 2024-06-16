@@ -16,6 +16,8 @@ class ProfileViewController: UIViewController {
     var selectedIndexPath: IndexPath?
     var selectedProfile: String?
     var profileDataSender: ((_ data: String?) -> Void)?
+    
+    var viewType: Constant.ViewType = .profile
 
     func layout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()
@@ -37,7 +39,7 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
-        configureNav(.profile)
+        configureNav(viewType)
         configureHierarchy()
         configureLayout()
         configureCollectionView()

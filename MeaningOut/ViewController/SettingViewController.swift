@@ -23,6 +23,11 @@ class SettingViewController: UIViewController {
     
     let tableView = UITableView()
     
+    override func viewWillAppear(_ animated: Bool) {
+        profileImage.image = UIImage(named: UserManager.profileImage)
+        nicknameLabel.text = UserManager.nickname
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
@@ -31,6 +36,15 @@ class SettingViewController: UIViewController {
         configureLayout()
         configureUI()
         configureTableView()
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(headerViewClicked))
+        headerView.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc func headerViewClicked(){
+        let vc = NicknameViewController()
+        vc.viewType = .editNickname
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     func configureTableView(){
@@ -126,7 +140,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SettingTableViewCell.identifier, for: indexPath) as! SettingTableViewCell
         let data = Constant.SettingType.allCases[indexPath.row]
-        
+        cell.selectionStyle = .none
         cell.configureData(data)
         return cell
     }

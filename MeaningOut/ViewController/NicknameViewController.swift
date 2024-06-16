@@ -16,25 +16,34 @@ class NicknameViewController: UIViewController {
     let completeButton = RoundButton(buttonType: .nickname)
     
     var isValid = false
+    var viewType: Constant.ViewType =  .nickname
     var selectedProfileImage: String?
     
     override func viewWillAppear(_ animated: Bool) {
-        nicknameField.becomeFirstResponder()
-        nicknameField.text = ""
+        if viewType == .nickname {
+            nicknameField.text = ""
+        }
         
         if let selectedProfileImage {
             profileView.profileImage.image = UIImage(named: selectedProfileImage)
         }
-
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
-        configureNav(.nickname)
+        configureNav(viewType)
         configureHierarchy()
         configureLayout()
         configureUI()
+        
+        if viewType == .editNickname {
+            completeButton.isHidden = true
+            addSaveButton()
+            nicknameField.text = UserManager.nickname
+            validCheck(UserManager.nickname)
+        }
         
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(profileImageClicked))
         profileView.addGestureRecognizer(tapRecognizer)
@@ -42,6 +51,59 @@ class NicknameViewController: UIViewController {
         nicknameField.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
         
         completeButton.addTarget(self, action: #selector(completeButtonClicked), for: .touchUpInside)
+        
+    }
+    
+    func addSaveButton(){
+        let save = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(completeButtonClicked))
+        navigationItem.rightBarButtonItem = save
+    }
+    
+    func validCheck(_ input: String){
+        if input.isEmpty {
+            validLabel.text = ""
+            isValid = false
+            return
+        }
+        
+        if !input.isValid(regexType: .countRegex){
+            validLabel.text = Constant.ValidType.countResult.rawValue
+            isValid = false
+        }else if !input.isValid(regexType: .specialcharRegex){
+            validLabel.text = Constant.ValidType.specialResult.rawValue
+            isValid = false
+        }else if !input.isValid(regexType: .numberRegex){
+            validLabel.text = Constant.ValidType.numberResult.rawValue
+            isValid = false
+        }else{
+            validLabel.text = Constant.ValidType.validResult.rawValue
+            isValid = true
+        }
+    }
+    
+    func saveUserData(){
+        if viewType == .nickname {
+            UserManager.isUser = true
+            UserManager.nickname = nicknameField.text!.trimmingCharacters(in: .whitespaces)
+            
+            if let image = selectedProfileImage {
+                UserManager.profileImage = image
+            }
+            
+            let date = Date()
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy.MM.dd"
+            let joinDate = dateFormatter.string(from: date)
+            
+            UserManager.joinDate = joinDate
+            
+        }else if viewType == .editNickname {
+            UserManager.nickname = nicknameField.text!.trimmingCharacters(in: .whitespaces)
+            
+            if let image = selectedProfileImage {
+                UserManager.profileImage = image
+            }
+        }
     }
     
     @objc func profileImageClicked(){
@@ -52,50 +114,30 @@ class NicknameViewController: UIViewController {
             self.selectedProfileImage = image
         }
         
+        vc.viewType = .editProfile
         navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func textFieldChanged(){
         let input = nicknameField.text!.trimmingCharacters(in: .whitespaces)
-        
-        if input.isEmpty {
-            validLabel.text = ""
-            isValid = false
-            return
-        }
-        
-        if !input.isValid(regexType: .countRegex){
-            validLabel.text = "2글자 이상 10글자 미만으로 설정주세요"
-            isValid = false
-        }else if !input.isValid(regexType: .specialcharRegex){
-            validLabel.text = "닉네임에 @, #, $, %는 포함할 수 없어요"
-            isValid = false
-        }else if !input.isValid(regexType: .numberRegex){
-            validLabel.text = "닉네임에 숫자는 포함할 수 없어요"
-            isValid = false
-        }else{
-            validLabel.text = "사용할 수 있는 닉네임이에요"
-            isValid = true
-        }
+        validCheck(input)
     }
     
     @objc func completeButtonClicked(){
         if isValid {
-
-            UserManager.isUser = true
-            UserManager.nickname = nicknameField.text!.trimmingCharacters(in: .whitespaces)
             
-            if let image = selectedProfileImage {
-                UserManager.profileImage = image
+            saveUserData()
+            
+            if viewType == .nickname {
+                let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+                let sceneDelegate = windowScene?.delegate as? SceneDelegate
+                
+                let tabBarController = TabBarController()
+                sceneDelegate?.window?.rootViewController = tabBarController
+                sceneDelegate?.window?.makeKeyAndVisible()
+            }else if viewType == .editNickname {
+                navigationController?.popViewController(animated: true)
             }
-            
-            let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-            let sceneDelegate = windowScene?.delegate as? SceneDelegate
-
-            let tabBarController = TabBarController()
-            sceneDelegate?.window?.rootViewController = tabBarController
-            sceneDelegate?.window?.makeKeyAndVisible()
-            
         }
     }
     
@@ -139,7 +181,7 @@ extension NicknameViewController: BaseProtocol {
     
     func configureUI() {
         nicknameField.clearButtonMode = .whileEditing
-
+        
         validLabel.font = Constant.FontType.tertiary
         validLabel.textColor = Constant.ColorType.theme
     }

@@ -117,6 +117,13 @@ enum Constant {
         case numberRegex = #"[0-9]"#
     }
     
+    enum ValidType: String {
+        case countResult = "2글자 이상 10글자 미만으로 설정주세요"
+        case specialResult = "닉네임에 @, #, $, %는 포함할 수 없어요"
+        case numberResult = "닉네임에 숫자는 포함할 수 없어요"
+        case validResult = "사용할 수 있는 닉네임이에요"
+    }
+    
     enum ButtonType: String {
         case onboard =  "시작하기"
         case nickname = "완료"
@@ -134,6 +141,8 @@ enum Constant {
         case result
         case detail
         case setting
+        case editNickname
+        case editProfile
 
         var navigationTitle: String {
             switch self {
@@ -145,6 +154,8 @@ enum Constant {
                 return ""
             case .setting:
                 return "SETTING"
+            case .editNickname, .editProfile:
+                return "EDIT PROFILE"
             }
         }
         

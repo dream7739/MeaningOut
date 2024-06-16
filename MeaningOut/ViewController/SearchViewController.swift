@@ -18,6 +18,10 @@ class SearchViewController: UIViewController {
     
     let emptyView = EmptyView()
     
+    override func viewWillAppear(_ animated: Bool) {
+        configureNav(.search)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
