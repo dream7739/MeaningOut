@@ -52,27 +52,12 @@ enum Constant {
             case profile_10
             case profile_11
 
-
-            static let profileList: [UIImage] = [UIImage(named: Constant.ImageType.ProfileType.profile_0.rawValue)!,
-                                                 UIImage(named: Constant.ImageType.ProfileType.profile_1.rawValue)!,
-                                                 UIImage(named: Constant.ImageType.ProfileType.profile_2.rawValue)!,
-                                                 UIImage(named: Constant.ImageType.ProfileType.profile_3.rawValue)!,
-                                                 UIImage(named: Constant.ImageType.ProfileType.profile_4.rawValue)!,
-                                                 UIImage(named: Constant.ImageType.ProfileType.profile_5.rawValue)!,
-                                                 UIImage(named: Constant.ImageType.ProfileType.profile_6.rawValue)!,
-                                                 UIImage(named: Constant.ImageType.ProfileType.profile_7.rawValue)!,
-                                                 UIImage(named: Constant.ImageType.ProfileType.profile_8.rawValue)!,
-                                                 UIImage(named: Constant.ImageType.ProfileType.profile_9.rawValue)!,
-                                                 UIImage(named: Constant.ImageType.ProfileType.profile_10.rawValue)!,
-                                                 UIImage(named: Constant.ImageType.ProfileType.profile_11.rawValue)! ]
-            
             static var randomTitle: String {
                 return ProfileType.allCases.randomElement()!.rawValue
             }
 
         }
     }
-    
     
     enum RoundImageType {
         case regular
@@ -100,6 +85,29 @@ enum Constant {
         
         var sortParam: String {
             return String(describing: self)
+        }
+    }
+    
+    enum SettingType: Int, CaseIterable {
+        case cart = 0
+        case questition = 1
+        case voc
+        case noti
+        case reset
+        
+        var title: String {
+            switch self {
+            case .cart:
+                return "나의 장바구니 목록"
+            case .questition:
+                return "자주 묻는 질문"
+            case .voc:
+                return "1:1 문의"
+            case .noti:
+                return "알림 설정"
+            case .reset:
+                return "탈퇴하기"
+            }
         }
     }
     

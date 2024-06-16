@@ -30,6 +30,16 @@ class SettingViewController: UIViewController {
         configureHierarchy()
         configureLayout()
         configureUI()
+        configureTableView()
+    }
+    
+    func configureTableView(){
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(SettingTableViewCell.self, forCellReuseIdentifier: SettingTableViewCell.identifier)
+        tableView.rowHeight = 48
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
+        tableView.isScrollEnabled = false
     }
     
 }
@@ -79,7 +89,7 @@ extension SettingViewController: BaseProtocol {
         sepratorLabel.snp.makeConstraints { make in
             make.horizontalEdges.equalToSuperview().inset(15)
             make.bottom.equalToSuperview()
-            make.height.equalTo(1)
+            make.height.equalTo(2)
         }
         
         tableView.snp.makeConstraints { make in
@@ -102,10 +112,22 @@ extension SettingViewController: BaseProtocol {
         indicatorImage.image = Constant.ImageType.next
         indicatorImage.tintColor = Constant.ColorType.secondary
         
-        sepratorLabel.backgroundColor = Constant.ColorType.secondary
+        sepratorLabel.backgroundColor = Constant.ColorType.tertiary
         
-        tableView.backgroundColor = .magenta
     }
     
+}
+
+extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return Constant.SettingType.allCases.count
+    }
     
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: SettingTableViewCell.identifier, for: indexPath) as! SettingTableViewCell
+        let data = Constant.SettingType.allCases[indexPath.row]
+        
+        cell.configureData(data)
+        return cell
+    }
 }
