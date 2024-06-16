@@ -53,7 +53,7 @@ class ResultViewController: UIViewController {
     
     var display = 30
     
-    var sim: String = "sim"
+    var sim: String = Constant.TagType.sim.sortParam
     
     var shopResult = ShopResult(total: 0, start: 0, display: 0, items: [])
     
@@ -138,11 +138,12 @@ extension ResultViewController: BaseProtocol {
     
     func configureLayout() {
         resultLabel.snp.makeConstraints { make in
-            make.top.leading.equalTo(view.safeAreaLayoutGuide).inset(20)
+            make.top.equalTo(view.safeAreaLayoutGuide).inset(10)
+            make.leading.equalTo(view.safeAreaLayoutGuide).inset(23)
         }
         
         tagCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(resultLabel.snp.bottom)
+            make.top.equalTo(resultLabel.snp.bottom).offset(4)
             make.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(44)
         }
@@ -155,9 +156,32 @@ extension ResultViewController: BaseProtocol {
     }
     
     func configureUI() {
-        resultLabel.font = Constant.FontType.tertiary
+        resultLabel.font = .boldSystemFont(ofSize: 14)
         resultLabel.textColor = Constant.ColorType.theme
 
+    }
+}
+
+extension ResultViewController: CellProtocol {
+    func cellItemClicked(indexPath: IndexPath){
+        selectedIndexPath = indexPath
+        tagCollectionView.reloadData()
+    }
+}
+
+extension ResultViewController: LikeProtocol{
+    func likeClicked(indexPath: IndexPath, isClicked: Bool) {
+        let productId = shopResult.items[indexPath.row].productId
+        
+        if isClicked {
+            if !UserManager.likeList.contains(productId){
+                UserManager.likeList.append(productId)
+            }
+        }else{
+            if UserManager.likeList.contains(productId){
+                UserManager.likeList.removeAll(where: {$0 == productId })
+            }
+        }
     }
 }
 
@@ -186,6 +210,8 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
         }else{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ResultCollectionViewCell.identifier, for: indexPath) as! ResultCollectionViewCell
             let data = shopResult.items[indexPath.row]
+            cell.delegate = self
+            cell.indexPath = indexPath
             cell.configureData(data)
             return cell
         }
@@ -225,12 +251,6 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
     }
 }
 
-extension ResultViewController: CellProtocol {
-    func cellItemClicked(indexPath: IndexPath) {
-        selectedIndexPath = indexPath
-        tagCollectionView.reloadData()
-    }
-}
 
 extension ResultViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {

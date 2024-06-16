@@ -18,13 +18,40 @@ class ResultCollectionViewCell: UICollectionViewCell {
     
     let priceLabel = UILabel()
     
+    let likeView = UIView()
+    
+    let likeImage = UIImageView()
+    
     let likeButton = UIButton()
+    
+    var delegate: LikeProtocol?
+    
+    var indexPath: IndexPath?
+    
+    var isClicked: Bool = false {
+        didSet {
+            if isClicked {
+                likeView.backgroundColor = Constant.ColorType.white
+                likeImage.image = Constant.ImageType.like_selected
+            }else{
+                likeView.backgroundColor = Constant.ColorType.black.withAlphaComponent(0.3)
+                likeImage.image = Constant.ImageType.like_unselected
+            }
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureHierarchy()
         configureLayout()
         configureUI()
+        likeButton.addTarget(self, action: #selector(likeButtonClicked), for: .touchUpInside)
+    }
+    
+    @objc func likeButtonClicked(){
+        guard let indexPath else { return }
+        isClicked.toggle()
+        delegate?.likeClicked(indexPath: indexPath, isClicked: isClicked)
     }
     
     required init?(coder: NSCoder) {
@@ -35,7 +62,13 @@ class ResultCollectionViewCell: UICollectionViewCell {
         itemImage.kf.setImage(with: URL(string: data.image))
         companyLabel.text = data.mallName
         nameLabel.text = data.titleDescription
-        priceLabel.text = Int(data.lprice)!.formatted(.number) + "원"
+        priceLabel.text = data.priceDescription
+        
+        if !UserManager.likeList.isEmpty && UserManager.likeList.contains(data.productId) {
+            isClicked = true
+        }else{
+            isClicked = false
+        }
     }
 }
 
@@ -45,7 +78,9 @@ extension ResultCollectionViewCell: BaseProtocol {
         contentView.addSubview(companyLabel)
         contentView.addSubview(nameLabel)
         contentView.addSubview(priceLabel)
-        contentView.addSubview(likeButton)
+        contentView.addSubview(likeView)
+        likeView.addSubview(likeImage)
+        likeView.addSubview(likeButton)
     }
     
     func configureLayout() {
@@ -69,9 +104,18 @@ extension ResultCollectionViewCell: BaseProtocol {
             make.horizontalEdges.equalToSuperview()
         }
         
-        likeButton.snp.makeConstraints { make in
+        likeView.snp.makeConstraints { make in
             make.bottom.trailing.equalTo(itemImage).inset(15)
+            make.size.equalTo(30)
+        }
+        
+        likeImage.snp.makeConstraints { make in
+            make.center.equalToSuperview()
             make.size.equalTo(20)
+        }
+        
+        likeButton.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
     }
     
@@ -91,7 +135,12 @@ extension ResultCollectionViewCell: BaseProtocol {
         priceLabel.font = .systemFont(ofSize: 16, weight: .heavy)
         priceLabel.textColor = Constant.ColorType.black
         
-        likeButton.setBackgroundImage(UIImage(named: "like_unselected"), for: .normal)
+        likeView.backgroundColor = Constant.ColorType.black.withAlphaComponent(0.3)
+        likeView.layer.cornerRadius = 7
+        
+        likeImage.image = Constant.ImageType.like_unselected
+        
+        likeButton.backgroundColor = .clear
     }
     
     

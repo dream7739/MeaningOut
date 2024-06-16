@@ -10,3 +10,7 @@ import UIKit
 protocol CellProtocol {
     func cellItemClicked(indexPath: IndexPath)
 }
+
+protocol LikeProtocol {
+    func likeClicked(indexPath: IndexPath, isClicked: Bool)
+}
