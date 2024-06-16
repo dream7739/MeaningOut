@@ -46,6 +46,12 @@ class UserManager {
     )
     static var nickname: String
     
+    @UserDefaultsManager(
+        defaultValue: "",
+        key: "joinDate",
+        storage: .standard
+    )
+    static var joinDate: String
     
     @UserDefaultsManager(
         defaultValue: [],
