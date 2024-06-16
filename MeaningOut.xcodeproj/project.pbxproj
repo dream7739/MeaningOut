@@ -31,6 +31,7 @@
 		887B299E2C1B14A9009F3630 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887B299D2C1B14A9009F3630 /* UIViewController+Extension.swift */; };
 		887B29A12C1B1592009F3630 /* RoundButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887B29A02C1B1592009F3630 /* RoundButton.swift */; };
 		887B29A32C1B1AEE009F3630 /* NicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887B29A22C1B1AEE009F3630 /* NicknameViewController.swift */; };
+		8891D23C2C1EB9E20007F60E /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8891D23B2C1EB9E20007F60E /* DetailViewController.swift */; };
 		8899152D2C1BEA460088C795 /* RoundImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8899152C2C1BEA460088C795 /* RoundImageView.swift */; };
 		8899152F2C1BEA5C0088C795 /* UnderLineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8899152E2C1BEA5C0088C795 /* UnderLineTextField.swift */; };
 		88B875382C1C199C00F19CE6 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B875372C1C199C00F19CE6 /* String+Extension.swift */; };
@@ -69,6 +70,7 @@
 		887B299D2C1B14A9009F3630 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		887B29A02C1B1592009F3630 /* RoundButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundButton.swift; sourceTree = "<group>"; };
 		887B29A22C1B1AEE009F3630 /* NicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewController.swift; sourceTree = "<group>"; };
+		8891D23B2C1EB9E20007F60E /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		8899152C2C1BEA460088C795 /* RoundImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundImageView.swift; sourceTree = "<group>"; };
 		8899152E2C1BEA5C0088C795 /* UnderLineTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderLineTextField.swift; sourceTree = "<group>"; };
 		88B875372C1C199C00F19CE6 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 				8871F6662C1C6DAA00A7A36B /* SearchViewController.swift */,
 				8871F6682C1C6DD600A7A36B /* SettingViewController.swift */,
 				88FBDF662C1DA27800AB0BC9 /* ResultViewController.swift */,
+				8891D23B2C1EB9E20007F60E /* DetailViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -335,6 +338,7 @@
 				88FBDF742C1DD68F00AB0BC9 /* Shop.swift in Sources */,
 				8899152F2C1BEA5C0088C795 /* UnderLineTextField.swift in Sources */,
 				88FBDF6F2C1DBDE700AB0BC9 /* PaddingLabel.swift in Sources */,
+				8891D23C2C1EB9E20007F60E /* DetailViewController.swift in Sources */,
 				88FBDF632C1D844600AB0BC9 /* EmptyView.swift in Sources */,
 				880448762C1B0E6C00DB7B26 /* Constant.swift in Sources */,
 			);

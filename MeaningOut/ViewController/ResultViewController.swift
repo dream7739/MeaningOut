@@ -247,10 +247,17 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
             sim = sortParam
             start = 1
             callNaverShop()
+        }else if collectionView == resultCollectionView {
+            let data = shopResult.items[indexPath.row]
+            
+            let vc = DetailViewController()
+            vc.productId = data.productId
+            vc.link = data.link
+            vc.name = data.titleDescription
+            navigationController?.pushViewController(vc, animated: true)
         }
     }
 }
-
 
 extension ResultViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
