@@ -35,8 +35,8 @@ enum Constant {
         static let close = UIImage(systemName: "xmark")
         static let photo = UIImage(systemName: "camera.fill")
         static let empty = UIImage(named: "empty")
-        static let like_unselected = UIImage(named: "like_unselected")
-        static let like_selected = UIImage(named: "like_selected")
+        static let like_unselected = UIImage(named: "like_unselected")?.withRenderingMode(.alwaysOriginal)
+        static let like_selected = UIImage(named: "like_selected")?.withRenderingMode(.alwaysOriginal)
         
         enum ProfileType:String, CaseIterable {
             case profile_0

@@ -62,4 +62,16 @@ class UserManager {
         storage: .standard
     )
     static var likeList: [String]
+    
+    static func addLikeList(_ productId: String){
+        if !UserManager.likeList.contains(productId){
+            UserManager.likeList.append(productId)
+        }
+    }
+    
+    static func removeLikeList(_ productId: String){
+        if UserManager.likeList.contains(productId){
+            UserManager.likeList.removeAll(where: {$0 == productId })
+        }
+    }
 }

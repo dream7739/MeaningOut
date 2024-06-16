@@ -19,6 +19,8 @@ class DetailViewController: UIViewController {
     
     var name: String?
     
+    var isClicked: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
@@ -32,7 +34,33 @@ class DetailViewController: UIViewController {
     }
     
     func addLikeBarButton(){
+        guard let productId else { return }
+        let image: UIImage
         
+        if !UserManager.likeList.isEmpty && UserManager.likeList.contains(productId){
+            isClicked = true
+            image = Constant.ImageType.like_selected!
+        }else{
+            isClicked = false
+            image = Constant.ImageType.like_unselected!
+        }
+        
+        let likeButton = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(likeButtonClicked))
+        navigationItem.rightBarButtonItem = likeButton
+    }
+    
+    @objc func likeButtonClicked(){
+        guard let productId else { return }
+
+        isClicked.toggle()
+
+        if isClicked {
+            UserManager.addLikeList(productId)
+            navigationItem.rightBarButtonItem?.image = Constant.ImageType.like_selected!
+        }else{
+            UserManager.removeLikeList(productId)
+            navigationItem.rightBarButtonItem?.image = Constant.ImageType.like_unselected!
+        }
     }
     
 }

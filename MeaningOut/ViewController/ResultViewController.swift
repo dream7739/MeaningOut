@@ -57,6 +57,11 @@ class ResultViewController: UIViewController {
     
     var shopResult = ShopResult(total: 0, start: 0, display: 0, items: [])
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        resultCollectionView.reloadData()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -174,13 +179,9 @@ extension ResultViewController: LikeProtocol{
         let productId = shopResult.items[indexPath.row].productId
         
         if isClicked {
-            if !UserManager.likeList.contains(productId){
-                UserManager.likeList.append(productId)
-            }
+            UserManager.addLikeList(productId)
         }else{
-            if UserManager.likeList.contains(productId){
-                UserManager.likeList.removeAll(where: {$0 == productId })
-            }
+            UserManager.removeLikeList(productId)
         }
     }
 }
