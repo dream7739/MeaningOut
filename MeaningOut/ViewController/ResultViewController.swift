@@ -124,6 +124,10 @@ extension ResultViewController {
             response in
             switch response.result {
             case .success(let value):
+                if self.start == 540 {
+                    print(value)
+                }
+                
                 if value.total == 0 {
                     self.emptyView.isHidden = false
                     return
@@ -283,7 +287,8 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
 extension ResultViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         for idx in indexPaths {
-            if idx.row == shopResult.items.count - 4 {
+
+            if idx.row == shopResult.items.count - 2 {
                 start += display
                 
                 if start <= 1000 {

@@ -22,6 +22,8 @@ class SearchViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         configureNav(.search)
         
+        navigationItem.leftBarButtonItem = nil
+        
         searchController.searchBar.searchTextField.text = ""
         
         searchController.isActive = false

@@ -32,7 +32,6 @@ class DetailViewController: UIViewController {
         navigationItem.title = name
         addLikeBarButton()
     }
-    
 }
 
 extension DetailViewController {
