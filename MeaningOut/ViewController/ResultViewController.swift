@@ -288,7 +288,7 @@ extension ResultViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         for idx in indexPaths {
 
-            if idx.row == shopResult.items.count - 2 {
+            if idx.row == shopResult.items.count - 8 {
                 start += display
                 
                 if start <= 1000 {

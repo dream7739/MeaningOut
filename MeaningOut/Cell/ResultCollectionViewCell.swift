@@ -54,6 +54,7 @@ class ResultCollectionViewCell: UICollectionViewCell {
 
 extension ResultCollectionViewCell {
     func configureData(_ data: Shop){
+        itemImage.kf.indicatorType = .activity
         itemImage.kf.setImage(with: URL(string: data.image))
         companyLabel.text = data.mallName
         nameLabel.text = data.titleDescription
