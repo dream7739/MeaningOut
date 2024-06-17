@@ -79,10 +79,6 @@ extension ProfileViewController: BaseProtocol {
         }
     }
     
-    func configureUI() {
-        
-    }
-    
 }
 
 extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataSource {

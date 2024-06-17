@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 class RoundProfileView: UIView {
-    let profileImage = RoundImageView(imageType: .highlight)
+    let profileImage = RoundImageView(type: .highlight)
     let cameraImage = UIImageView()
 
     override init(frame: CGRect) {
@@ -23,6 +23,13 @@ class RoundProfileView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func layoutSubviews() {
+        layer.cornerRadius = frame.width / 2
+    }
+    
+}
+
+extension RoundProfileView: BaseProtocol {
     func configureHierarchy(){
         addSubview(profileImage)
         addSubview(cameraImage)
@@ -44,7 +51,7 @@ class RoundProfileView: UIView {
             profileImage.image = UIImage(named: Constant.ImageType.ProfileType.randomTitle)!
         }else{
             profileImage.image = UIImage(named: UserManager.profileImage)
-        } 
+        }
 
         cameraImage.image = Constant.ImageType.photo
         cameraImage.contentMode = .center
@@ -53,9 +60,4 @@ class RoundProfileView: UIView {
         cameraImage.layer.cornerRadius = 13
         cameraImage.clipsToBounds = true
     }
-    
-    override func layoutSubviews() {
-        layer.cornerRadius = frame.width / 2
-    }
-    
 }

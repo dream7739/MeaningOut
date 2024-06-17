@@ -13,7 +13,6 @@ extension UIViewController {
     }
     
     func configureNav(_ viewType: Constant.ViewType){
-        
         guard let nav = navigationController else { return }
         navigationItem.title = viewType.navigationTitle
         nav.navigationBar.tintColor = .black

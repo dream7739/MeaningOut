@@ -46,11 +46,17 @@ class NicknameViewController: UIViewController {
         profileView.addGestureRecognizer(tapRecognizer)
         
         nicknameField.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
-        
         completeButton.addTarget(self, action: #selector(completeButtonClicked), for: .touchUpInside)
         
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
+    
+}
+
+extension NicknameViewController {
     func addSaveButton(){
         let save = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(completeButtonClicked))
         navigationItem.rightBarButtonItem = save
@@ -64,16 +70,16 @@ class NicknameViewController: UIViewController {
         }
         
         if !input.isValid(regexType: .countRegex){
-            validLabel.text = Constant.ValidType.countResult.rawValue
+            validLabel.text = Constant.RegexResult.countResult.rawValue
             isValid = false
         }else if !input.isValid(regexType: .specialcharRegex){
-            validLabel.text = Constant.ValidType.specialResult.rawValue
+            validLabel.text = Constant.RegexResult.specialResult.rawValue
             isValid = false
         }else if !input.isValid(regexType: .numberRegex){
-            validLabel.text = Constant.ValidType.numberResult.rawValue
+            validLabel.text = Constant.RegexResult.numberResult.rawValue
             isValid = false
         }else{
-            validLabel.text = Constant.ValidType.validResult.rawValue
+            validLabel.text = Constant.RegexResult.validResult.rawValue
             isValid = true
         }
     }
@@ -88,10 +94,7 @@ class NicknameViewController: UIViewController {
             }
             
             let date = Date()
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy.MM.dd"
-            let joinDate = dateFormatter.string(from: date)
-            
+            let joinDate = date.toString()
             UserManager.joinDate = joinDate
             
         }else if viewType == .editNickname {
@@ -100,6 +103,19 @@ class NicknameViewController: UIViewController {
             if let image = selectedProfileImage {
                 UserManager.profileImage = image
             }
+        }
+    }
+    
+    func changeScreen(){
+        if viewType == .nickname {
+            let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+            let sceneDelegate = windowScene?.delegate as? SceneDelegate
+            
+            let tabBarController = TabBarController()
+            sceneDelegate?.window?.rootViewController = tabBarController
+            sceneDelegate?.window?.makeKeyAndVisible()
+        }else if viewType == .editNickname {
+            navigationController?.popViewController(animated: true)
         }
     }
     
@@ -122,24 +138,9 @@ class NicknameViewController: UIViewController {
     
     @objc func completeButtonClicked(){
         if isValid {
-            
             saveUserData()
-            
-            if viewType == .nickname {
-                let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-                let sceneDelegate = windowScene?.delegate as? SceneDelegate
-                
-                let tabBarController = TabBarController()
-                sceneDelegate?.window?.rootViewController = tabBarController
-                sceneDelegate?.window?.makeKeyAndVisible()
-            }else if viewType == .editNickname {
-                navigationController?.popViewController(animated: true)
-            }
+            changeScreen()
         }
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        view.endEditing(true)
     }
 }
 

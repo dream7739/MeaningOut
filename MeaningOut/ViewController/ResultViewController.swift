@@ -53,13 +53,16 @@ class ResultViewController: UIViewController {
     
     var display = 30
     
-    var sim: String = Constant.TagType.sim.sortParam
+    var sim: String = Constant.SortType.sim.sortParam
     
     var shopResult = ShopResult(total: 0, start: 0, display: 0, items: [])
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        NotificationCenter.default.addObserver(self, selector: #selector(likeButtonClicked), name: ShopNotification.like, object: nil)
+        NotificationCenter.default.addObserver(self, 
+                                               selector: #selector(likeButtonClicked),
+                                               name: ShopNotification.like,
+                                               object: nil)
         resultCollectionView.reloadData()
     }
     
@@ -192,7 +195,7 @@ extension ResultViewController: BaseProtocol {
 extension ResultViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == tagCollectionView {
-            return Constant.TagType.allCases.count
+            return Constant.SortType.allCases.count
         }else{
             return shopResult.items.count
         }
@@ -202,7 +205,7 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
         if collectionView == tagCollectionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagCollectionViewCell.identifier, for: indexPath) as! TagCollectionViewCell
             
-            let data = Constant.TagType.allCases[indexPath.row]
+            let data = Constant.SortType.allCases[indexPath.row]
             cell.configureData(data)
             
             if indexPath == selectedIndexPath {
@@ -225,7 +228,7 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == tagCollectionView {
             let label = PaddingLabel()
-            label.text = Constant.TagType.allCases[indexPath.row].title
+            label.text = Constant.SortType.allCases[indexPath.row].title
             label.font = Constant.FontType.secondary
             
             let size = label.intrinsicContentSize
@@ -248,7 +251,7 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
                 selectedIndexPath = indexPath
                 collectionView.reloadData()
                 
-                let sortParam = Constant.TagType.allCases[indexPath.row].sortParam
+                let sortParam = Constant.SortType.allCases[indexPath.row].sortParam
                 sim = sortParam
                 start = 1
                 callNaverShop()

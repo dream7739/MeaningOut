@@ -11,7 +11,7 @@ class SettingViewController: UIViewController {
     
     let headerView = UIView()
     
-    let profileImage = RoundImageView(imageType: .highlight)
+    let profileImage = RoundImageView(type: .highlight)
     
     let nicknameLabel = UILabel()
     
@@ -42,11 +42,9 @@ class SettingViewController: UIViewController {
         headerView.addGestureRecognizer(tapGesture)
     }
     
-    @objc func headerViewClicked(){
-        let vc = NicknameViewController()
-        vc.viewType = .editNickname
-        navigationController?.pushViewController(vc, animated: true)
-    }
+}
+
+extension SettingViewController {
     
     func configureTableView(){
         tableView.delegate = self
@@ -57,6 +55,11 @@ class SettingViewController: UIViewController {
         tableView.isScrollEnabled = false
     }
     
+    @objc func headerViewClicked(){
+        let vc = NicknameViewController()
+        vc.viewType = .editNickname
+        navigationController?.pushViewController(vc, animated: true)
+    }
 }
 
 extension SettingViewController: BaseProtocol {

@@ -23,13 +23,13 @@ class OnboardingViewController: UIViewController {
         
         startButton.addTarget(self, action: #selector(startButtonClicked), for: .touchUpInside)
     }
-    
+}
+
+extension OnboardingViewController {
     @objc func startButtonClicked(){
         let vc = NicknameViewController()
         navigationController?.pushViewController(vc, animated: true)
     }
-  
-
 }
 
 extension OnboardingViewController: BaseProtocol {
@@ -56,12 +56,10 @@ extension OnboardingViewController: BaseProtocol {
             make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
             make.height.equalTo(44)
         }
-        
-        
     }
     
     func configureUI() {
-        titleLabel.text = "MeaningOut"
+        titleLabel.text = Constant.serviceName
         titleLabel.font = .systemFont(ofSize: 40, weight: .heavy)
         titleLabel.textColor = Constant.ColorType.theme
         

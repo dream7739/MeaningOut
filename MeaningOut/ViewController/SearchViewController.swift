@@ -24,12 +24,10 @@ class SearchViewController: UIViewController {
         
         searchController.searchBar.searchTextField.text = ""
         
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(deleteButtonClicked),
-            name: ShopNotification.delete,
-            object: nil
-        )
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(deleteButtonClicked),
+                                               name: ShopNotification.delete,
+                                               object: nil)
     }
     
     override func viewDidLoad() {

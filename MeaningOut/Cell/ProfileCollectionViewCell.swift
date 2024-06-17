@@ -10,14 +10,14 @@ import SnapKit
 
 class ProfileCollectionViewCell: UICollectionViewCell {
     
-    let profileImage = RoundImageView(imageType: .regular)
+    let profileImage = RoundImageView(type: .regular)
         
     var isClicked = false {
         didSet{
             if isClicked {
-                profileImage.configureUI(.highlight)
+                profileImage.setHighLight()
             }else{
-                profileImage.configureUI(.regular)
+                profileImage.setRegular()
             }
         }
     }
@@ -31,11 +31,12 @@ class ProfileCollectionViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+}
+
+extension ProfileCollectionViewCell {
     func configureData(data: Constant.ImageType.ProfileType){
         profileImage.image = UIImage(named: data.rawValue)
     }
-
 }
 
 extension ProfileCollectionViewCell: BaseProtocol {
@@ -47,10 +48,6 @@ extension ProfileCollectionViewCell: BaseProtocol {
         profileImage.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-    }
-    
-    func configureUI() {
-        
     }
     
 }

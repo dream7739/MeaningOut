@@ -8,6 +8,8 @@
 import UIKit
 
 enum Constant {
+    static let serviceName = "MeaningOut"
+    
     enum ColorType {
         static let theme = UIColor(red: 239/255, green: 137/255, blue: 71/255, alpha: 1)
         static let primary = UIColor(red: 76/255, green: 76/255, blue: 76/255, alpha: 1)
@@ -64,7 +66,7 @@ enum Constant {
         case highlight
     }
     
-    enum TagType: Int, CaseIterable {
+    enum SortType: Int, CaseIterable {
         case sim = 0
         case date = 1
         case dsc = 2
@@ -117,7 +119,7 @@ enum Constant {
         case numberRegex = #"[0-9]"#
     }
     
-    enum ValidType: String {
+    enum RegexResult: String {
         case countResult = "2글자 이상 10글자 미만으로 설정주세요"
         case specialResult = "닉네임에 @, #, $, %는 포함할 수 없어요"
         case numberResult = "닉네임에 숫자는 포함할 수 없어요"

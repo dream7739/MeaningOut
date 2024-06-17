@@ -24,7 +24,9 @@ class EmptyView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+}
+
+extension EmptyView: BaseProtocol {
     func configureHierarchy(){
         addSubview(emptyImage)
         addSubview(descriptionLabel)
@@ -45,7 +47,6 @@ class EmptyView: UIView {
     }
     
     func configureUI(){
-        
         backgroundColor = .white
         
         emptyImage.image = Constant.ImageType.empty

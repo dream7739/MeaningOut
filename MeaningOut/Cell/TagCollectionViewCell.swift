@@ -34,11 +34,10 @@ class TagCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
 }
 
 extension TagCollectionViewCell {
-    func configureData(_ data: Constant.TagType){
+    func configureData(_ data: Constant.SortType){
         tagLabel.text = data.title
     }
 }

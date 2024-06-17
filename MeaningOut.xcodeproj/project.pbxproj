@@ -38,6 +38,7 @@
 		88B8753A2C1C2AFE00F19CE6 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B875392C1C2AFE00F19CE6 /* ProfileViewController.swift */; };
 		88B8753C2C1C2B7100F19CE6 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B8753B2C1C2B7100F19CE6 /* TabBarController.swift */; };
 		88CE76922C2003C700644F7A /* ShopNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CE76912C2003C700644F7A /* ShopNotification.swift */; };
+		88CE76942C202CB200644F7A /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CE76932C202CB200644F7A /* Date+Extension.swift */; };
 		88FBDF632C1D844600AB0BC9 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FBDF622C1D844600AB0BC9 /* EmptyView.swift */; };
 		88FBDF652C1D87DE00AB0BC9 /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FBDF642C1D87DE00AB0BC9 /* SearchTableViewCell.swift */; };
 		88FBDF672C1DA27800AB0BC9 /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FBDF662C1DA27800AB0BC9 /* ResultViewController.swift */; };
@@ -77,6 +78,7 @@
 		88B875392C1C2AFE00F19CE6 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		88B8753B2C1C2B7100F19CE6 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		88CE76912C2003C700644F7A /* ShopNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopNotification.swift; sourceTree = "<group>"; };
+		88CE76932C202CB200644F7A /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		88FBDF622C1D844600AB0BC9 /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
 		88FBDF642C1D87DE00AB0BC9 /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
 		88FBDF662C1DA27800AB0BC9 /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
@@ -200,6 +202,7 @@
 			children = (
 				887B299D2C1B14A9009F3630 /* UIViewController+Extension.swift */,
 				88B875372C1C199C00F19CE6 /* String+Extension.swift */,
+				88CE76932C202CB200644F7A /* Date+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -331,6 +334,7 @@
 				88FBDF652C1D87DE00AB0BC9 /* SearchTableViewCell.swift in Sources */,
 				88B8753C2C1C2B7100F19CE6 /* TabBarController.swift in Sources */,
 				88CE76922C2003C700644F7A /* ShopNotification.swift in Sources */,
+				88CE76942C202CB200644F7A /* Date+Extension.swift in Sources */,
 				8871F66F2C1C6F9400A7A36B /* UserDefaultsManager.swift in Sources */,
 				88FBDF712C1DD13000AB0BC9 /* APIKey.swift in Sources */,
 				8871F6692C1C6DD600A7A36B /* SettingViewController.swift in Sources */,

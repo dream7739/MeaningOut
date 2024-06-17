@@ -27,7 +27,9 @@ class SettingTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+}
 
+extension SettingTableViewCell {
     func configureData(_ data: Constant.SettingType){
         nameLabel.text = data.title
         
@@ -51,7 +53,6 @@ class SettingTableViewCell: UITableViewCell {
             countLabel.isHidden = true
         }
     }
-    
 }
 
 extension SettingTableViewCell: BaseProtocol {
@@ -86,7 +87,6 @@ extension SettingTableViewCell: BaseProtocol {
         
         likeImage.image = Constant.ImageType.like_selected
     
-        
         countLabel.textColor = Constant.ColorType.black
         countLabel.font = Constant.FontType.tertiary
     }

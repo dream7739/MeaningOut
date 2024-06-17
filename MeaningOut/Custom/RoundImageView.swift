@@ -9,30 +9,32 @@ import UIKit
 
 class RoundImageView: UIImageView {
     
-    init(imageType: Constant.RoundImageType){
+    init(type: Constant.RoundImageType){
         super.init(frame: .zero)
         contentMode = .scaleAspectFill
         clipsToBounds = true
-        configureUI(imageType)
+        
+        switch type {
+        case .regular: setRegular()
+        case .highlight: setHighLight()
+        }
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureUI(_ imageType: Constant.RoundImageType){
-        switch imageType {
-        case .regular:
-            layer.borderWidth = 1
-            layer.borderColor = Constant.ColorType.tertiary.cgColor
-            alpha = 0.5
-        case .highlight:
-            layer.borderWidth = 3
-            layer.borderColor = Constant.ColorType.theme.cgColor
-            alpha = 1.0
-        }
+    func setRegular(){
+        layer.borderWidth = 1
+        layer.borderColor = Constant.ColorType.tertiary.cgColor
+        alpha = 0.5
     }
     
+    func setHighLight(){
+        layer.borderWidth = 3
+        layer.borderColor = Constant.ColorType.theme.cgColor
+        alpha = 1.0
+    }
     
     override func layoutSubviews() {
         layer.cornerRadius = frame.width / 2

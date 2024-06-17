@@ -33,6 +33,9 @@ class DetailViewController: UIViewController {
         addLikeBarButton()
     }
     
+}
+
+extension DetailViewController {
     func addLikeBarButton(){
         guard let productId else { return }
         let image: UIImage
@@ -62,7 +65,6 @@ class DetailViewController: UIViewController {
             navigationItem.rightBarButtonItem?.image = Constant.ImageType.like_unselected!
         }
     }
-    
 }
 
 extension DetailViewController: BaseProtocol {
