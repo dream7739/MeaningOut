@@ -10,7 +10,7 @@ import SnapKit
 
 class SearchViewController: UIViewController {
     let searchController = UISearchController()
-
+    
     let recentLabel = UILabel()
     
     let resetButton = UIButton()
@@ -23,6 +23,8 @@ class SearchViewController: UIViewController {
         configureNav(.search)
         
         searchController.searchBar.searchTextField.text = ""
+        
+        searchController.isActive = false
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(deleteButtonClicked),
@@ -144,8 +146,12 @@ extension SearchViewController: UISearchBarDelegate {
         let input = searchBar.text!.trimmingCharacters(in: .whitespaces)
         
         if !input.isEmpty {
-            UserManager.recentList.insert(input, at: 0)
-            UserManager.savedList = UserManager.recentList
+            let savedInput = input.lowercased()
+            
+            if !UserManager.recentList.contains(savedInput){
+                UserManager.recentList.insert(savedInput, at: 0)
+                UserManager.savedList = UserManager.recentList
+            }
             
             if !emptyView.isHidden {
                 emptyView.isHidden.toggle()
