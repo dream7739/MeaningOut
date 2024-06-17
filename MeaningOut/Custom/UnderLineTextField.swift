@@ -9,6 +9,8 @@ import UIKit
 import SnapKit
 
 class UnderLineTextField : UITextField {
+    let underline = UIView(frame: .zero)
+
     init(placeholderType : Constant.PlaceholderType){
         super.init(frame: .zero)
         placeholder = placeholderType.rawValue
@@ -23,7 +25,6 @@ class UnderLineTextField : UITextField {
     }
     
     private func addUnderline(){
-        let underline = UIView(frame: .zero)
         underline.backgroundColor = Constant.ColorType.tertiary
         addSubview(underline)
         
@@ -32,6 +33,17 @@ class UnderLineTextField : UITextField {
             make.height.equalTo(1)
         }
     }
-
+    
+    func setLine(type: Constant.TextFieldType){
+        switch type {
+        case .normal:
+            underline.backgroundColor = Constant.ColorType.tertiary
+        case .success:
+            underline.backgroundColor = Constant.ColorType.black
+        case .error:
+            underline.backgroundColor = Constant.ColorType.theme
+        }
+    }
+    
     
 }

@@ -66,6 +66,12 @@ enum Constant {
         case highlight
     }
     
+    enum TextFieldType {
+        case normal
+        case success
+        case error
+    }
+    
     enum SortType: Int, CaseIterable {
         case sim = 0
         case date = 1

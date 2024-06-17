@@ -62,6 +62,7 @@ extension NicknameViewController {
     func validCheck(_ input: String){
         if input.isEmpty {
             validLabel.text = ""
+            nicknameField.setLine(type: .normal)
             isValid = false
             return
         }
@@ -78,6 +79,14 @@ extension NicknameViewController {
         }else{
             validLabel.text = Constant.RegexResult.validResult.rawValue
             isValid = true
+        }
+        
+        if isValid {
+            nicknameField.setLine(type: .success)
+            validLabel.textColor = Constant.ColorType.black
+        }else{
+            nicknameField.setLine(type: .error)
+            validLabel.textColor = Constant.ColorType.theme
         }
     }
     
