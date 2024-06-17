@@ -45,7 +45,7 @@ class ResultViewController: UIViewController {
         return layout
     }
     
-    var selectedIndexPath: IndexPath?
+    var selectedIndexPath: IndexPath = IndexPath(row: 0, section: 0)
     
     var keyword: String?
     

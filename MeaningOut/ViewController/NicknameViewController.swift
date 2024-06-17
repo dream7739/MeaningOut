@@ -46,12 +46,9 @@ class NicknameViewController: UIViewController {
         profileView.addGestureRecognizer(tapRecognizer)
         
         nicknameField.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
+        nicknameField.addTarget(self, action: #selector(returnKeyClicked), for: .editingDidEndOnExit)
+
         completeButton.addTarget(self, action: #selector(completeButtonClicked), for: .touchUpInside)
-        
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        view.endEditing(true)
     }
     
 }
@@ -136,6 +133,10 @@ extension NicknameViewController {
         validCheck(input)
     }
     
+    @objc func returnKeyClicked(){
+        completeButtonClicked()
+    }
+    
     @objc func completeButtonClicked(){
         if isValid {
             saveUserData()
@@ -184,4 +185,3 @@ extension NicknameViewController: BaseProtocol {
         validLabel.textColor = Constant.ColorType.theme
     }
 }
-
