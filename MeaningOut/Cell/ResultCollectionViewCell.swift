@@ -94,7 +94,7 @@ extension ResultCollectionViewCell: BaseProtocol {
         contentView.addSubview(priceLabel)
         contentView.addSubview(likeView)
         likeView.addSubview(likeImage)
-        likeView.addSubview(likeButton)
+        contentView.addSubview(likeButton)
     }
     
     func configureLayout() {
@@ -129,7 +129,8 @@ extension ResultCollectionViewCell: BaseProtocol {
         }
         
         likeButton.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.bottom.trailing.equalTo(itemImage)
+            make.size.equalTo(50)
         }
     }
     

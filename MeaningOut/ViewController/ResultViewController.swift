@@ -244,13 +244,15 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == tagCollectionView {
-            selectedIndexPath = indexPath
-            collectionView.reloadData()
-            
-            let sortParam = Constant.TagType.allCases[indexPath.row].sortParam
-            sim = sortParam
-            start = 1
-            callNaverShop()
+            if selectedIndexPath != indexPath {
+                selectedIndexPath = indexPath
+                collectionView.reloadData()
+                
+                let sortParam = Constant.TagType.allCases[indexPath.row].sortParam
+                sim = sortParam
+                start = 1
+                callNaverShop()
+            }
         }else if collectionView == resultCollectionView {
             let data = shopResult.items[indexPath.row]
             
