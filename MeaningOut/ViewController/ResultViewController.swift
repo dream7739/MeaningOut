@@ -14,6 +14,8 @@ class ResultViewController: UIViewController {
     
     let resultLabel = UILabel()
     
+    let emptyView = EmptyView(type: .result)
+    
     lazy var tagCollectionView = UICollectionView(frame: .zero, collectionViewLayout: tagLayout())
     
     lazy var resultCollectionView = UICollectionView(frame: .zero, collectionViewLayout: resultLayout())
@@ -122,6 +124,11 @@ extension ResultViewController {
             response in
             switch response.result {
             case .success(let value):
+                if value.total == 0 {
+                    self.emptyView.isHidden = false
+                    return
+                }
+                
                 if self.start == 1 {
                     self.shopResult = value
                     self.resultLabel.text = self.shopResult.totalDescription
@@ -162,12 +169,17 @@ extension ResultViewController: BaseProtocol {
         view.addSubview(resultLabel)
         view.addSubview(tagCollectionView)
         view.addSubview(resultCollectionView)
+        view.addSubview(emptyView)
     }
     
     func configureLayout() {
         resultLabel.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).inset(10)
             make.leading.equalTo(view.safeAreaLayoutGuide).inset(23)
+        }
+        
+        emptyView.snp.makeConstraints { make in
+            make.edges.equalTo(view.safeAreaLayoutGuide)
         }
         
         tagCollectionView.snp.makeConstraints { make in
@@ -186,7 +198,7 @@ extension ResultViewController: BaseProtocol {
     func configureUI() {
         resultLabel.font = .boldSystemFont(ofSize: 14)
         resultLabel.textColor = Constant.ColorType.theme
-        
+        emptyView.isHidden = true
     }
 }
 

@@ -72,6 +72,11 @@ enum Constant {
         case error
     }
     
+    enum EmptyType: String{
+        case search = "최근 검색어가 없어요"
+        case result = "검색 결과가 없어요"
+    }
+    
     enum SortType: Int, CaseIterable {
         case sim = 0
         case date = 1

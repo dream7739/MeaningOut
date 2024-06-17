@@ -14,15 +14,23 @@ class EmptyView: UIView {
     
     let descriptionLabel = UILabel()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(type: Constant.EmptyType) {
+        super.init(frame: .zero)
         configureHierarchy()
         configureLayout()
         configureUI()
+        setDescription(type)
+        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension EmptyView{
+    func setDescription(_ type: Constant.EmptyType){
+        descriptionLabel.text = type.rawValue
     }
 }
 
@@ -51,7 +59,6 @@ extension EmptyView: BaseProtocol {
         
         emptyImage.image = Constant.ImageType.empty
         
-        descriptionLabel.text = "최근 검색어가 없어요"
         descriptionLabel.font = .systemFont(ofSize: 16, weight: .heavy)
         descriptionLabel.textAlignment = .center
     }

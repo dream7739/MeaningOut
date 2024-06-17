@@ -17,7 +17,7 @@ class SearchViewController: UIViewController {
     
     let tableView = UITableView()
     
-    let emptyView = EmptyView()
+    let emptyView = EmptyView(type: .search)
     
     override func viewWillAppear(_ animated: Bool) {
         configureNav(.search)
