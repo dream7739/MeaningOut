@@ -9,7 +9,8 @@ import UIKit
 import SnapKit
 
 class SearchViewController: UIViewController {
-    
+    let searchController = UISearchController()
+
     let recentLabel = UILabel()
     
     let resetButton = UIButton()
@@ -20,6 +21,15 @@ class SearchViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         configureNav(.search)
+        
+        searchController.searchBar.searchTextField.text = ""
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(deleteButtonClicked),
+            name: ShopNotification.delete,
+            object: nil
+        )
     }
     
     override func viewDidLoad() {
@@ -35,8 +45,14 @@ class SearchViewController: UIViewController {
         resetButton.addTarget(self, action: #selector(resetButtonClicked), for: .touchUpInside)
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+}
+
+extension SearchViewController {
     func configureSearch(){
-        let searchController = UISearchController()
         navigationItem.searchController = searchController
         searchController.searchBar.searchTextField.placeholder = Constant.PlaceholderType.search.rawValue
         searchController.searchBar.delegate = self
@@ -50,11 +66,29 @@ class SearchViewController: UIViewController {
         tableView.rowHeight = 46
     }
     
+    func setContentEmpty(){
+        emptyView.isHidden = false
+        searchController.searchBar.searchTextField.text = ""
+        searchController.isActive = false
+    }
+    
     @objc func resetButtonClicked(){
         UserManager.recentList.removeAll()
         UserManager.savedList = UserManager.recentList
         
-        emptyView.isHidden = false
+        setContentEmpty()
+    }
+    
+    @objc func deleteButtonClicked(notification: Notification){
+        guard let indexPath = notification.userInfo?[ShopNotificationKey.indexPath] as? IndexPath else { return }
+        
+        UserManager.recentList.remove(at: indexPath.row)
+        UserManager.savedList = UserManager.recentList
+        tableView.reloadData()
+        
+        if UserManager.recentList.isEmpty {
+            setContentEmpty()
+        }
     }
     
 }
@@ -137,12 +171,10 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.identifier, for: indexPath) as! SearchTableViewCell
         cell.configureData(UserManager.recentList[indexPath.row])
         cell.indexPath = indexPath
-        cell.delegate = self
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         let vc = ResultViewController()
         vc.keyword = UserManager.recentList[indexPath.row]
         navigationController?.pushViewController(vc, animated: true)
@@ -151,15 +183,3 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-extension SearchViewController: CellProtocol {
-    func cellItemClicked(indexPath: IndexPath) {
-        UserManager.recentList.remove(at: indexPath.row)
-        UserManager.savedList = UserManager.recentList
-        tableView.reloadData()
-        
-        if UserManager.recentList.isEmpty {
-            emptyView.isHidden = false
-        }
-    }
-    
-}

@@ -23,7 +23,7 @@ class ResultViewController: UIViewController {
         let spacing: CGFloat = 10
         let horizontalInset: CGFloat = 20
         let verticalInset: CGFloat = 5
-
+        
         layout.minimumLineSpacing = spacing
         layout.minimumInteritemSpacing = spacing
         
@@ -59,6 +59,7 @@ class ResultViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(likeButtonClicked), name: ShopNotification.like, object: nil)
         resultCollectionView.reloadData()
     }
     
@@ -76,11 +77,17 @@ class ResultViewController: UIViewController {
         navigationItem.title = keyword
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self)
+    }
+}
+
+extension ResultViewController {
     func configureCollectionView(){
         tagCollectionView.delegate = self
         tagCollectionView.dataSource = self
         tagCollectionView.register(TagCollectionViewCell.self, forCellWithReuseIdentifier: TagCollectionViewCell.identifier)
-
+        
         resultCollectionView.delegate = self
         resultCollectionView.dataSource = self
         resultCollectionView.prefetchDataSource = self
@@ -101,7 +108,7 @@ class ResultViewController: UIViewController {
             "display": display,
             "sort": sim
         ]
-
+        
         AF.request(
             APIURL.naverURL,
             method: .get,
@@ -129,6 +136,19 @@ class ResultViewController: UIViewController {
                 print(error)
             }
         })
+    }
+    
+    @objc func likeButtonClicked(notification: Notification){
+        guard let indexPath = notification.userInfo?[ShopNotificationKey.indexPath] as? IndexPath,
+              let click = notification.userInfo?[ShopNotificationKey.click] as? Bool else { return }
+
+        let productId = shopResult.items[indexPath.row].productId
+        
+        if click {
+            UserManager.addLikeList(productId)
+        }else{
+            UserManager.removeLikeList(productId)
+        }
     }
     
 }
@@ -163,28 +183,11 @@ extension ResultViewController: BaseProtocol {
     func configureUI() {
         resultLabel.font = .boldSystemFont(ofSize: 14)
         resultLabel.textColor = Constant.ColorType.theme
-
-    }
-}
-
-extension ResultViewController: CellProtocol {
-    func cellItemClicked(indexPath: IndexPath){
-        selectedIndexPath = indexPath
-        tagCollectionView.reloadData()
-    }
-}
-
-extension ResultViewController: LikeProtocol{
-    func likeClicked(indexPath: IndexPath, isClicked: Bool) {
-        let productId = shopResult.items[indexPath.row].productId
         
-        if isClicked {
-            UserManager.addLikeList(productId)
-        }else{
-            UserManager.removeLikeList(productId)
-        }
     }
 }
+
+
 
 extension ResultViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -198,8 +201,9 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == tagCollectionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagCollectionViewCell.identifier, for: indexPath) as! TagCollectionViewCell
-            cell.tagLabel.text = Constant.TagType.allCases[indexPath.row].title
-            cell.delegate = self
+            
+            let data = Constant.TagType.allCases[indexPath.row]
+            cell.configureData(data)
             
             if indexPath == selectedIndexPath {
                 cell.isClicked = true
@@ -211,7 +215,6 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
         }else{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ResultCollectionViewCell.identifier, for: indexPath) as! ResultCollectionViewCell
             let data = shopResult.items[indexPath.row]
-            cell.delegate = self
             cell.indexPath = indexPath
             cell.configureData(data)
             return cell
@@ -241,8 +244,8 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == tagCollectionView {
-            let cell = collectionView.cellForItem(at: indexPath) as! TagCollectionViewCell
-            cell.delegate?.cellItemClicked(indexPath: indexPath)
+            selectedIndexPath = indexPath
+            collectionView.reloadData()
             
             let sortParam = Constant.TagType.allCases[indexPath.row].sortParam
             sim = sortParam

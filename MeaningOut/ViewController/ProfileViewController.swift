@@ -18,7 +18,7 @@ class ProfileViewController: UIViewController {
     var profileDataSender: ((_ data: String?) -> Void)?
     
     var viewType: Constant.ViewType = .profile
-
+    
     func layout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -49,13 +49,14 @@ class ProfileViewController: UIViewController {
         profileDataSender?(selectedProfile)
     }
     
+}
+
+extension ProfileViewController {
     func configureCollectionView(){
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(ProfileCollectionViewCell.self, forCellWithReuseIdentifier: ProfileCollectionViewCell.identifier)
     }
-    
-    
 }
 
 extension ProfileViewController: BaseProtocol {
@@ -92,9 +93,9 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProfileCollectionViewCell.identifier, for: indexPath) as! ProfileCollectionViewCell
         
-        cell.delegate = self
+        let data = Constant.ImageType.ProfileType.allCases[indexPath.row]
         
-        cell.profileImage.image = UIImage(named: Constant.ImageType.ProfileType.allCases[indexPath.row].rawValue)
+        cell.configureData(data: data)
         
         if indexPath == selectedIndexPath {
             cell.isClicked = true
@@ -106,20 +107,12 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath) as! ProfileCollectionViewCell
-        
-        let image = Constant.ImageType.ProfileType.allCases[indexPath.row].rawValue
-        selectedProfile = image
-        profileView.profileImage.image = UIImage(named: image)
-        
-        cell.delegate?.cellItemClicked(indexPath: indexPath)
-    }
-    
-}
-
-extension ProfileViewController: CellProtocol {
-    func cellItemClicked(indexPath: IndexPath) {
         selectedIndexPath = indexPath
         collectionView.reloadData()
+        
+        let image = Constant.ImageType.ProfileType.allCases[selectedIndexPath!.row].rawValue
+        selectedProfile = image
+        profileView.profileImage.image = UIImage(named: image)
     }
 }
+

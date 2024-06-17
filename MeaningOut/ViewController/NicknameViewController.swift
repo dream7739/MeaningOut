@@ -15,16 +15,14 @@ class NicknameViewController: UIViewController {
     let validLabel = UILabel()
     let completeButton = RoundButton(buttonType: .nickname)
     
-    var isValid = false
     var viewType: Constant.ViewType =  .nickname
+    var isValid = false
     var selectedProfileImage: String?
     
     override func viewWillAppear(_ animated: Bool) {
-        
         if let selectedProfileImage {
             profileView.profileImage.image = UIImage(named: selectedProfileImage)
         }
-        
     }
     
     override func viewDidLoad() {

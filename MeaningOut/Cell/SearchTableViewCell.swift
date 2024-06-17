@@ -17,9 +17,7 @@ class SearchTableViewCell: UITableViewCell {
     let deleteButton = UIButton()
     
     let deleteImage = UIImageView()
-    
-    var delegate: CellProtocol?
-    
+        
     var indexPath: IndexPath?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -33,18 +31,22 @@ class SearchTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    
-    
+  
+}
+
+extension SearchTableViewCell {
     func configureData(_ data: String){
         recentLabel.text = data
     }
     
     @objc func deleteButtonClicked(){
         guard let indexPath else { return }
-        delegate?.cellItemClicked(indexPath: indexPath)
+        NotificationCenter.default.post(
+            name: ShopNotification.delete,
+            object: nil,
+            userInfo: [ShopNotificationKey.indexPath : indexPath]
+        )
     }
-    
 }
 
 extension SearchTableViewCell: BaseProtocol {

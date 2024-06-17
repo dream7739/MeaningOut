@@ -11,9 +11,7 @@ import SnapKit
 class ProfileCollectionViewCell: UICollectionViewCell {
     
     let profileImage = RoundImageView(imageType: .regular)
-    
-    var delegate: CellProtocol?
-    
+        
     var isClicked = false {
         didSet{
             if isClicked {
@@ -34,6 +32,10 @@ class ProfileCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func configureData(data: Constant.ImageType.ProfileType){
+        profileImage.image = UIImage(named: data.rawValue)
+    }
+
 }
 
 extension ProfileCollectionViewCell: BaseProtocol {

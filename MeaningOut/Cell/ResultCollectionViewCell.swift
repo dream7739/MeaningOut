@@ -24,8 +24,6 @@ class ResultCollectionViewCell: UICollectionViewCell {
     
     let likeButton = UIButton()
     
-    var delegate: LikeProtocol?
-    
     var indexPath: IndexPath?
     
     var isClicked: Bool = false {
@@ -47,17 +45,16 @@ class ResultCollectionViewCell: UICollectionViewCell {
         configureUI()
         likeButton.addTarget(self, action: #selector(likeButtonClicked), for: .touchUpInside)
     }
-    
-    @objc func likeButtonClicked(){
-        guard let indexPath else { return }
-        isClicked.toggle()
-        delegate?.likeClicked(indexPath: indexPath, isClicked: isClicked)
-    }
+  
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+  
+}
+
+extension ResultCollectionViewCell {
     func configureData(_ data: Shop){
         itemImage.kf.setImage(with: URL(string: data.image))
         companyLabel.text = data.mallName
@@ -69,6 +66,23 @@ class ResultCollectionViewCell: UICollectionViewCell {
         }else{
             isClicked = false
         }
+    }
+    
+    @objc func likeButtonClicked(){
+        guard let indexPath else { return }
+        
+        isClicked.toggle()
+
+        let info: [String: Any] = [
+            ShopNotificationKey.indexPath: indexPath,
+            ShopNotificationKey.click: isClicked
+        ]
+
+        NotificationCenter.default.post(
+            name: ShopNotification.like,
+            object: nil,
+            userInfo: info
+        )
     }
 }
 

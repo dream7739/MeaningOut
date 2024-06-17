@@ -11,8 +11,6 @@ import SnapKit
 class TagCollectionViewCell: UICollectionViewCell {
     let tagLabel = PaddingLabel()
     
-    var delegate: CellProtocol?
-    
     var isClicked: Bool = false{
         didSet {
             if isClicked {
@@ -37,6 +35,12 @@ class TagCollectionViewCell: UICollectionViewCell {
     }
     
     
+}
+
+extension TagCollectionViewCell {
+    func configureData(_ data: Constant.TagType){
+        tagLabel.text = data.title
+    }
 }
 
 extension TagCollectionViewCell: BaseProtocol {
