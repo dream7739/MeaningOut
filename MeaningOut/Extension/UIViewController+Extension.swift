@@ -18,10 +18,11 @@ extension UIViewController {
         nav.navigationBar.tintColor = .black
 
         let viewControllers = nav.viewControllers
+        print(viewControllers)
     
-        guard let firstVC = viewControllers.first else { return }
+       
         
-        if firstVC != self {
+        if viewType != .search && viewType != .setting {
             let backButton = UIBarButtonItem(image: Constant.ImageType.back, style: .plain, target: self, action: #selector(backButtonClicked))
             navigationItem.leftBarButtonItem = backButton
         }
