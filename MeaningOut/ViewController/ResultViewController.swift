@@ -288,13 +288,20 @@ extension ResultViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         for idx in indexPaths {
 
-            if idx.row == shopResult.items.count - 8 {
+            if idx.item == shopResult.items.count - 4 {
                 start += display
                 
                 if start <= 1000 {
                     callNaverShop()
                 }
             }
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cancelPrefetchingForItemsAt indexPaths: [IndexPath]) {
+        for idx in indexPaths {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ResultCollectionViewCell.identifier, for: idx) as! ResultCollectionViewCell
+            cell.cancelDownload()
         }
     }
     

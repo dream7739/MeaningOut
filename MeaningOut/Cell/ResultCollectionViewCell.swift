@@ -67,6 +67,10 @@ extension ResultCollectionViewCell {
         }
     }
     
+    func cancelDownload(){
+        itemImage.kf.cancelDownloadTask()
+    }
+    
     @objc func likeButtonClicked(){
         guard let indexPath else { return }
         
