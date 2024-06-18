@@ -21,6 +21,10 @@ class OnboardingViewController: UIViewController {
         configureLayout()
         configureUI()
         
+        let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        backBarButtonItem.tintColor = .black
+        self.navigationItem.backBarButtonItem = backBarButtonItem
+        
         startButton.addTarget(self, action: #selector(startButtonClicked), for: .touchUpInside)
     }
 }
