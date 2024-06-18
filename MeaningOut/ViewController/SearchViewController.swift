@@ -59,6 +59,7 @@ extension SearchViewController {
     func configureSearch(){
         navigationItem.searchController = searchController
         searchController.searchBar.searchTextField.placeholder = Constant.PlaceholderType.search.rawValue
+        searchController.searchBar.tintColor = Constant.ColorType.black
         searchController.searchBar.delegate = self
     }
     
