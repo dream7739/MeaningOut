@@ -19,6 +19,7 @@ class NicknameViewController: UIViewController {
     var isValid = false
     var selectedProfileImage: String?
     
+    
     override func viewWillAppear(_ animated: Bool) {
         if let selectedProfileImage {
             profileView.profileImage.image = UIImage(named: selectedProfileImage)
@@ -143,6 +144,7 @@ extension NicknameViewController {
         }
         
         vc.viewType = .editProfile
+        vc.selectedProfile = selectedProfileImage
         navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -201,5 +203,14 @@ extension NicknameViewController: BaseProtocol {
         
         validLabel.font = Constant.FontType.tertiary
         validLabel.textColor = Constant.ColorType.theme
+        
+        if UserManager.profileImage.isEmpty {
+            selectedProfileImage = Constant.ImageType.ProfileType.randomTitle
+        }else{
+            selectedProfileImage = UserManager.profileImage
+        }
+        
+        profileView.profileImage.image = UIImage(named: selectedProfileImage!)
+
     }
 }

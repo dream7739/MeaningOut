@@ -42,6 +42,7 @@ class ProfileViewController: UIViewController {
         configureNav(viewType)
         configureHierarchy()
         configureLayout()
+        configureUI()
         configureCollectionView()
     }
     
@@ -79,6 +80,12 @@ extension ProfileViewController: BaseProtocol {
         }
     }
     
+    func configureUI(){
+        if let selectedProfile {
+            profileView.profileImage.image = UIImage(named: selectedProfile)
+        }
+    }
+    
 }
 
 extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -93,7 +100,16 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
         
         cell.configureData(data: data)
         
-        if indexPath == selectedIndexPath {
+        guard let selectedIndexPath else {
+            if let selectedProfile, selectedProfile == data.rawValue {
+                cell.isClicked = true
+            }else{
+                cell.isClicked = false
+            }
+            return cell
+        }
+        
+        if selectedIndexPath == indexPath {
             cell.isClicked = true
         }else{
             cell.isClicked = false
