@@ -33,6 +33,10 @@ class NicknameViewController: UIViewController {
         configureLayout()
         configureUI()
         
+        let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        backBarButtonItem.tintColor = .black
+        self.navigationItem.backBarButtonItem = backBarButtonItem
+        
         if viewType == .editNickname {
             completeButton.isHidden = true
             addSaveButton()
@@ -56,29 +60,30 @@ class NicknameViewController: UIViewController {
 extension NicknameViewController {
     func addSaveButton(){
         let save = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(completeButtonClicked))
+        save.tintColor = .black
         navigationItem.rightBarButtonItem = save
     }
     
     func validCheck(_ input: String){
-        if input.isEmpty {
+        do {
+            let result = try input.validateUserInput()
+            validLabel.text = Constant.RegexResult.validResult.rawValue
+            isValid = true
+        }catch Constant.ValidationError.isEmpty {
             validLabel.text = ""
             nicknameField.setLine(type: .normal)
             isValid = false
-            return
-        }
-        
-        if !input.isValid(regexType: .countRegex){
+        }catch Constant.ValidationError.countLimit {
             validLabel.text = Constant.RegexResult.countResult.rawValue
             isValid = false
-        }else if !input.isValid(regexType: .specialcharRegex){
-            validLabel.text = Constant.RegexResult.specialResult.rawValue
-            isValid = false
-        }else if !input.isValid(regexType: .numberRegex){
+        }catch Constant.ValidationError.isNumber{
             validLabel.text = Constant.RegexResult.numberResult.rawValue
             isValid = false
-        }else{
-            validLabel.text = Constant.RegexResult.validResult.rawValue
-            isValid = true
+        }catch Constant.ValidationError.isSpecialChar {
+            validLabel.text = Constant.RegexResult.specialResult.rawValue
+            isValid = false
+        }catch {
+            print("Etc error occured")
         }
         
         if isValid {

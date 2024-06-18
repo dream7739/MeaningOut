@@ -42,6 +42,10 @@ class SearchViewController: UIViewController {
         configureLayout()
         configureUI()
         
+        let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        backBarButtonItem.tintColor = .black
+        self.navigationItem.backBarButtonItem = backBarButtonItem
+        
         resetButton.addTarget(self, action: #selector(resetButtonClicked), for: .touchUpInside)
     }
     

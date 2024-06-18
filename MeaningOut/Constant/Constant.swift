@@ -124,10 +124,11 @@ enum Constant {
         }
     }
     
-    enum RegexType: String {
-        case countRegex
-        case specialcharRegex = #"[@#$%]"#
-        case numberRegex = #"[0-9]"#
+    enum ValidationError: Error {
+        case countLimit
+        case isEmpty
+        case isSpecialChar
+        case isNumber
     }
     
     enum RegexResult: String {

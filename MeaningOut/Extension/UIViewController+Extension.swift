@@ -13,20 +13,7 @@ extension UIViewController {
     }
     
     func configureNav(_ viewType: Constant.ViewType){
-        guard let nav = navigationController else { return }
         navigationItem.title = viewType.navigationTitle
-        nav.navigationBar.tintColor = .black
-
-        let viewControllers = nav.viewControllers
-        print(viewControllers)
-    
-       
-        
-        if viewType != .search && viewType != .setting {
-            let backButton = UIBarButtonItem(image: Constant.ImageType.back, style: .plain, target: self, action: #selector(backButtonClicked))
-            navigationItem.leftBarButtonItem = backButton
-        }
-        
     }
     
     @objc func backButtonClicked(){

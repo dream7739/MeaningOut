@@ -21,27 +21,25 @@ extension String {
         return attributedString
     }
     
-    func isValid(regexType: Constant.RegexType) -> Bool {
-        switch regexType{
-        case .countRegex:
-            if self.count < 2 || self.count > 10 {
-                return false
-            }else{
-                return true
-            }
-        case .specialcharRegex:
-            guard let _ = self.range(of: regexType.rawValue, options: .regularExpression) else {
-                return true
-            }
-            return false
-        case .numberRegex:
-            guard let _ = self.range(of: regexType.rawValue, options: .regularExpression) else {
-                return true
-            }
-            return false
+    func validateUserInput() throws -> Bool {
+        guard !self.isEmpty else{
+            throw Constant.ValidationError.isEmpty
         }
         
+        guard self.count >= 2 && self.count <= 10 else {
+            throw Constant.ValidationError.countLimit
+        }
+        
+        guard (self.range(of:  #"[@#$%]"#, options: .regularExpression) == nil) else {
+            throw Constant.ValidationError.isSpecialChar
+        }
+        
+        guard (self.range(of: #"[0-9]"#, options: .regularExpression) == nil) else {
+            throw Constant.ValidationError.isNumber
+        }
+        
+        return true
     }
     
- 
+
 }

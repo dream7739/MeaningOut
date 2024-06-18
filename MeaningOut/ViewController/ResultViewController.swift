@@ -80,6 +80,10 @@ class ResultViewController: UIViewController {
         configureCollectionView()
         
         navigationItem.title = keyword
+        
+        let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        backBarButtonItem.tintColor = .black
+        self.navigationItem.backBarButtonItem = backBarButtonItem
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -122,12 +126,10 @@ extension ResultViewController {
             headers: header
         ).responseDecodable(of: ShopResult.self, completionHandler: {
             response in
+
             switch response.result {
+
             case .success(let value):
-                if self.start == 540 {
-                    print(value)
-                }
-                
                 if value.total == 0 {
                     self.emptyView.isHidden = false
                     return
@@ -147,7 +149,7 @@ extension ResultViewController {
                 }
                 
             case .failure(let error):
-                print(error)
+                self.emptyView.isHidden = false
             }
         })
     }
