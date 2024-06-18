@@ -143,7 +143,12 @@ extension NicknameViewController {
             self.selectedProfileImage = image
         }
         
-        vc.viewType = .editProfile
+        if viewType == .editNickname {
+            vc.viewType = .editProfile
+        }else if viewType == .nickname {
+            vc.viewType = .profile
+        }
+        
         vc.selectedProfile = selectedProfileImage
         navigationController?.pushViewController(vc, animated: true)
     }
