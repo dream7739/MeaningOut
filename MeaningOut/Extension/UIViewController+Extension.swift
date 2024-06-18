@@ -16,7 +16,4 @@ extension UIViewController {
         navigationItem.title = viewType.navigationTitle
     }
     
-    @objc func backButtonClicked(){
-        navigationController?.popViewController(animated: true)
-    }
 }
