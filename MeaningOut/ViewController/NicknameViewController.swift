@@ -75,7 +75,7 @@ extension NicknameViewController {
             validLabel.text = Constant.RegexResult.validResult.rawValue
             isValid = true
         }catch Constant.ValidationError.isEmpty {
-            validLabel.text = ""
+            validLabel.text =  Constant.RegexResult.emptyResult.rawValue
             nicknameField.setLine(type: .normal)
             isValid = false
         }catch Constant.ValidationError.countLimit {
