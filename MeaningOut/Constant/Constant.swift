@@ -75,6 +75,7 @@ enum Constant {
     enum EmptyType: String{
         case search = "최근 검색어가 없어요"
         case result = "검색 결과가 없어요"
+        case link = "해당 상품의 페이지가 존재하지 않습니다"
     }
     
     enum SortType: Int, CaseIterable {

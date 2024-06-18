@@ -12,6 +12,10 @@ import SnapKit
 class DetailViewController: UIViewController {
 
     let webView = WKWebView()
+
+    let indicator = UIActivityIndicatorView(style: .large)
+    
+    let emptyView = EmptyView(type: .link)
     
     var productId: String?
     
@@ -69,17 +73,50 @@ extension DetailViewController {
 extension DetailViewController: BaseProtocol {
     func configureHierarchy() {
         view.addSubview(webView)
+        view.addSubview(indicator)
+        view.addSubview(emptyView)
     }
     
     func configureLayout() {
         webView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
+        
+        indicator.snp.makeConstraints { make in
+            make.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        emptyView.snp.makeConstraints { make in
+            make.edges.equalTo(view.safeAreaLayoutGuide)
+        }
     }
     
     func configureUI() {
-        guard let link, let url = URL(string: link) else { return }
+        webView.navigationDelegate = self
+        indicator.color = Constant.ColorType.secondary
+        indicator.isHidden = true
+        emptyView.isHidden = true
+        
+        guard let link, let url = URL(string: link) else {
+            emptyView.isHidden = false
+            return
+        }
+        
         let request = URLRequest(url: url)
         webView.load(request)
     }
+}
+
+extension DetailViewController : WKNavigationDelegate {
+    func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
+        indicator.isHidden = false
+        indicator.startAnimating()
+    }
+    
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        indicator.isHidden = true
+        indicator.stopAnimating()
+    }
+    
 }
