@@ -55,6 +55,10 @@ class NicknameViewController: UIViewController {
         completeButton.addTarget(self, action: #selector(completeButtonClicked), for: .touchUpInside)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+            self.nicknameField.becomeFirstResponder()
+    }
 }
 
 extension NicknameViewController {
