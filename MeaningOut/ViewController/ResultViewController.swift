@@ -293,7 +293,7 @@ extension ResultViewController: UICollectionViewDataSourcePrefetching {
             if idx.item == shopResult.items.count - 4 {
                 start += display
                 
-                if start <= 1000 {
+                if start <= 1000 && start <= shopResult.total {
                     callNaverShop()
                 }
             }
