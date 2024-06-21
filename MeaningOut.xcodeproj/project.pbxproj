@@ -19,6 +19,7 @@
 		883A7DE02C1B0B8A00A4665E /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 883A7DDF2C1B0B8A00A4665E /* Alamofire */; };
 		883A7DE32C1B0B9700A4665E /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 883A7DE22C1B0B9700A4665E /* Toast */; };
 		883A7DE62C1B0BA400A4665E /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 883A7DE52C1B0BA400A4665E /* Kingfisher */; };
+		883E55892C255ED600A74170 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883E55882C255ED600A74170 /* APIManager.swift */; };
 		8871F65F2C1C510300A7A36B /* ProfileCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8871F65E2C1C510300A7A36B /* ProfileCollectionViewCell.swift */; };
 		8871F6612C1C513E00A7A36B /* ReusableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8871F6602C1C513E00A7A36B /* ReusableProtocol.swift */; };
 		8871F6632C1C63D800A7A36B /* RoundProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8871F6622C1C63D800A7A36B /* RoundProfileView.swift */; };
@@ -59,6 +60,7 @@
 		883A7DCE2C1B0A6D00A4665E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		883A7DD02C1B0A6D00A4665E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		883A7DD62C1B0B5C00A4665E /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		883E55882C255ED600A74170 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		8871F65E2C1C510300A7A36B /* ProfileCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCollectionViewCell.swift; sourceTree = "<group>"; };
 		8871F6602C1C513E00A7A36B /* ReusableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableProtocol.swift; sourceTree = "<group>"; };
 		8871F6622C1C63D800A7A36B /* RoundProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundProfileView.swift; sourceTree = "<group>"; };
@@ -134,6 +136,7 @@
 		883A7DC12C1B0A6C00A4665E /* MeaningOut */ = {
 			isa = PBXGroup;
 			children = (
+				883E55872C255EBB00A74170 /* API */,
 				88FBDF722C1DD68700AB0BC9 /* Model */,
 				8871F66D2C1C6F7200A7A36B /* Mananger */,
 				8871F65D2C1C4B7E00A7A36B /* Cell */,
@@ -151,6 +154,14 @@
 				88FBDF702C1DD13000AB0BC9 /* APIKey.swift */,
 			);
 			path = MeaningOut;
+			sourceTree = "<group>";
+		};
+		883E55872C255EBB00A74170 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				883E55882C255ED600A74170 /* APIManager.swift */,
+			);
+			path = API;
 			sourceTree = "<group>";
 		};
 		8871F65D2C1C4B7E00A7A36B /* Cell */ = {
@@ -328,6 +339,7 @@
 				887B29982C1B133C009F3630 /* OnboardingViewController.swift in Sources */,
 				887B299E2C1B14A9009F3630 /* UIViewController+Extension.swift in Sources */,
 				883A7DC52C1B0A6C00A4665E /* SceneDelegate.swift in Sources */,
+				883E55892C255ED600A74170 /* APIManager.swift in Sources */,
 				887B29A32C1B1AEE009F3630 /* NicknameViewController.swift in Sources */,
 				88FBDF6D2C1DBD6400AB0BC9 /* TagCollectionViewCell.swift in Sources */,
 				88B8753A2C1C2AFE00F19CE6 /* ProfileViewController.swift in Sources */,
