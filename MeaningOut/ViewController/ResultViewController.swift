@@ -9,6 +9,7 @@ import UIKit
 import Alamofire
 import Kingfisher
 import SnapKit
+import Toast
 
 class ResultViewController: UIViewController {
     
@@ -76,11 +77,12 @@ class ResultViewController: UIViewController {
         configureHierarchy()
         configureLayout()
         configureUI()
-
-        guard let keyword else { return }
         configureCollectionView()
-        let request = ShopRequest(query: keyword, start: start, display: display, sort: sort)
-        APIManager.shared.callNaverShop(req: request, completion: configureResponse)
+        
+        if let keyword {
+            let request = ShopRequest(query: keyword, start: start, display: display, sort: sort)
+            APIManager.shared.callNaverShop(req: request, completion: configureResponse)
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -109,25 +111,31 @@ extension ResultViewController {
         self.navigationItem.backBarButtonItem = backBarButtonItem
     }
     
-    func configureResponse(_ value: ShopResult){
-        //검색 결과가 없는 경우
-        if value.total == 0 {
+    func configureResponse(_ response: Result<ShopResult, Error>){
+        switch response {
+        case .success(let value):
+            if value.total == 0 {
+                emptyView.isHidden = false
+                return
+            }
+            
+            if self.start == 1 {
+                shopResult = value
+                resultLabel.text = self.shopResult.totalDescription
+            }else{
+                shopResult.items.append(contentsOf: value.items)
+            }
+            
+            resultCollectionView.reloadData()
+            
+            if start == 1 {
+                resultCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
+            }
+            
+        case .failure(let error):
+            print(error)
             emptyView.isHidden = false
-            return
-        }
-        
-        //검색결과가 있는 경우
-        if self.start == 1 {
-            shopResult = value
-            resultLabel.text = self.shopResult.totalDescription
-        }else{
-            shopResult.items.append(contentsOf: value.items)
-        }
-        
-        resultCollectionView.reloadData()
-        
-        if start == 1 {
-            resultCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
+            showToast("결과를 가져오는데 실패하였습니다.")
         }
     }
     
@@ -184,8 +192,6 @@ extension ResultViewController: BaseProtocol {
         emptyView.isHidden = true
     }
 }
-
-
 
 extension ResultViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -250,9 +256,10 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
                 sort = Constant.SortType.allCases[indexPath.row].sortParam
                 start = 1
                 
-                let request = ShopRequest(query: keyword!, start: start, display: display, sort: sort)
-                
-                APIManager.shared.callNaverShop(req: request, completion: configureResponse)
+                if let keyword {
+                    let request = ShopRequest(query: keyword, start: start, display: display, sort: sort)
+                    APIManager.shared.callNaverShop(req: request, completion: configureResponse)
+                }
 
             }
         }else if collectionView == resultCollectionView {
@@ -275,8 +282,10 @@ extension ResultViewController: UICollectionViewDataSourcePrefetching {
                 start += display
                 
                 if start <= 1000 && start <= shopResult.total {
-                    let request = ShopRequest(query: keyword!, start: start, display: display, sort: sort)
-                    APIManager.shared.callNaverShop(req: request, completion: configureResponse)
+                    if let keyword {
+                        let request = ShopRequest(query: keyword, start: start, display: display, sort: sort)
+                        APIManager.shared.callNaverShop(req: request, completion: configureResponse)
+                    }
                 }
             }
         }

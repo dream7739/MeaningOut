@@ -14,7 +14,7 @@ class APIManager {
     static let shared = APIManager()
     
     func callNaverShop(req: ShopRequest,
-                       completion: @escaping (ShopResult) -> ()){
+                       completion: @escaping (Result<ShopResult, Error>) -> ()){
         
         let header: HTTPHeaders = [
             "X-Naver-Client-Id" : APIKey.clientID,
@@ -37,9 +37,9 @@ class APIManager {
             response in
             switch response.result {
             case .success(let value):
-                completion(value)
+                completion(.success(value))
             case .failure(let error):
-                print(response.data)
+                completion(.failure(error))
             }
         })
     }
