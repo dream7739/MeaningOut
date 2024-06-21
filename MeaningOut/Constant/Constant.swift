@@ -151,6 +151,7 @@ enum Constant {
     }
     
     enum ViewType {
+        case onboard
         case nickname
         case profile
         case search
@@ -166,7 +167,7 @@ enum Constant {
                 return "PROFILE SETTING"
             case .search:
                 return "\(UserManager.nickname)`s MEANING OUT"
-            case .result, .detail:
+            case .onboard, .result, .detail:
                 return ""
             case .setting:
                 return "SETTING"

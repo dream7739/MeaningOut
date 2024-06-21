@@ -34,10 +34,6 @@ class NicknameViewController: UIViewController {
         configureLayout()
         configureUI()
         
-        let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
-        backBarButtonItem.tintColor = .black
-        self.navigationItem.backBarButtonItem = backBarButtonItem
-        
         if viewType == .editNickname {
             completeButton.isHidden = true
             addSaveButton()
@@ -71,9 +67,8 @@ extension NicknameViewController {
     
     func validCheck(_ input: String){
         do {
-            let result = try input.validateUserInput()
+            isValid = try input.validateUserInput()
             validLabel.text = Constant.RegexResult.validResult.rawValue
-            isValid = true
         }catch Constant.ValidationError.isEmpty {
             validLabel.text =  Constant.RegexResult.emptyResult.rawValue
             nicknameField.setLine(type: .normal)
@@ -124,12 +119,8 @@ extension NicknameViewController {
     
     func changeScreen(){
         if viewType == .nickname {
-            let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-            let sceneDelegate = windowScene?.delegate as? SceneDelegate
-            
             let tabBarController = TabBarController()
-            sceneDelegate?.window?.rootViewController = tabBarController
-            sceneDelegate?.window?.makeKeyAndVisible()
+            configureRootView(tabBarController)
         }else if viewType == .editNickname {
             navigationController?.popViewController(animated: true)
         }

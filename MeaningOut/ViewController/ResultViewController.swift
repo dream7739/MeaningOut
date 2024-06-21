@@ -6,10 +6,7 @@
 //
 
 import UIKit
-import Alamofire
-import Kingfisher
 import SnapKit
-import Toast
 
 class ResultViewController: UIViewController {
     
@@ -73,13 +70,13 @@ class ResultViewController: UIViewController {
         super.viewDidLoad()
         configureView()
         configureNav(.result)
-        configureBarbutton()
         configureHierarchy()
         configureLayout()
         configureUI()
         configureCollectionView()
         
         if let keyword {
+            navigationItem.title = keyword
             let request = ShopRequest(query: keyword, start: start, display: display, sort: sort)
             APIManager.shared.callNaverShop(req: request, completion: configureResponse)
         }
@@ -101,14 +98,6 @@ extension ResultViewController {
         resultCollectionView.prefetchDataSource = self
         resultCollectionView.register(ResultCollectionViewCell.self, forCellWithReuseIdentifier: ResultCollectionViewCell.identifier)
         
-    }
-    
-    func configureBarbutton(){
-        navigationItem.title = keyword
-        
-        let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
-        backBarButtonItem.tintColor = .black
-        self.navigationItem.backBarButtonItem = backBarButtonItem
     }
     
     func configureResponse(_ response: Result<ShopResult, Error>){
