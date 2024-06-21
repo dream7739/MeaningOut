@@ -11,9 +11,9 @@ import SnapKit
 class NicknameViewController: UIViewController {
     
     let profileView = RoundProfileView()
-    let nicknameField = UnderLineTextField(placeholderType: .nickname)
+    let nicknameField = UnderLineTextField()
     let validLabel = UILabel()
-    let completeButton = RoundButton(buttonType: .nickname)
+    let completeButton = RoundButton()
     
     var viewType: Constant.ViewType =  .nickname
     var isValid = false
@@ -71,7 +71,7 @@ extension NicknameViewController {
             validLabel.text = Constant.RegexResult.validResult.rawValue
         }catch Constant.ValidationError.isEmpty {
             validLabel.text =  Constant.RegexResult.emptyResult.rawValue
-            nicknameField.setLine(type: .normal)
+            nicknameField.setLineColor(type: .normal)
             isValid = false
         }catch Constant.ValidationError.countLimit {
             validLabel.text = Constant.RegexResult.countResult.rawValue
@@ -87,10 +87,10 @@ extension NicknameViewController {
         }
         
         if isValid {
-            nicknameField.setLine(type: .success)
+            nicknameField.setLineColor(type: .valid)
             validLabel.textColor = Constant.ColorType.black
         }else{
-            nicknameField.setLine(type: .error)
+            nicknameField.setLineColor(type: .inValid)
             validLabel.textColor = Constant.ColorType.theme
         }
     }
@@ -195,6 +195,7 @@ extension NicknameViewController: BaseProtocol {
     }
     
     func configureUI() {
+        nicknameField.placeholder = Constant.PlaceholderType.nickname.rawValue
         nicknameField.clearButtonMode = .whileEditing
         
         validLabel.font = Constant.FontType.tertiary
@@ -208,5 +209,6 @@ extension NicknameViewController: BaseProtocol {
         
         profileView.profileImage.image = UIImage(named: selectedProfileImage!)
 
+        completeButton.setTitle("완료", for: .normal)
     }
 }

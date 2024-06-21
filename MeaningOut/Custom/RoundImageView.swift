@@ -9,14 +9,14 @@ import UIKit
 
 class RoundImageView: UIImageView {
     
-    init(type: Constant.RoundImageType){
+    init(type: RoundImageView.ImageType){
         super.init(frame: .zero)
         contentMode = .scaleAspectFill
         clipsToBounds = true
         
         switch type {
-        case .regular: setRegular()
-        case .highlight: setHighLight()
+            case .regular: setRegular()
+            case .highlight: setHighLight()
         }
     }
     
@@ -40,4 +40,11 @@ class RoundImageView: UIImageView {
         layer.cornerRadius = frame.width / 2
     }
     
+}
+
+extension RoundImageView {
+    enum ImageType {
+        case regular
+        case highlight
+    }
 }

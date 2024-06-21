@@ -61,23 +61,6 @@ enum Constant {
         }
     }
     
-    enum RoundImageType {
-        case regular
-        case highlight
-    }
-    
-    enum TextFieldType {
-        case normal
-        case success
-        case error
-    }
-    
-    enum EmptyType: String{
-        case search = "최근 검색어가 없어요"
-        case result = "검색 결과가 없어요"
-        case link = "해당 상품의 페이지가 존재하지 않습니다"
-    }
-    
     enum SortType: Int, CaseIterable {
         case sim = 0
         case date = 1
@@ -138,11 +121,6 @@ enum Constant {
         case specialResult = "닉네임에 @, #, $, %는 포함할 수 없어요"
         case numberResult = "닉네임에 숫자는 포함할 수 없어요"
         case validResult = "사용 가능한 닉네임입니다 :)"
-    }
-    
-    enum ButtonType: String {
-        case onboard =  "시작하기"
-        case nickname = "완료"
     }
     
     enum PlaceholderType: String {
