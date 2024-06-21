@@ -9,6 +9,7 @@ import UIKit
 import Alamofire
 import Kingfisher
 import SnapKit
+import Toast
 
 class ResultViewController: UIViewController {
     
@@ -55,7 +56,7 @@ class ResultViewController: UIViewController {
     
     var display = 30
     
-    var sim: String = Constant.SortType.sim.sortParam
+    var sort: String = Constant.SortType.sim.sortParam
     
     var shopResult = ShopResult(total: 0, start: 0, display: 0, items: [])
     
@@ -70,20 +71,18 @@ class ResultViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        callNaverShop()
         configureView()
         configureNav(.result)
+        configureBarbutton()
         configureHierarchy()
         configureLayout()
         configureUI()
         configureCollectionView()
         
-        navigationItem.title = keyword
-        
-        let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
-        backBarButtonItem.tintColor = .black
-        self.navigationItem.backBarButtonItem = backBarButtonItem
+        if let keyword {
+            let request = ShopRequest(query: keyword, start: start, display: display, sort: sort)
+            APIManager.shared.callNaverShop(req: request, completion: configureResponse)
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -104,54 +103,40 @@ extension ResultViewController {
         
     }
     
-    func callNaverShop(){
-        guard let keyword else { return }
+    func configureBarbutton(){
+        navigationItem.title = keyword
         
-        let header: HTTPHeaders = [
-            "X-Naver-Client-Id" : APIKey.clientID,
-            "X-Naver-Client-Secret": APIKey.clientSecret]
-        
-        let param: Parameters = [
-            "query" : keyword,
-            "start": start,
-            "display": display,
-            "sort": sim
-        ]
-        
-        AF.request(
-            APIURL.naverURL,
-            method: .get,
-            parameters: param,
-            encoding: URLEncoding.queryString,
-            headers: header
-        ).responseDecodable(of: ShopResult.self, completionHandler: {
-            response in
-
-            switch response.result {
-
-            case .success(let value):
-                if value.total == 0 {
-                    self.emptyView.isHidden = false
-                    return
-                }
-                
-                if self.start == 1 {
-                    self.shopResult = value
-                    self.resultLabel.text = self.shopResult.totalDescription
-                }else{
-                    self.shopResult.items.append(contentsOf: value.items)
-                }
-                
-                self.resultCollectionView.reloadData()
-                
-                if self.start == 1 && self.shopResult.items.count > 0 {
-                    self.resultCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
-                }
-                
-            case .failure(let error):
-                self.emptyView.isHidden = false
+        let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        backBarButtonItem.tintColor = .black
+        self.navigationItem.backBarButtonItem = backBarButtonItem
+    }
+    
+    func configureResponse(_ response: Result<ShopResult, Error>){
+        switch response {
+        case .success(let value):
+            if value.total == 0 {
+                emptyView.isHidden = false
+                return
             }
-        })
+            
+            if self.start == 1 {
+                shopResult = value
+                resultLabel.text = self.shopResult.totalDescription
+            }else{
+                shopResult.items.append(contentsOf: value.items)
+            }
+            
+            resultCollectionView.reloadData()
+            
+            if start == 1 {
+                resultCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
+            }
+            
+        case .failure(let error):
+            print(error)
+            emptyView.isHidden = false
+            showToast("결과를 가져오는데 실패하였습니다.")
+        }
     }
     
     @objc func likeButtonClicked(notification: Notification){
@@ -207,8 +192,6 @@ extension ResultViewController: BaseProtocol {
         emptyView.isHidden = true
     }
 }
-
-
 
 extension ResultViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -266,13 +249,18 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == tagCollectionView {
             if selectedIndexPath != indexPath {
+                
                 selectedIndexPath = indexPath
                 collectionView.reloadData()
                 
-                let sortParam = Constant.SortType.allCases[indexPath.row].sortParam
-                sim = sortParam
+                sort = Constant.SortType.allCases[indexPath.row].sortParam
                 start = 1
-                callNaverShop()
+                
+                if let keyword {
+                    let request = ShopRequest(query: keyword, start: start, display: display, sort: sort)
+                    APIManager.shared.callNaverShop(req: request, completion: configureResponse)
+                }
+
             }
         }else if collectionView == resultCollectionView {
             let data = shopResult.items[indexPath.row]
@@ -294,7 +282,10 @@ extension ResultViewController: UICollectionViewDataSourcePrefetching {
                 start += display
                 
                 if start <= 1000 && start <= shopResult.total {
-                    callNaverShop()
+                    if let keyword {
+                        let request = ShopRequest(query: keyword, start: start, display: display, sort: sort)
+                        APIManager.shared.callNaverShop(req: request, completion: configureResponse)
+                    }
                 }
             }
         }

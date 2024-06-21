@@ -7,6 +7,14 @@
 
 import Foundation
 
+struct ShopRequest {
+    var query: String
+    var start: Int
+    var display: Int
+    var sort: String
+    
+}
+
 struct ShopResult: Decodable {
     let total: Int
     let start: Int
