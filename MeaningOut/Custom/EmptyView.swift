@@ -11,26 +11,30 @@ import SnapKit
 class EmptyView: UIView {
     
     let emptyImage = UIImageView()
-    
     let descriptionLabel = UILabel()
     
-    init(type: Constant.EmptyType) {
+    init(type: EmptyView.EmptyType) {
         super.init(frame: .zero)
         configureHierarchy()
         configureLayout()
         configureUI()
         setDescription(type)
-        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func setDescription(_ type: EmptyView.EmptyType){
+        descriptionLabel.text = type.rawValue
+    }
 }
 
 extension EmptyView{
-    func setDescription(_ type: Constant.EmptyType){
-        descriptionLabel.text = type.rawValue
+    enum EmptyType: String{
+        case search = "최근 검색어가 없어요"
+        case result = "검색 결과가 없어요"
+        case link = "해당 상품의 페이지가 존재하지 않습니다"
     }
 }
 

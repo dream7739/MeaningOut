@@ -12,7 +12,7 @@ class OnboardingViewController: UIViewController {
 
     let titleLabel = UILabel()
     let launchImage = UIImageView()
-    let startButton = RoundButton(buttonType: .onboard)
+    let startButton = RoundButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,6 +66,8 @@ extension OnboardingViewController: BaseProtocol {
         
         launchImage.contentMode = .scaleAspectFill
         launchImage.image = Constant.ImageType.start
+        
+        startButton.setTitle("시작하기", for: .normal)
         
     }
 }
