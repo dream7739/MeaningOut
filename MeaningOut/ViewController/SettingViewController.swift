@@ -158,12 +158,9 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
             let confirm = UIAlertAction(title: "확인", style: .default) { _ in
                 UserManager.resetAll()
                 
-                let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-                let sceneDelegate = windowScene?.delegate as? SceneDelegate
+                let onboardingViewController = UINavigationController(rootViewController: OnboardingViewController())
                 
-                let vc = UINavigationController(rootViewController: OnboardingViewController())
-                sceneDelegate?.window?.rootViewController = vc
-                sceneDelegate?.window?.makeKeyAndVisible()
+                self.configureRootView(onboardingViewController)
             }
             
             let cancel = UIAlertAction(title: "취소", style: .cancel)

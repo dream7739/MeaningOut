@@ -6,10 +6,7 @@
 //
 
 import UIKit
-import Alamofire
-import Kingfisher
 import SnapKit
-import Toast
 
 class ResultViewController: UIViewController {
     
@@ -102,7 +99,6 @@ extension ResultViewController {
         resultCollectionView.register(ResultCollectionViewCell.self, forCellWithReuseIdentifier: ResultCollectionViewCell.identifier)
         
     }
-    
     
     func configureResponse(_ response: Result<ShopResult, Error>){
         switch response {
