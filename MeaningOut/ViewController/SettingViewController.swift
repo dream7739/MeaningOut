@@ -38,10 +38,6 @@ class SettingViewController: UIViewController {
         configureUI()
         configureTableView()
         
-        let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
-        backBarButtonItem.tintColor = .black
-        self.navigationItem.backBarButtonItem = backBarButtonItem
-        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(headerViewClicked))
         headerView.addGestureRecognizer(tapGesture)
     }

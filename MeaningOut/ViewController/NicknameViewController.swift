@@ -34,10 +34,6 @@ class NicknameViewController: UIViewController {
         configureLayout()
         configureUI()
         
-        let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
-        backBarButtonItem.tintColor = .black
-        self.navigationItem.backBarButtonItem = backBarButtonItem
-        
         if viewType == .editNickname {
             completeButton.isHidden = true
             addSaveButton()
