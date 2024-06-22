@@ -272,9 +272,11 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
                 sort = Constant.SortType.allCases[indexPath.row].sortParam
                 start = 1
                 
-                if let keyword {
+                if NetworkMonitor.shared.isConnected, let keyword {
                     let request = ShopRequest(query: keyword, start: start, display: display, sort: sort)
                     APIManager.shared.callNaverShop(req: request, completion: configureResponse)
+                }else{
+                    networkView.isHidden = false
                 }
 
             }
@@ -302,7 +304,7 @@ extension ResultViewController: UICollectionViewDataSourcePrefetching {
                         let request = ShopRequest(query: keyword, start: start, display: display, sort: sort)
                         APIManager.shared.callNaverShop(req: request, completion: configureResponse)
                     }else{
-                        
+                        networkView.isHidden = false
                     }
                 }
             }
