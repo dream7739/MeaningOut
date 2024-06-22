@@ -75,6 +75,12 @@ class ResultViewController: UIViewController {
         configureUI()
         configureCollectionView()
         
+        if NetworkMonitor.shared.isConnected {
+            print("연결됨")
+        }else{
+            print("연결되지 않음")
+        }
+        
         if let keyword {
             navigationItem.title = keyword
             let request = ShopRequest(query: keyword, start: start, display: display, sort: sort)
