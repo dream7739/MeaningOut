@@ -10,6 +10,7 @@ import UIKit
 struct ShopNotification {
     static let delete = Notification.Name("SearchDeleteNotification")
     static let like = Notification.Name("LikeClickNotification")
+    static let network = Notification.Name("NetworkRetryNotification")
 }
 
 struct ShopNotificationKey {

@@ -20,6 +20,7 @@
 		883A7DE32C1B0B9700A4665E /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 883A7DE22C1B0B9700A4665E /* Toast */; };
 		883A7DE62C1B0BA400A4665E /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 883A7DE52C1B0BA400A4665E /* Kingfisher */; };
 		883E55892C255ED600A74170 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883E55882C255ED600A74170 /* APIManager.swift */; };
+		8849DF4A2C26A7CD00F2711B /* NetworkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8849DF492C26A7CD00F2711B /* NetworkView.swift */; };
 		8871F65F2C1C510300A7A36B /* ProfileCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8871F65E2C1C510300A7A36B /* ProfileCollectionViewCell.swift */; };
 		8871F6612C1C513E00A7A36B /* ReusableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8871F6602C1C513E00A7A36B /* ReusableProtocol.swift */; };
 		8871F6632C1C63D800A7A36B /* RoundProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8871F6622C1C63D800A7A36B /* RoundProfileView.swift */; };
@@ -38,6 +39,7 @@
 		88B875382C1C199C00F19CE6 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B875372C1C199C00F19CE6 /* String+Extension.swift */; };
 		88B8753A2C1C2AFE00F19CE6 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B875392C1C2AFE00F19CE6 /* ProfileViewController.swift */; };
 		88B8753C2C1C2B7100F19CE6 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B8753B2C1C2B7100F19CE6 /* TabBarController.swift */; };
+		88C445DA2C26982D00F498C7 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C445D92C26982D00F498C7 /* NetworkMonitor.swift */; };
 		88CE76922C2003C700644F7A /* ShopNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CE76912C2003C700644F7A /* ShopNotification.swift */; };
 		88CE76942C202CB200644F7A /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CE76932C202CB200644F7A /* Date+Extension.swift */; };
 		88FBDF632C1D844600AB0BC9 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FBDF622C1D844600AB0BC9 /* EmptyView.swift */; };
@@ -61,6 +63,7 @@
 		883A7DD02C1B0A6D00A4665E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		883A7DD62C1B0B5C00A4665E /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		883E55882C255ED600A74170 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
+		8849DF492C26A7CD00F2711B /* NetworkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkView.swift; sourceTree = "<group>"; };
 		8871F65E2C1C510300A7A36B /* ProfileCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCollectionViewCell.swift; sourceTree = "<group>"; };
 		8871F6602C1C513E00A7A36B /* ReusableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableProtocol.swift; sourceTree = "<group>"; };
 		8871F6622C1C63D800A7A36B /* RoundProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundProfileView.swift; sourceTree = "<group>"; };
@@ -79,6 +82,7 @@
 		88B875372C1C199C00F19CE6 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		88B875392C1C2AFE00F19CE6 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		88B8753B2C1C2B7100F19CE6 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		88C445D92C26982D00F498C7 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 		88CE76912C2003C700644F7A /* ShopNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopNotification.swift; sourceTree = "<group>"; };
 		88CE76932C202CB200644F7A /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		88FBDF622C1D844600AB0BC9 /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
@@ -179,6 +183,7 @@
 		8871F66D2C1C6F7200A7A36B /* Mananger */ = {
 			isa = PBXGroup;
 			children = (
+				88C445D92C26982D00F498C7 /* NetworkMonitor.swift */,
 				8871F66E2C1C6F9400A7A36B /* UserDefaultsManager.swift */,
 			);
 			path = Mananger;
@@ -227,6 +232,7 @@
 				8871F6622C1C63D800A7A36B /* RoundProfileView.swift */,
 				88FBDF622C1D844600AB0BC9 /* EmptyView.swift */,
 				88FBDF6E2C1DBDE700AB0BC9 /* PaddingLabel.swift */,
+				8849DF492C26A7CD00F2711B /* NetworkView.swift */,
 			);
 			path = Custom;
 			sourceTree = "<group>";
@@ -334,6 +340,7 @@
 				88B875382C1C199C00F19CE6 /* String+Extension.swift in Sources */,
 				88FBDF6B2C1DB59400AB0BC9 /* ResultCollectionViewCell.swift in Sources */,
 				8871F6612C1C513E00A7A36B /* ReusableProtocol.swift in Sources */,
+				88C445DA2C26982D00F498C7 /* NetworkMonitor.swift in Sources */,
 				88FBDF672C1DA27800AB0BC9 /* ResultViewController.swift in Sources */,
 				883A7DC32C1B0A6C00A4665E /* AppDelegate.swift in Sources */,
 				887B29982C1B133C009F3630 /* OnboardingViewController.swift in Sources */,
@@ -346,6 +353,7 @@
 				88FBDF652C1D87DE00AB0BC9 /* SearchTableViewCell.swift in Sources */,
 				88B8753C2C1C2B7100F19CE6 /* TabBarController.swift in Sources */,
 				88CE76922C2003C700644F7A /* ShopNotification.swift in Sources */,
+				8849DF4A2C26A7CD00F2711B /* NetworkView.swift in Sources */,
 				88CE76942C202CB200644F7A /* Date+Extension.swift in Sources */,
 				8871F66F2C1C6F9400A7A36B /* UserDefaultsManager.swift in Sources */,
 				88FBDF712C1DD13000AB0BC9 /* APIKey.swift in Sources */,
