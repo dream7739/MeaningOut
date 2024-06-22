@@ -21,25 +21,7 @@ extension String {
         return attributedString
     }
     
-    func validateUserInput() throws -> Bool {
-        guard !self.isEmpty else{
-            throw Constant.ValidationError.isEmpty
-        }
-        
-        guard self.count >= 2 && self.count <= 10 else {
-            throw Constant.ValidationError.countLimit
-        }
-        
-        guard (self.range(of:  #"[@#$%]"#, options: .regularExpression) == nil) else {
-            throw Constant.ValidationError.isSpecialChar
-        }
-        
-        guard (self.range(of: #"[0-9]"#, options: .regularExpression) == nil) else {
-            throw Constant.ValidationError.isNumber
-        }
-        
-        return true
-    }
+  
     
 
 }
