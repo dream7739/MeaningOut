@@ -19,13 +19,6 @@ class NicknameViewController: UIViewController {
     var isValid = false
     var selectedProfileImage: String?
     
-    
-    override func viewWillAppear(_ animated: Bool) {
-        if let selectedProfileImage {
-            profileView.profileImage.image = UIImage(named: selectedProfileImage)
-        }
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
@@ -34,22 +27,18 @@ class NicknameViewController: UIViewController {
         configureLayout()
         configureUI()
         
-        if viewType == .editNickname {
-            completeButton.isHidden = true
-            addSaveButton()
-            nicknameField.text = UserManager.nickname
-            validCheck(UserManager.nickname)
-        }else if viewType == .nickname {
-            nicknameField.text = ""
-        }
-        
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(profileImageClicked))
         profileView.addGestureRecognizer(tapRecognizer)
         
         nicknameField.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
         nicknameField.addTarget(self, action: #selector(returnKeyClicked), for: .editingDidEndOnExit)
-
         completeButton.addTarget(self, action: #selector(completeButtonClicked), for: .touchUpInside)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if let selectedProfileImage {
+            profileView.profileImage.image = UIImage(named: selectedProfileImage)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -59,40 +48,58 @@ class NicknameViewController: UIViewController {
 }
 
 extension NicknameViewController {
-    func addSaveButton(){
-        let save = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(completeButtonClicked))
-        save.tintColor = .black
-        navigationItem.rightBarButtonItem = save
+    
+    @discardableResult
+    func validateUserInput(_ input: String) throws -> Bool {
+        guard !input.isEmpty else{
+            throw Validation.Nickname.isEmpty
+        }
+        
+        guard input.count >= 2 && input.count <= 10 else {
+            throw Validation.Nickname.countLimit
+        }
+        
+        guard (input.range(of:  #"[@#$%]"#, options: .regularExpression) == nil) else {
+            throw Validation.Nickname.isSpecialChar
+        }
+        
+        guard (input.range(of: #"[0-9]"#, options: .regularExpression) == nil) else {
+            throw Validation.Nickname.isNumber
+        }
+        
+        return true
     }
     
-    func validCheck(_ input: String){
+    func checkUserInput(_ input: String){
         do {
-            isValid = try input.validateUserInput()
-            validLabel.text = Constant.RegexResult.validResult.rawValue
-        }catch Constant.ValidationError.isEmpty {
-            validLabel.text =  Constant.RegexResult.emptyResult.rawValue
-            nicknameField.setLineColor(type: .normal)
+            isValid = try validateUserInput(input)
+            validLabel.text = "사용 가능한 닉네임입니다 :)"
+            nicknameField.setLineColor(type: .valid)
+            validLabel.textColor = Constant.ColorType.black
+        }catch Validation.Nickname.isEmpty {
             isValid = false
-        }catch Constant.ValidationError.countLimit {
-            validLabel.text = Constant.RegexResult.countResult.rawValue
+            validLabel.text =  Validation.Nickname.isEmpty.description
+            nicknameField.setLineColor(type: .inValid)
+            validLabel.textColor = Constant.ColorType.theme
+        }catch Validation.Nickname.countLimit {
             isValid = false
-        }catch Constant.ValidationError.isNumber{
-            validLabel.text = Constant.RegexResult.numberResult.rawValue
+            validLabel.text = Validation.Nickname.countLimit.description
+            nicknameField.setLineColor(type: .inValid)
+            validLabel.textColor = Constant.ColorType.theme
+        }catch Validation.Nickname.isNumber{
             isValid = false
-        }catch Constant.ValidationError.isSpecialChar {
-            validLabel.text = Constant.RegexResult.specialResult.rawValue
+            validLabel.text = Validation.Nickname.isNumber.description
+            nicknameField.setLineColor(type: .inValid)
+            validLabel.textColor = Constant.ColorType.theme
+        }catch Validation.Nickname.isSpecialChar {
             isValid = false
+            validLabel.text = Validation.Nickname.isSpecialChar.description
+            nicknameField.setLineColor(type: .inValid)
+            validLabel.textColor = Constant.ColorType.theme
         }catch {
             print("Etc error occured")
         }
         
-        if isValid {
-            nicknameField.setLineColor(type: .valid)
-            validLabel.textColor = Constant.ColorType.black
-        }else{
-            nicknameField.setLineColor(type: .inValid)
-            validLabel.textColor = Constant.ColorType.theme
-        }
     }
     
     func saveUserData(){
@@ -146,7 +153,7 @@ extension NicknameViewController {
     
     @objc func textFieldChanged(){
         let input = nicknameField.text!.trimmingCharacters(in: .whitespaces)
-        validCheck(input)
+        checkUserInput(input)
     }
     
     @objc func returnKeyClicked(){
@@ -195,20 +202,35 @@ extension NicknameViewController: BaseProtocol {
     }
     
     func configureUI() {
-        nicknameField.placeholder = Constant.PlaceholderType.nickname.rawValue
-        nicknameField.clearButtonMode = .whileEditing
-        
-        validLabel.font = Constant.FontType.tertiary
-        validLabel.textColor = Constant.ColorType.theme
+        //진입 지점에 따른 분기 처리
+        if viewType == .editNickname {
+            nicknameField.text = UserManager.nickname
+            completeButton.isHidden = true
+            addSaveButton()
+            checkUserInput(UserManager.nickname)
+        }else if viewType == .nickname {
+            nicknameField.text = ""
+        }
         
         if UserManager.profileImage.isEmpty {
             selectedProfileImage = Constant.ImageType.ProfileType.randomTitle
         }else{
             selectedProfileImage = UserManager.profileImage
         }
-        
         profileView.profileImage.image = UIImage(named: selectedProfileImage!)
-
+        
+        nicknameField.placeholder = Constant.PlaceholderType.nickname.rawValue
+        nicknameField.clearButtonMode = .whileEditing
+        
+        validLabel.font = Constant.FontType.tertiary
+        validLabel.textColor = Constant.ColorType.theme
+        
         completeButton.setTitle("완료", for: .normal)
+    }
+    
+    func addSaveButton(){
+        let save = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(completeButtonClicked))
+        save.tintColor = .black
+        navigationItem.rightBarButtonItem = save
     }
 }

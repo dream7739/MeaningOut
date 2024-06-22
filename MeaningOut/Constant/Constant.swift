@@ -109,21 +109,6 @@ enum Constant {
         }
     }
     
-    enum ValidationError: Error {
-        case countLimit
-        case isEmpty
-        case isSpecialChar
-        case isNumber
-    }
-    
-    enum RegexResult: String {
-        case countResult = "2글자 이상 10글자 미만으로 설정주세요"
-        case emptyResult = "닉네임을 입력해주세요"
-        case specialResult = "닉네임에 @, #, $, %는 포함할 수 없어요"
-        case numberResult = "닉네임에 숫자는 포함할 수 없어요"
-        case validResult = "사용 가능한 닉네임입니다 :)"
-    }
-    
     enum PlaceholderType: String {
         case nickname = "닉네임을 입력해주세요 :)"
         case search = "브랜드, 상품 등을 입력하세요"
