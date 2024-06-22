@@ -39,6 +39,7 @@ enum Constant {
         static let empty = UIImage(named: "empty")
         static let like_unselected = UIImage(named: "like_unselected")?.withRenderingMode(.alwaysOriginal)
         static let like_selected = UIImage(named: "like_selected")?.withRenderingMode(.alwaysOriginal)
+        static let wifi = UIImage(systemName: "wifi")
         
         enum ProfileType:String, CaseIterable {
             case profile_0

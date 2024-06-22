@@ -14,6 +14,8 @@ class ResultViewController: UIViewController {
     
     let emptyView = EmptyView(type: .result)
     
+    let networkView = NetworkView()
+    
     lazy var tagCollectionView = UICollectionView(frame: .zero, collectionViewLayout: tagLayout())
     
     lazy var resultCollectionView = UICollectionView(frame: .zero, collectionViewLayout: resultLayout())
@@ -57,15 +59,6 @@ class ResultViewController: UIViewController {
     
     var shopResult = ShopResult(total: 0, start: 0, display: 0, items: [])
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        NotificationCenter.default.addObserver(self, 
-                                               selector: #selector(likeButtonClicked),
-                                               name: ShopNotification.like,
-                                               object: nil)
-        resultCollectionView.reloadData()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
@@ -75,17 +68,28 @@ class ResultViewController: UIViewController {
         configureUI()
         configureCollectionView()
         
-        if NetworkMonitor.shared.isConnected {
-            print("연결됨")
+        if NetworkMonitor.shared.isConnected, let keyword {
+                navigationItem.title = keyword
+                let request = ShopRequest(query: keyword, start: start, display: display, sort: sort)
+                APIManager.shared.callNaverShop(req: request, completion: configureResponse)
         }else{
-            print("연결되지 않음")
+            networkView.isHidden = false
         }
-        
-        if let keyword {
-            navigationItem.title = keyword
-            let request = ShopRequest(query: keyword, start: start, display: display, sort: sort)
-            APIManager.shared.callNaverShop(req: request, completion: configureResponse)
-        }
+     
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(likeButtonClicked),
+                                               name: ShopNotification.like,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(retryButtonClicked),
+                                               name: ShopNotification.network,
+                                               object: nil)
+        resultCollectionView.reloadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -147,6 +151,17 @@ extension ResultViewController {
         }
     }
     
+    @objc func retryButtonClicked(notification: Notification){
+        guard let keyword else { return }
+        
+        if NetworkMonitor.shared.isConnected {
+            networkView.isHidden = true
+            let request = ShopRequest(query: keyword, start: start, display: display, sort: sort)
+            APIManager.shared.callNaverShop(req: request, completion: configureResponse)
+        }else{
+            networkView.isHidden = false
+        }
+    }
 }
 
 extension ResultViewController: BaseProtocol {
@@ -156,6 +171,7 @@ extension ResultViewController: BaseProtocol {
         view.addSubview(tagCollectionView)
         view.addSubview(resultCollectionView)
         view.addSubview(emptyView)
+        view.addSubview(networkView)
     }
     
     func configureLayout() {
@@ -165,6 +181,10 @@ extension ResultViewController: BaseProtocol {
         }
         
         emptyView.snp.makeConstraints { make in
+            make.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        networkView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
         
@@ -185,6 +205,7 @@ extension ResultViewController: BaseProtocol {
         resultLabel.font = .boldSystemFont(ofSize: 14)
         resultLabel.textColor = Constant.ColorType.theme
         emptyView.isHidden = true
+        networkView.isHidden = true
     }
 }
 
@@ -277,9 +298,11 @@ extension ResultViewController: UICollectionViewDataSourcePrefetching {
                 start += display
                 
                 if start <= 1000 && start <= shopResult.total {
-                    if let keyword {
+                    if NetworkMonitor.shared.isConnected, let keyword {
                         let request = ShopRequest(query: keyword, start: start, display: display, sort: sort)
                         APIManager.shared.callNaverShop(req: request, completion: configureResponse)
+                    }else{
+                        
                     }
                 }
             }
