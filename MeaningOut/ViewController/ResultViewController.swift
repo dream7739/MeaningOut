@@ -68,8 +68,10 @@ class ResultViewController: UIViewController {
         configureUI()
         configureCollectionView()
         
-        if NetworkMonitor.shared.isConnected, let keyword {
-                navigationItem.title = keyword
+        guard let keyword else { return }
+        navigationItem.title = keyword
+        
+        if NetworkMonitor.shared.isConnected {
                 let request = ShopRequest(query: keyword, start: start, display: display, sort: sort)
                 APIManager.shared.callNaverShop(req: request, completion: configureResponse)
         }else{
@@ -272,7 +274,9 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
                 sort = Constant.SortType.allCases[indexPath.row].sortParam
                 start = 1
                 
-                if NetworkMonitor.shared.isConnected, let keyword {
+                guard let keyword else { return }
+                
+                if NetworkMonitor.shared.isConnected{
                     let request = ShopRequest(query: keyword, start: start, display: display, sort: sort)
                     APIManager.shared.callNaverShop(req: request, completion: configureResponse)
                 }else{
@@ -300,7 +304,10 @@ extension ResultViewController: UICollectionViewDataSourcePrefetching {
                 start += display
                 
                 if start <= 1000 && start <= shopResult.total {
-                    if NetworkMonitor.shared.isConnected, let keyword {
+                    
+                    guard let keyword else { return }
+
+                    if NetworkMonitor.shared.isConnected{
                         let request = ShopRequest(query: keyword, start: start, display: display, sort: sort)
                         APIManager.shared.callNaverShop(req: request, completion: configureResponse)
                     }else{
