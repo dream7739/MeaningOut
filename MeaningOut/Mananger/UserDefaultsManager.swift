@@ -8,17 +8,25 @@
 import Foundation
 
 @propertyWrapper
-struct UserDefaultsManager<T> {
+struct UserDefaultsManager<T: Codable> {
     let defaultValue: T
     let key: String
     let storage: UserDefaults
     
     var wrappedValue: T {
         get{
-            self.storage.object(forKey: key) as? T ?? defaultValue
+            if let data = self.storage.object(forKey: key) as? Data {
+                if let decodeData = try? JSONDecoder().decode(T.self, from: data){
+                    return decodeData
+                }
+            }
+            
+            return defaultValue
         }
         set{
-            self.storage.set(newValue, forKey: key)
+            if let data = try? JSONEncoder().encode(newValue) {
+                self.storage.set(data, forKey: key)
+            }
         }
     }
 }
@@ -32,7 +40,7 @@ class UserManager {
         storage: .standard
     )
     static var isUser: Bool
-
+    
     
     @UserDefaultsManager(
         defaultValue: "",
@@ -66,20 +74,20 @@ class UserManager {
     
     @UserDefaultsManager(
         defaultValue: [],
-        key: "likeList",
+        key: "likeSet",
         storage: .standard
     )
-    static var likeList: [String]
+    static var likeSet: Set<String>
     
     static func addLikeList(_ productId: String){
-        if !UserManager.likeList.contains(productId){
-            UserManager.likeList.append(productId)
+        if !UserManager.likeSet.contains(productId){
+            UserManager.likeSet.insert(productId)
         }
     }
     
     static func removeLikeList(_ productId: String){
-        if UserManager.likeList.contains(productId){
-            UserManager.likeList.removeAll(where: {$0 == productId })
+        if UserManager.likeSet.contains(productId){
+            UserManager.likeSet.remove(productId)
         }
     }
     

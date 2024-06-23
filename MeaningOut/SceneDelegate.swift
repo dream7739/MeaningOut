@@ -16,7 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: scene)
         
         let onboardVC = UINavigationController(rootViewController: OnboardingViewController())
-        let tabBarVC = TabBarController()
+        let tabBarVC = ShopTabBarController()
         
         if UserManager.isUser {
             window?.rootViewController = tabBarVC
@@ -28,6 +28,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
+        NetworkMonitor.shared.stopMonitoring()
         // Called as the scene is being released by the system.
         // This occurs shortly after the scene enters the background, or when its session is discarded.
         // Release any resources associated with this scene that can be re-created the next time the scene connects.

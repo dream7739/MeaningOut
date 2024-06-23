@@ -43,7 +43,7 @@ extension DetailViewController {
         guard let productId else { return }
         let image: UIImage
         
-        if !UserManager.likeList.isEmpty && UserManager.likeList.contains(productId){
+        if !UserManager.likeSet.isEmpty && UserManager.likeSet.contains(productId){
             isClicked = true
             image = Constant.ImageType.like_selected!
         }else{

@@ -141,12 +141,14 @@ extension ResultViewController {
     }
     
     @objc func likeButtonClicked(notification: Notification){
-        guard let indexPath = notification.userInfo?[ShopNotificationKey.indexPath] as? IndexPath,
-              let click = notification.userInfo?[ShopNotificationKey.click] as? Bool else { return }
-
+        guard let item = notification.userInfo?[ShopNotificationKey.indexPath] as? (IndexPath, Bool) else { return }
+        
+        let indexPath = item.0
+        let isClicked = item.1
+        
         let productId = shopResult.items[indexPath.row].productId
         
-        if click {
+        if isClicked {
             UserManager.addLikeList(productId)
         }else{
             UserManager.removeLikeList(productId)

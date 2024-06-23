@@ -36,6 +36,7 @@ class NicknameViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         if let selectedProfileImage {
             profileView.profileImage.image = UIImage(named: selectedProfileImage)
         }
@@ -126,7 +127,7 @@ extension NicknameViewController {
     
     func changeScreen(){
         if viewType == .nickname {
-            let tabBarController = TabBarController()
+            let tabBarController = ShopTabBarController()
             configureRootView(tabBarController)
         }else if viewType == .editNickname {
             navigationController?.popViewController(animated: true)
