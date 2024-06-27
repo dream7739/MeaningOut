@@ -59,6 +59,18 @@ extension UIViewController {
         
     }
     
+    static func resultLayout() -> UICollectionViewLayout {
+        let layout = UICollectionViewFlowLayout()
+        let spacing: CGFloat = 20
+        let horizontalInset: CGFloat = 20
+        let verticalInset: CGFloat = 20
+        layout.scrollDirection = .vertical
+        layout.minimumLineSpacing = spacing
+        layout.minimumInteritemSpacing = spacing
+        layout.sectionInset = UIEdgeInsets(top: verticalInset, left: horizontalInset, bottom: verticalInset, right: horizontalInset)
+        
+        return layout
+    }
 }
 
 extension UIViewController {
@@ -90,3 +102,4 @@ extension UIViewController {
         
     }
 }
+

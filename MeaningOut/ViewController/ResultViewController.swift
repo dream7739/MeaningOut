@@ -18,7 +18,7 @@ class ResultViewController: UIViewController {
     
     lazy var tagCollectionView = UICollectionView(frame: .zero, collectionViewLayout: tagLayout())
     
-    lazy var resultCollectionView = UICollectionView(frame: .zero, collectionViewLayout: resultLayout())
+    lazy var resultCollectionView = UICollectionView(frame: .zero, collectionViewLayout: ResultViewController.resultLayout())
     
     func tagLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()
@@ -31,19 +31,6 @@ class ResultViewController: UIViewController {
         
         layout.scrollDirection = .horizontal
         layout.sectionInset = UIEdgeInsets(top: verticalInset, left: horizontalInset, bottom: verticalInset, right: horizontalInset)
-        return layout
-    }
-    
-    func resultLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewFlowLayout()
-        let spacing: CGFloat = 20
-        let horizontalInset: CGFloat = 20
-        let verticalInset: CGFloat = 20
-        layout.scrollDirection = .vertical
-        layout.minimumLineSpacing = spacing
-        layout.minimumInteritemSpacing = spacing
-        layout.sectionInset = UIEdgeInsets(top: verticalInset, left: horizontalInset, bottom: verticalInset, right: horizontalInset)
-        
         return layout
     }
     
@@ -77,7 +64,6 @@ class ResultViewController: UIViewController {
         }else{
             networkView.isHidden = false
         }
-        
     }
     
     
