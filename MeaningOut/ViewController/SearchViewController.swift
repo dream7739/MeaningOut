@@ -29,7 +29,6 @@ class SearchViewController: UIViewController {
         configureLayout()
         configureUI()
         
-        print(UserManager.savedList)
         resetButton.addTarget(self, action: #selector(resetButtonClicked), for: .touchUpInside)
     }
     
@@ -172,7 +171,9 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.identifier, for: indexPath) as! SearchTableViewCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.identifier, for: indexPath) as? SearchTableViewCell else {
+            return UITableViewCell()
+        }
         cell.configureData(UserManager.savedList[indexPath.row])
         cell.indexPath = indexPath
         return cell

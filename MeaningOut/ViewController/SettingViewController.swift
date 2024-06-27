@@ -37,7 +37,7 @@ class SettingViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        viewWillAppear(animated)
+        super.viewWillAppear(animated)
         profileImage.image = UIImage(named: UserManager.profileImage)
         nicknameLabel.text = UserManager.nickname
         tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)

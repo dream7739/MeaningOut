@@ -72,12 +72,12 @@ class ResultViewController: UIViewController {
         navigationItem.title = keyword
         
         if NetworkMonitor.shared.isConnected {
-                let request = ShopRequest(query: keyword, start: start, display: display, sort: sort)
-                APIManager.shared.callNaverShop(req: request, completion: configureResponse)
+            let request = ShopRequest(query: keyword, start: start, display: display, sort: sort)
+            APIManager.shared.callNaverShop(req: request, completion: configureResponse)
         }else{
             networkView.isHidden = false
         }
-     
+        
     }
     
     
@@ -225,7 +225,9 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == tagCollectionView {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagCollectionViewCell.identifier, for: indexPath) as! TagCollectionViewCell
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagCollectionViewCell.identifier, for: indexPath) as? TagCollectionViewCell else {
+                return UICollectionViewCell()
+            }
             
             let data = Display.SortType.allCases[indexPath.row]
             cell.configureData(data)
@@ -238,7 +240,9 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
             
             return cell
         }else{
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ResultCollectionViewCell.identifier, for: indexPath) as! ResultCollectionViewCell
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ResultCollectionViewCell.identifier, for: indexPath) as? ResultCollectionViewCell else {
+                return UICollectionViewCell()
+            }
             let data = shopResult.items[indexPath.row]
             cell.indexPath = indexPath
             cell.configureData(data)
@@ -285,7 +289,7 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
                 }else{
                     networkView.isHidden = false
                 }
-
+                
             }
         }else if collectionView == resultCollectionView {
             let data = shopResult.items[indexPath.row]
@@ -302,14 +306,14 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
 extension ResultViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         for idx in indexPaths {
-
+            
             if idx.item == shopResult.items.count - 4 {
                 start += display
                 
                 if start <= 1000 && start <= shopResult.total {
                     
                     guard let keyword else { return }
-
+                    
                     if NetworkMonitor.shared.isConnected{
                         let request = ShopRequest(query: keyword, start: start, display: display, sort: sort)
                         APIManager.shared.callNaverShop(req: request, completion: configureResponse)
@@ -323,7 +327,9 @@ extension ResultViewController: UICollectionViewDataSourcePrefetching {
     
     func collectionView(_ collectionView: UICollectionView, cancelPrefetchingForItemsAt indexPaths: [IndexPath]) {
         for idx in indexPaths {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ResultCollectionViewCell.identifier, for: idx) as! ResultCollectionViewCell
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ResultCollectionViewCell.identifier, for: idx) as? ResultCollectionViewCell else {
+                return
+            }
             cell.cancelDownload()
         }
     }
