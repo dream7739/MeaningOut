@@ -15,7 +15,7 @@ class NicknameViewController: UIViewController {
     let validLabel = UILabel()
     let completeButton = RoundButton()
     
-    var viewType: Constant.ViewType =  .nickname
+    var viewType: ViewType =  .nickname
     var isValid = false
     var selectedProfileImage: String?
     
@@ -220,7 +220,7 @@ extension NicknameViewController: BaseProtocol {
         }
         profileView.profileImage.image = UIImage(named: selectedProfileImage!)
         
-        nicknameField.placeholder = Constant.PlaceholderType.nickname.rawValue
+        nicknameField.placeholder = Display.PlaceholderType.nickname.rawValue
         nicknameField.clearButtonMode = .whileEditing
         
         validLabel.font = Constant.FontType.tertiary

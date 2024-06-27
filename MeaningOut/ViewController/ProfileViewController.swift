@@ -17,7 +17,7 @@ class ProfileViewController: UIViewController {
     var selectedProfile: String?
     var profileDataSender: ((_ data: String?) -> Void)?
     
-    var viewType: Constant.ViewType = .profile
+    var viewType: UIViewController.ViewType = .profile
     
     func layout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()

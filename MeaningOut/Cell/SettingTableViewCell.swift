@@ -30,7 +30,7 @@ class SettingTableViewCell: UITableViewCell {
 }
 
 extension SettingTableViewCell {
-    func configureData(_ data: Constant.SettingType){
+    func configureData(_ data: Display.SettingType){
         nameLabel.text = data.title
         
         if data == .cart {
@@ -91,3 +91,4 @@ extension SettingTableViewCell: BaseProtocol {
         countLabel.font = Constant.FontType.tertiary
     }
 }
+

@@ -140,12 +140,12 @@ extension SettingViewController: BaseProtocol {
 
 extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Constant.SettingType.allCases.count
+        return Display.SettingType.allCases.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SettingTableViewCell.identifier, for: indexPath) as! SettingTableViewCell
-        let data = Constant.SettingType.allCases[indexPath.row]
+        let data = Display.SettingType.allCases[indexPath.row]
         cell.selectionStyle = .none
         cell.configureData(data)
         return cell

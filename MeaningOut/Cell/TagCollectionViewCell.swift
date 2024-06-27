@@ -37,7 +37,7 @@ class TagCollectionViewCell: UICollectionViewCell {
 }
 
 extension TagCollectionViewCell {
-    func configureData(_ data: Constant.SortType){
+    func configureData(_ data: Display.SortType){
         tagLabel.text = data.title
     }
 }
@@ -59,4 +59,8 @@ extension TagCollectionViewCell: BaseProtocol {
         tagLabel.textAlignment = .center
         tagLabel.clipsToBounds = true
     }
+}
+
+extension TagCollectionViewCell {
+   
 }
