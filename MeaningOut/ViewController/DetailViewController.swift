@@ -10,9 +10,9 @@ import WebKit
 import SnapKit
 
 class DetailViewController: UIViewController {
-
+    
     let webView = WKWebView()
-
+    
     let indicator = UIActivityIndicatorView(style: .large)
     
     let emptyView = EmptyView(type: .link)
@@ -43,23 +43,22 @@ extension DetailViewController {
         guard let productId else { return }
         let image: UIImage
         
-        if !UserManager.likeSet.isEmpty && UserManager.likeSet.contains(productId){
+        if let _ = UserManager.likeDict[productId], !UserManager.likeDict.isEmpty {
             isClicked = true
             image = Constant.ImageType.like_selected!
         }else{
             isClicked = false
             image = Constant.ImageType.like_unselected!
         }
-        
         let likeButton = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(likeButtonClicked))
         navigationItem.rightBarButtonItem = likeButton
     }
     
     @objc func likeButtonClicked(){
         guard let productId else { return }
-
+        
         isClicked.toggle()
-
+        
         if isClicked {
             UserManager.addLikeList(productId)
             navigationItem.rightBarButtonItem?.image = Constant.ImageType.like_selected!

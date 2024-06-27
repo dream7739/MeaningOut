@@ -15,18 +15,10 @@ struct UserDefaultsManager<T: Codable> {
     
     var wrappedValue: T {
         get{
-            if let data = self.storage.object(forKey: key) as? Data {
-                if let decodeData = try? JSONDecoder().decode(T.self, from: data){
-                    return decodeData
-                }
-            }
-            
-            return defaultValue
+            return self.storage.object(forKey: key) as? T ?? defaultValue
         }
         set{
-            if let data = try? JSONEncoder().encode(newValue) {
-                self.storage.set(data, forKey: key)
-            }
+            self.storage.set(newValue, forKey: key)
         }
     }
 }
@@ -73,22 +65,18 @@ class UserManager {
     static var recentList: [String] = []
     
     @UserDefaultsManager(
-        defaultValue: [],
-        key: "likeSet",
+        defaultValue: [:],
+        key: "likeDict",
         storage: .standard
     )
-    static var likeSet: Set<String>
+    static var likeDict: [String: Int]
     
     static func addLikeList(_ productId: String){
-        if !UserManager.likeSet.contains(productId){
-            UserManager.likeSet.insert(productId)
-        }
+        UserManager.likeDict[productId] = 0
     }
     
     static func removeLikeList(_ productId: String){
-        if UserManager.likeSet.contains(productId){
-            UserManager.likeSet.remove(productId)
-        }
+        UserManager.likeDict[productId] = nil
     }
     
     static func resetAll(){

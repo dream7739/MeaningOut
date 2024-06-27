@@ -34,7 +34,7 @@ extension SettingTableViewCell {
         nameLabel.text = data.title
         
         if data == .cart {
-            let countText = "\(UserManager.likeSet.count)개의 상품"
+            let countText = "\(UserManager.likeDict.count)개의 상품"
             countLabel.text = countText
             
             let font = UIFont.boldSystemFont(ofSize: 14)

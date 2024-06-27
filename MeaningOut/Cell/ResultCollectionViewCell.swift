@@ -60,7 +60,7 @@ extension ResultCollectionViewCell {
         nameLabel.text = data.titleDescription
         priceLabel.text = data.priceDescription
         
-        if !UserManager.likeSet.isEmpty && UserManager.likeSet.contains(data.productId) {
+        if let _ = UserManager.likeDict[data.productId], !UserManager.likeDict.isEmpty {
             isClicked = true
         }else{
             isClicked = false
