@@ -19,19 +19,6 @@ class SearchViewController: UIViewController {
     
     let emptyView = EmptyView(type: .search)
     
-    override func viewWillAppear(_ animated: Bool) {
-        configureNav(.search)
-        
-        searchController.searchBar.searchTextField.text = ""
-        
-        searchController.isActive = false
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(deleteButtonClicked),
-                                               name: ShopNotification.delete,
-                                               object: nil)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
@@ -44,6 +31,20 @@ class SearchViewController: UIViewController {
         
         print(UserManager.savedList)
         resetButton.addTarget(self, action: #selector(resetButtonClicked), for: .touchUpInside)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configureNav(.search)
+        
+        searchController.searchBar.searchTextField.text = ""
+        
+        searchController.isActive = false
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(deleteButtonClicked),
+                                               name: ShopNotification.delete,
+                                               object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
