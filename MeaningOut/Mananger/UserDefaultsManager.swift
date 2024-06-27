@@ -61,9 +61,7 @@ class UserManager {
         storage: .standard
     )
     static var savedList: [String]
-    
-    static var recentList: [String] = []
-    
+        
     @UserDefaultsManager(
         defaultValue: [:],
         key: "likeDict",

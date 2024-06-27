@@ -42,6 +42,7 @@ class SearchViewController: UIViewController {
         configureLayout()
         configureUI()
         
+        print(UserManager.savedList)
         resetButton.addTarget(self, action: #selector(resetButtonClicked), for: .touchUpInside)
     }
     
@@ -75,20 +76,17 @@ extension SearchViewController {
     }
     
     @objc func resetButtonClicked(){
-        UserManager.recentList.removeAll()
-        UserManager.savedList = UserManager.recentList
-        
+        UserManager.savedList.removeAll()
         setContentEmpty()
     }
     
     @objc func deleteButtonClicked(notification: Notification){
         guard let indexPath = notification.userInfo?[ShopNotificationKey.indexPath] as? IndexPath else { return }
         
-        UserManager.recentList.remove(at: indexPath.row)
-        UserManager.savedList = UserManager.recentList
+        UserManager.savedList.remove(at: indexPath.row)
         tableView.reloadData()
         
-        if UserManager.recentList.isEmpty {
+        if UserManager.savedList.isEmpty {
             setContentEmpty()
         }
     }
@@ -135,7 +133,7 @@ extension SearchViewController: BaseProtocol {
         if UserManager.savedList.isEmpty {
             emptyView.isHidden = false
         }else{
-            UserManager.recentList = UserManager.savedList
+            UserManager.savedList = UserManager.savedList
             emptyView.isHidden = true
         }
         
@@ -150,9 +148,8 @@ extension SearchViewController: UISearchBarDelegate {
         if !input.isEmpty {
             let savedInput = input.lowercased()
             
-            if !UserManager.recentList.contains(savedInput){
-                UserManager.recentList.insert(savedInput, at: 0)
-                UserManager.savedList = UserManager.recentList
+            if !UserManager.savedList.contains(savedInput){
+                UserManager.savedList.insert(savedInput, at: 0)
             }
             
             if !emptyView.isHidden {
@@ -170,21 +167,20 @@ extension SearchViewController: UISearchBarDelegate {
 
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return UserManager.recentList.count
+        return UserManager.savedList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.identifier, for: indexPath) as! SearchTableViewCell
-        cell.configureData(UserManager.recentList[indexPath.row])
+        cell.configureData(UserManager.savedList[indexPath.row])
         cell.indexPath = indexPath
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = ResultViewController()
-        vc.keyword = UserManager.recentList[indexPath.row]
+        vc.keyword = UserManager.savedList[indexPath.row]
         navigationController?.pushViewController(vc, animated: true)
-        
         tableView.reloadRows(at: [indexPath], with: .none)
     }
 }
