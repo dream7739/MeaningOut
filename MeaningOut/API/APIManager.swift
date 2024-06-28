@@ -35,7 +35,8 @@ class APIManager {
         urlRequest.httpMethod = request.method
         urlRequest.allHTTPHeaderFields = request.header
         
-        URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+        URLSession.shared.executeTask(urlRequest){
+            data, response, error in
             DispatchQueue.main.async {
                 
                 guard error == nil else {
@@ -65,7 +66,7 @@ class APIManager {
                     completion(.failure(.invalidData))
                 }
             }
-        }.resume()
+        }
     }
 }
 
