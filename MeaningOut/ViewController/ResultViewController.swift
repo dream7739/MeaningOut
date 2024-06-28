@@ -89,9 +89,7 @@ extension ResultViewController {
                 switch result {
                 case .success(let value):
                     
-                    if self.networkView.isHidden == false {
-                        self.networkView.isHidden = true
-                    }
+                    self.networkView.isHidden = true
                     
                     if value.total == 0 {
                         self.emptyView.isHidden = false

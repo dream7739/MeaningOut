@@ -25,13 +25,14 @@ class ProfileViewController: UIViewController {
         layout.collectionView?.isScrollEnabled = false
         
         let spacing: CGFloat = 10
-        let sectionInset: CGFloat = 20
-        let width = (view.bounds.width - (spacing * 3) - (sectionInset * 2)) / 4
+        let verticalInset: CGFloat = 20
+        let horizontalInset: CGFloat = 30
+        let width = (view.bounds.width - (spacing * 2) - (horizontalInset * 2)) / 3
         
         layout.itemSize = CGSize(width: width, height: width)
         layout.minimumLineSpacing = spacing
         layout.minimumInteritemSpacing = spacing
-        layout.sectionInset = UIEdgeInsets(top: sectionInset, left: sectionInset, bottom: sectionInset, right: sectionInset)
+        layout.sectionInset = UIEdgeInsets(top: verticalInset, left: horizontalInset, bottom: verticalInset, right: horizontalInset)
         
         return layout
     }

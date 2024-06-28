@@ -54,9 +54,6 @@ enum Design {
             case profile_6
             case profile_7
             case profile_8
-            case profile_9
-            case profile_10
-            case profile_11
 
             static var randomTitle: String {
                 return ProfileType.allCases.randomElement()!.rawValue
