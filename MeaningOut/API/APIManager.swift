@@ -33,7 +33,6 @@ class APIManager {
         
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = request.method
-     
         urlRequest.allHTTPHeaderFields = request.header
         
         URLSession.shared.dataTask(with: urlRequest) { data, response, error in
