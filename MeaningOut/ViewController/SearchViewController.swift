@@ -56,8 +56,8 @@ class SearchViewController: UIViewController {
 extension SearchViewController {
     func configureSearch(){
         navigationItem.searchController = searchController
-        searchController.searchBar.searchTextField.placeholder = Display.PlaceholderType.search.rawValue
-        searchController.searchBar.tintColor = Constant.ColorType.black
+        searchController.searchBar.searchTextField.placeholder = Display.Placeholder.search.rawValue
+        searchController.searchBar.tintColor = Design.ColorType.black
         searchController.searchBar.delegate = self
     }
     
@@ -127,8 +127,8 @@ extension SearchViewController: BaseProtocol {
         recentLabel.font = .systemFont(ofSize: 16, weight: .black)
         
         resetButton.setTitle("전체 삭제", for: .normal)
-        resetButton.setTitleColor(Constant.ColorType.theme, for: .normal)
-        resetButton.titleLabel?.font = Constant.FontType.tertiary
+        resetButton.setTitleColor(Design.ColorType.theme, for: .normal)
+        resetButton.titleLabel?.font = Design.FontType.tertiary
         
         if UserManager.savedList.isEmpty {
             emptyView.isHidden = false

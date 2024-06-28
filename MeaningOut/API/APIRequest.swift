@@ -12,13 +12,13 @@ enum APIRequest{
     
     var method: String {
         switch self {
-        case .shop(let request):
+        case .shop:
             return "GET"
         }
     }
     
     var baseURL: String {
-        return "https://openapi.naver.com/v1/"
+        return APIURL.naver
     }
 
     var endPoint: String {

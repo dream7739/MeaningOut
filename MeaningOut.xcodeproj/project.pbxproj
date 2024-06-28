@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		880448762C1B0E6C00DB7B26 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880448752C1B0E6C00DB7B26 /* Constant.swift */; };
+		880448762C1B0E6C00DB7B26 /* Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880448752C1B0E6C00DB7B26 /* Design.swift */; };
 		883A7DC32C1B0A6C00A4665E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883A7DC22C1B0A6C00A4665E /* AppDelegate.swift */; };
 		883A7DC52C1B0A6C00A4665E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883A7DC42C1B0A6C00A4665E /* SceneDelegate.swift */; };
 		883A7DCC2C1B0A6D00A4665E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 883A7DCB2C1B0A6D00A4665E /* Assets.xcassets */; };
@@ -54,7 +54,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		880448752C1B0E6C00DB7B26 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		880448752C1B0E6C00DB7B26 /* Design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Design.swift; sourceTree = "<group>"; };
 		883A7DBF2C1B0A6C00A4665E /* MeaningOut.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeaningOut.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		883A7DC22C1B0A6C00A4665E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		883A7DC42C1B0A6C00A4665E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -116,7 +116,7 @@
 		880448742C1B0E5800DB7B26 /* Constant */ = {
 			isa = PBXGroup;
 			children = (
-				880448752C1B0E6C00DB7B26 /* Constant.swift */,
+				880448752C1B0E6C00DB7B26 /* Design.swift */,
 				88CE76912C2003C700644F7A /* Notification.swift */,
 				88FEFBA62C2703CB00EB2FAB /* Validation.swift */,
 				88D6B6932C2D7C2A008A598B /* Display.swift */,
@@ -368,7 +368,7 @@
 				88FBDF6F2C1DBDE700AB0BC9 /* PaddingLabel.swift in Sources */,
 				8891D23C2C1EB9E20007F60E /* DetailViewController.swift in Sources */,
 				88FBDF632C1D844600AB0BC9 /* EmptyView.swift in Sources */,
-				880448762C1B0E6C00DB7B26 /* Constant.swift in Sources */,
+				880448762C1B0E6C00DB7B26 /* Design.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

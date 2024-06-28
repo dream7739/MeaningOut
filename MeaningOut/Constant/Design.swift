@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum Constant {
+enum Design {
     static let serviceName = "MeaningOut"
     
     enum ColorType {

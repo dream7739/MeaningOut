@@ -91,14 +91,14 @@ extension ProfileViewController: BaseProtocol {
 
 extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return Constant.ImageType.ProfileType.allCases.count
+        return Design.ImageType.ProfileType.allCases.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProfileCollectionViewCell.identifier, for: indexPath) as? ProfileCollectionViewCell else { return UICollectionViewCell()
         }
         
-        let data = Constant.ImageType.ProfileType.allCases[indexPath.row]
+        let data = Design.ImageType.ProfileType.allCases[indexPath.row]
         
         cell.configureData(data: data)
         
@@ -124,7 +124,7 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
         selectedIndexPath = indexPath
         collectionView.reloadData()
         guard let selectedPath =  selectedIndexPath else { return }
-        let image = Constant.ImageType.ProfileType.allCases[selectedPath.row].rawValue
+        let image = Design.ImageType.ProfileType.allCases[selectedPath.row].rawValue
         selectedProfile = image
         profileView.profileImage.image = UIImage(named: image)
     }

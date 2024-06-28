@@ -76,27 +76,27 @@ extension NicknameViewController {
             isValid = try validateUserInput(input)
             validLabel.text = "사용 가능한 닉네임입니다 :)"
             nicknameField.setLineColor(type: .valid)
-            validLabel.textColor = Constant.ColorType.black
+            validLabel.textColor = Design.ColorType.black
         }catch Validation.Nickname.isEmpty {
             isValid = false
             validLabel.text =  Validation.Nickname.isEmpty.description
             nicknameField.setLineColor(type: .inValid)
-            validLabel.textColor = Constant.ColorType.theme
+            validLabel.textColor = Design.ColorType.theme
         }catch Validation.Nickname.countLimit {
             isValid = false
             validLabel.text = Validation.Nickname.countLimit.description
             nicknameField.setLineColor(type: .inValid)
-            validLabel.textColor = Constant.ColorType.theme
+            validLabel.textColor = Design.ColorType.theme
         }catch Validation.Nickname.isNumber{
             isValid = false
             validLabel.text = Validation.Nickname.isNumber.description
             nicknameField.setLineColor(type: .inValid)
-            validLabel.textColor = Constant.ColorType.theme
+            validLabel.textColor = Design.ColorType.theme
         }catch Validation.Nickname.isSpecialChar {
             isValid = false
             validLabel.text = Validation.Nickname.isSpecialChar.description
             nicknameField.setLineColor(type: .inValid)
-            validLabel.textColor = Constant.ColorType.theme
+            validLabel.textColor = Design.ColorType.theme
         }catch {
             print("Etc error occured")
         }
@@ -214,17 +214,17 @@ extension NicknameViewController: BaseProtocol {
         }
         
         if UserManager.profileImage.isEmpty {
-            selectedProfileImage = Constant.ImageType.ProfileType.randomTitle
+            selectedProfileImage = Design.ImageType.ProfileType.randomTitle
         }else{
             selectedProfileImage = UserManager.profileImage
         }
         profileView.profileImage.image = UIImage(named: selectedProfileImage!)
         
-        nicknameField.placeholder = Display.PlaceholderType.nickname.rawValue
+        nicknameField.placeholder = Display.Placeholder.nickname.rawValue
         nicknameField.clearButtonMode = .whileEditing
         
-        validLabel.font = Constant.FontType.tertiary
-        validLabel.textColor = Constant.ColorType.theme
+        validLabel.font = Design.FontType.tertiary
+        validLabel.textColor = Design.ColorType.theme
         
         completeButton.setTitle("완료", for: .normal)
     }

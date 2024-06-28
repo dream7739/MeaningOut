@@ -12,8 +12,8 @@ class ShopTabBarController : UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tabBar.unselectedItemTintColor = Constant.ColorType.secondary
-        tabBar.tintColor = Constant.ColorType.theme
+        tabBar.unselectedItemTintColor = Design.ColorType.secondary
+        tabBar.tintColor = Design.ColorType.theme
         
         let searchVC = SearchViewController()
         let nav1 = UINavigationController(rootViewController: searchVC)
@@ -21,8 +21,8 @@ class ShopTabBarController : UITabBarController {
         let settingVC = SettingViewController()
         let nav2 = UINavigationController(rootViewController: settingVC)
         
-        nav1.tabBarItem = UITabBarItem(title: "검색", image: Constant.ImageType.search, tag: 0)
-        nav2.tabBarItem = UITabBarItem(title: "설정", image: Constant.ImageType.profile, tag: 1)
+        nav1.tabBarItem = UITabBarItem(title: "검색", image: Design.ImageType.search, tag: 0)
+        nav2.tabBarItem = UITabBarItem(title: "설정", image: Design.ImageType.profile, tag: 1)
         
         setViewControllers([nav1, nav2], animated: true)
    }

@@ -14,11 +14,11 @@ class TagCollectionViewCell: UICollectionViewCell {
     var isClicked: Bool = false{
         didSet {
             if isClicked {
-                tagLabel.backgroundColor = Constant.ColorType.primary
-                tagLabel.textColor = Constant.ColorType.white
+                tagLabel.backgroundColor = Design.ColorType.primary
+                tagLabel.textColor = Design.ColorType.white
             }else{
-                tagLabel.backgroundColor = Constant.ColorType.white
-                tagLabel.textColor = Constant.ColorType.primary
+                tagLabel.backgroundColor = Design.ColorType.white
+                tagLabel.textColor = Design.ColorType.primary
             }
         }
     }
@@ -37,7 +37,7 @@ class TagCollectionViewCell: UICollectionViewCell {
 }
 
 extension TagCollectionViewCell {
-    func configureData(_ data: Display.SortType){
+    func configureData(_ data: Display.SortOption){
         tagLabel.text = data.title
     }
 }
@@ -54,8 +54,8 @@ extension TagCollectionViewCell: BaseProtocol {
     }
     
     func configureUI() {
-        tagLabel.textColor = Constant.ColorType.black
-        tagLabel.font = Constant.FontType.secondary
+        tagLabel.textColor = Design.ColorType.black
+        tagLabel.font = Design.FontType.secondary
         tagLabel.textAlignment = .center
         tagLabel.clipsToBounds = true
     }

@@ -8,7 +8,7 @@
 import Foundation
 
 enum Display {
-    enum SettingType: Int, CaseIterable {
+    enum Setting: Int, CaseIterable {
         case cart = 0
         case questition = 1
         case voc
@@ -31,12 +31,12 @@ enum Display {
         }
     }
     
-    enum PlaceholderType: String {
+    enum Placeholder: String {
         case nickname = "닉네임을 입력해주세요 :)"
         case search = "브랜드, 상품 등을 입력하세요"
     }
     
-    enum SortType: Int, CaseIterable {
+    enum SortOption: Int, CaseIterable {
         case sim = 0
         case date = 1
         case dsc = 2

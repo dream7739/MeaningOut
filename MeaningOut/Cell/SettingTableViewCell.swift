@@ -30,7 +30,7 @@ class SettingTableViewCell: UITableViewCell {
 }
 
 extension SettingTableViewCell {
-    func configureData(_ data: Display.SettingType){
+    func configureData(_ data: Display.Setting){
         nameLabel.text = data.title
         
         if data == .cart {
@@ -82,13 +82,13 @@ extension SettingTableViewCell: BaseProtocol {
     }
     
     func configureUI() {
-        nameLabel.textColor = Constant.ColorType.black
-        nameLabel.font = Constant.FontType.secondary
+        nameLabel.textColor = Design.ColorType.black
+        nameLabel.font = Design.FontType.secondary
         
-        likeImage.image = Constant.ImageType.like_selected
+        likeImage.image = Design.ImageType.like_selected
     
-        countLabel.textColor = Constant.ColorType.black
-        countLabel.font = Constant.FontType.tertiary
+        countLabel.textColor = Design.ColorType.black
+        countLabel.font = Design.FontType.tertiary
     }
 }
 

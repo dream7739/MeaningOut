@@ -42,7 +42,7 @@ class ResultViewController: UIViewController {
     
     var display = 30
     
-    var sort: String = Display.SortType.sim.sortParam
+    var sort: String = Display.SortOption.sim.sortParam
     
     var shopResult = ShopResult(total: 0, start: 0, display: 0, items: [])
     
@@ -191,7 +191,7 @@ extension ResultViewController: BaseProtocol {
     
     func configureUI() {
         resultLabel.font = .boldSystemFont(ofSize: 14)
-        resultLabel.textColor = Constant.ColorType.theme
+        resultLabel.textColor = Design.ColorType.theme
         emptyView.isHidden = true
         networkView.isHidden = true
     }
@@ -200,7 +200,7 @@ extension ResultViewController: BaseProtocol {
 extension ResultViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == tagCollectionView {
-            return Display.SortType.allCases.count
+            return Display.SortOption.allCases.count
         }else{
             return shopResult.items.count
         }
@@ -212,7 +212,7 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
                 return UICollectionViewCell()
             }
             
-            let data = Display.SortType.allCases[indexPath.row]
+            let data = Display.SortOption.allCases[indexPath.row]
             cell.configureData(data)
             
             if indexPath == selectedIndexPath {
@@ -237,8 +237,8 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == tagCollectionView {
             let label = PaddingLabel()
-            label.text = Display.SortType.allCases[indexPath.row].title
-            label.font = Constant.FontType.secondary
+            label.text = Display.SortOption.allCases[indexPath.row].title
+            label.font = Design.FontType.secondary
             
             let size = label.intrinsicContentSize
             return CGSize(width: size.width, height: size.height)
@@ -261,7 +261,7 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
                 selectedIndexPath = indexPath
                 collectionView.reloadData()
                 
-                sort = Display.SortType.allCases[indexPath.row].sortParam
+                sort = Display.SortOption.allCases[indexPath.row].sortParam
                 start = 1
                 
                 callNaverShop()

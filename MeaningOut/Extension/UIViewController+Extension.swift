@@ -45,7 +45,7 @@ extension UIViewController {
         var toastStyle = ToastStyle()
         toastStyle.cornerRadius = 20
         toastStyle.horizontalPadding = 15
-        toastStyle.backgroundColor = Constant.ColorType.primary
+        toastStyle.backgroundColor = Design.ColorType.primary
         
         view.makeToast(
             text,

@@ -74,23 +74,23 @@ extension NetworkView: BaseProtocol {
     func configureUI(){
         backgroundColor = .white
         
-        networkImage.image = Constant.ImageType.wifi
-        networkImage.tintColor = Constant.ColorType.tertiary
+        networkImage.image = Design.ImageType.wifi
+        networkImage.tintColor = Design.ColorType.tertiary
         
         titleLabel.font = .systemFont(ofSize: 20)
-        titleLabel.textColor = Constant.ColorType.primary
+        titleLabel.textColor = Design.ColorType.primary
         titleLabel.textAlignment = .center
         titleLabel.text = "네트워크 연결이 원할하지 않습니다"
         
-        descriptionLabel.font = Constant.FontType.tertiary
-        descriptionLabel.textColor = Constant.ColorType.secondary
+        descriptionLabel.font = Design.FontType.tertiary
+        descriptionLabel.textColor = Design.ColorType.secondary
         descriptionLabel.textAlignment = .center
         descriptionLabel.numberOfLines = 2
         descriptionLabel.text = "네트워크 연결 상태를 확인하고\n다시 시도해 주세요"
         
         retryButton.layer.cornerRadius = 20
-        retryButton.backgroundColor = Constant.ColorType.black
-        retryButton.setTitleColor(Constant.ColorType.white, for: .normal)
+        retryButton.backgroundColor = Design.ColorType.black
+        retryButton.setTitleColor(Design.ColorType.white, for: .normal)
         retryButton.setTitle("다시 시도", for: .normal)
 
     }

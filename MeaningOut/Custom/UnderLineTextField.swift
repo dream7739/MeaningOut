@@ -13,8 +13,8 @@ class UnderLineTextField : UITextField {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        tintColor = Constant.ColorType.theme
-        textColor = Constant.ColorType.primary
+        tintColor = Design.ColorType.theme
+        textColor = Design.ColorType.primary
         
         configureUI()
     }
@@ -24,7 +24,7 @@ class UnderLineTextField : UITextField {
     }
     
     private func configureUI(){
-        underline.backgroundColor = Constant.ColorType.tertiary
+        underline.backgroundColor = Design.ColorType.tertiary
         addSubview(underline)
         
         underline.snp.makeConstraints { make in
@@ -36,11 +36,11 @@ class UnderLineTextField : UITextField {
     func setLineColor(type: UnderLineTextField.TextFieldType){
         switch type {
         case .normal:
-            underline.backgroundColor = Constant.ColorType.tertiary
+            underline.backgroundColor = Design.ColorType.tertiary
         case .valid:
-            underline.backgroundColor = Constant.ColorType.black
+            underline.backgroundColor = Design.ColorType.black
         case .inValid:
-            underline.backgroundColor = Constant.ColorType.theme
+            underline.backgroundColor = Design.ColorType.theme
         }
     }
     

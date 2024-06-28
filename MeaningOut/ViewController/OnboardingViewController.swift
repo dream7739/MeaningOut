@@ -60,12 +60,12 @@ extension OnboardingViewController: BaseProtocol {
     }
     
     func configureUI() {
-        titleLabel.text = Constant.serviceName
+        titleLabel.text = Design.serviceName
         titleLabel.font = .systemFont(ofSize: 40, weight: .heavy)
-        titleLabel.textColor = Constant.ColorType.theme
+        titleLabel.textColor = Design.ColorType.theme
         
         launchImage.contentMode = .scaleAspectFill
-        launchImage.image = Constant.ImageType.start
+        launchImage.image = Design.ImageType.start
         
         startButton.setTitle("시작하기", for: .normal)
         

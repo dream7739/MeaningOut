@@ -17,7 +17,7 @@ class PaddingLabel: UILabel {
         super.init(frame: frame)
         layer.cornerRadius = 16
         layer.borderWidth = 1
-        layer.borderColor = Constant.ColorType.tertiary.cgColor
+        layer.borderColor = Design.ColorType.tertiary.cgColor
     }
     
     required init?(coder: NSCoder) {

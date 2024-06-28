@@ -123,17 +123,17 @@ extension SettingViewController: BaseProtocol {
         profileImage.image = UIImage(named: UserManager.profileImage)
         
         nicknameLabel.font = .systemFont(ofSize: 16, weight: .heavy)
-        nicknameLabel.textColor = Constant.ColorType.black
+        nicknameLabel.textColor = Design.ColorType.black
         nicknameLabel.text = UserManager.nickname
         
-        dateLabel.font = Constant.FontType.tertiary
-        dateLabel.textColor = Constant.ColorType.secondary
+        dateLabel.font = Design.FontType.tertiary
+        dateLabel.textColor = Design.ColorType.secondary
         dateLabel.text = UserManager.joinDate + " 가입"
         
-        indicatorImage.image = Constant.ImageType.next
-        indicatorImage.tintColor = Constant.ColorType.secondary
+        indicatorImage.image = Design.ImageType.next
+        indicatorImage.tintColor = Design.ColorType.secondary
         
-        sepratorLabel.backgroundColor = Constant.ColorType.tertiary
+        sepratorLabel.backgroundColor = Design.ColorType.tertiary
         
     }
     
@@ -141,12 +141,12 @@ extension SettingViewController: BaseProtocol {
 
 extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Display.SettingType.allCases.count
+        return Display.Setting.allCases.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SettingTableViewCell.identifier, for: indexPath) as! SettingTableViewCell
-        let data = Display.SettingType.allCases[indexPath.row]
+        let data = Display.Setting.allCases[indexPath.row]
         cell.selectionStyle = .none
         cell.configureData(data)
         return cell

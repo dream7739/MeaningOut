@@ -29,11 +29,11 @@ class ResultCollectionViewCell: UICollectionViewCell {
     var isClicked: Bool = false {
         didSet {
             if isClicked {
-                likeView.backgroundColor = Constant.ColorType.white
-                likeImage.image = Constant.ImageType.like_selected
+                likeView.backgroundColor = Design.ColorType.white
+                likeImage.image = Design.ImageType.like_selected
             }else{
-                likeView.backgroundColor = Constant.ColorType.black.withAlphaComponent(0.3)
-                likeImage.image = Constant.ImageType.like_unselected
+                likeView.backgroundColor = Design.ColorType.black.withAlphaComponent(0.3)
+                likeImage.image = Design.ImageType.like_unselected
             }
         }
     }
@@ -142,20 +142,20 @@ extension ResultCollectionViewCell: BaseProtocol {
         itemImage.clipsToBounds = true
         itemImage.contentMode = .scaleAspectFill
         
-        companyLabel.font = Constant.FontType.quaternary
-        companyLabel.textColor = Constant.ColorType.tertiary
+        companyLabel.font = Design.FontType.quaternary
+        companyLabel.textColor = Design.ColorType.tertiary
         
-        nameLabel.font = Constant.FontType.tertiary
-        nameLabel.textColor = Constant.ColorType.black
+        nameLabel.font = Design.FontType.tertiary
+        nameLabel.textColor = Design.ColorType.black
         nameLabel.numberOfLines = 2
         
         priceLabel.font = .systemFont(ofSize: 16, weight: .heavy)
-        priceLabel.textColor = Constant.ColorType.black
+        priceLabel.textColor = Design.ColorType.black
         
-        likeView.backgroundColor = Constant.ColorType.black.withAlphaComponent(0.3)
+        likeView.backgroundColor = Design.ColorType.black.withAlphaComponent(0.3)
         likeView.layer.cornerRadius = 7
         
-        likeImage.image = Constant.ImageType.like_unselected
+        likeImage.image = Design.ImageType.like_unselected
         
         likeButton.backgroundColor = .clear
     }

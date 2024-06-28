@@ -45,10 +45,10 @@ extension DetailViewController {
         
         if let _ = UserManager.likeDict[productId], !UserManager.likeDict.isEmpty {
             isClicked = true
-            image = Constant.ImageType.like_selected ?? UIImage()
+            image = Design.ImageType.like_selected ?? UIImage()
         }else{
             isClicked = false
-            image = Constant.ImageType.like_unselected ?? UIImage()
+            image = Design.ImageType.like_unselected ?? UIImage()
         }
         let likeButton = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(likeButtonClicked))
         navigationItem.rightBarButtonItem = likeButton
@@ -61,10 +61,10 @@ extension DetailViewController {
         
         if isClicked {
             UserManager.addLikeList(productId)
-            navigationItem.rightBarButtonItem?.image = Constant.ImageType.like_selected ?? UIImage()
+            navigationItem.rightBarButtonItem?.image = Design.ImageType.like_selected ?? UIImage()
         }else{
             UserManager.removeLikeList(productId)
-            navigationItem.rightBarButtonItem?.image = Constant.ImageType.like_unselected ?? UIImage()
+            navigationItem.rightBarButtonItem?.image = Design.ImageType.like_unselected ?? UIImage()
         }
     }
 }
@@ -92,7 +92,7 @@ extension DetailViewController: BaseProtocol {
     
     func configureUI() {
         webView.navigationDelegate = self
-        indicator.color = Constant.ColorType.secondary
+        indicator.color = Design.ColorType.secondary
         indicator.isHidden = true
         emptyView.isHidden = true
         

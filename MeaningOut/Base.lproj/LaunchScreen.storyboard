@@ -29,20 +29,12 @@
                                     <constraint firstAttribute="width" secondItem="Szg-pV-jb7" secondAttribute="height" multiplier="3:4" id="VXW-8e-30O"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="홍정민" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DSo-hu-aaw">
-                                <rect key="frame" x="164" y="600.33333333333337" width="65" height="30"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
-                                <color key="textColor" red="0.93725490199999995" green="0.53725490200000003" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="kAA-5o-glf" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="E3v-fc-gNz"/>
                             <constraint firstItem="Szg-pV-jb7" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="76" id="NJL-k1-YFB"/>
-                            <constraint firstItem="DSo-hu-aaw" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="RJk-8i-W0Q"/>
-                            <constraint firstItem="DSo-hu-aaw" firstAttribute="top" secondItem="Szg-pV-jb7" secondAttribute="bottom" constant="32" id="gl4-7M-ce4"/>
                             <constraint firstItem="Szg-pV-jb7" firstAttribute="top" secondItem="kAA-5o-glf" secondAttribute="bottom" constant="60" id="lva-om-VKf"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Szg-pV-jb7" secondAttribute="trailing" constant="76" id="nYg-bU-8IN"/>
                             <constraint firstItem="kAA-5o-glf" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="80" id="wy7-As-pbp"/>

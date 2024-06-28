@@ -20,9 +20,30 @@ struct ShopResult: Decodable {
     let start: Int
     let display: Int
     var items: [Shop]
+    let totalDescription: String
     
-    var totalDescription: String {
-        return "\(total.formatted())개의 검색 결과"
+    enum CodingKeys: CodingKey {
+        case total
+        case start
+        case display
+        case items
+    }
+
+    init(total: Int, start:Int, display: Int, items: [Shop]){
+        self.total = total
+        self.start = start
+        self.display = display
+        self.items = items
+        self.totalDescription = "\(total.formatted())개의 검색 결과"
+    }
+    
+    init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.total = try container.decode(Int.self, forKey: .total)
+        self.start = try container.decode(Int.self, forKey: .start)
+        self.display = try container.decode(Int.self, forKey: .display)
+        self.items = try container.decode([Shop].self, forKey: .items)
+        self.totalDescription =  "\(total.formatted())개의 검색 결과"
     }
 }
 
@@ -33,17 +54,32 @@ struct Shop: Decodable {
     let lprice: String
     let mallName: String
     let productId: String
+    let titleDescription: String
+    let priceDescription: String
     
-    var titleDescription: String {
-        return title.htmlToAttributedString()?.string ?? title
+    enum CodingKeys: CodingKey {
+        case title
+        case link
+        case image
+        case lprice
+        case mallName
+        case productId
     }
     
-    var priceDescription: String {
-        guard let price = Int(lprice) else{
-            return lprice + "원"
+    init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.title = try container.decode(String.self, forKey: .title)
+        self.link = try container.decode(String.self, forKey: .link)
+        self.image = try container.decode(String.self, forKey: .image)
+        self.lprice = try container.decode(String.self, forKey: .lprice)
+        self.mallName = try container.decode(String.self, forKey: .mallName)
+        self.productId = try container.decode(String.self, forKey: .productId)
+        self.titleDescription = title.htmlToAttributedString()?.string ?? title
+        if let price = Int(self.lprice) {
+            self.priceDescription = price.formatted() + "원"
+        }else{
+            self.priceDescription = lprice + "원"
         }
-        
-        return price.formatted() + "원"
     }
-
+ 
 }

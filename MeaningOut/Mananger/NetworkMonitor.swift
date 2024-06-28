@@ -29,15 +29,6 @@ final class NetworkMonitor {
             }else{
                 self?.isConnected = false
             }
-            
-            self?.getConnectionType(path)
-            
-            if self?.isConnected == true {
-                print("연결이 된 상태")
-            }else{
-                print("연결이 안된 상태")
-            }
-            
         }
     }
     
