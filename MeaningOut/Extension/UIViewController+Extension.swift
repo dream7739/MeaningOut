@@ -17,6 +17,10 @@ extension UIViewController {
     func configureNav(_ viewType: ViewType){
         navigationItem.title = viewType.navigationTitle
         
+        navigationController?.navigationBar.titleTextAttributes = [
+            NSAttributedString.Key.font: Design.FontType.gmarketMedium!
+        ]
+        
         let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
         backBarButtonItem.tintColor = .black
         navigationItem.backBarButtonItem = backBarButtonItem

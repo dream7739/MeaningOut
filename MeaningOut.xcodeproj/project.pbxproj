@@ -25,6 +25,9 @@
 		8871F6672C1C6DAA00A7A36B /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8871F6662C1C6DAA00A7A36B /* SearchViewController.swift */; };
 		8871F6692C1C6DD600A7A36B /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8871F6682C1C6DD600A7A36B /* SettingViewController.swift */; };
 		8871F66F2C1C6F9400A7A36B /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8871F66E2C1C6F9400A7A36B /* UserDefaultsManager.swift */; };
+		8874E5EF2C2EC9E600DF0CE4 /* GmarketSansMedium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8874E5EC2C2EC9E600DF0CE4 /* GmarketSansMedium.otf */; };
+		8874E5F02C2EC9E600DF0CE4 /* GmarketSansBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8874E5ED2C2EC9E600DF0CE4 /* GmarketSansBold.otf */; };
+		8874E5F12C2EC9E600DF0CE4 /* GmarketSansLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8874E5EE2C2EC9E600DF0CE4 /* GmarketSansLight.otf */; };
 		887B29982C1B133C009F3630 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887B29972C1B133C009F3630 /* OnboardingViewController.swift */; };
 		887B299B2C1B1424009F3630 /* BaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887B299A2C1B1424009F3630 /* BaseProtocol.swift */; };
 		887B299E2C1B14A9009F3630 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887B299D2C1B14A9009F3630 /* UIViewController+Extension.swift */; };
@@ -70,6 +73,9 @@
 		8871F6662C1C6DAA00A7A36B /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		8871F6682C1C6DD600A7A36B /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		8871F66E2C1C6F9400A7A36B /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
+		8874E5EC2C2EC9E600DF0CE4 /* GmarketSansMedium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GmarketSansMedium.otf; sourceTree = "<group>"; };
+		8874E5ED2C2EC9E600DF0CE4 /* GmarketSansBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GmarketSansBold.otf; sourceTree = "<group>"; };
+		8874E5EE2C2EC9E600DF0CE4 /* GmarketSansLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GmarketSansLight.otf; sourceTree = "<group>"; };
 		887B29972C1B133C009F3630 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		887B299A2C1B1424009F3630 /* BaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseProtocol.swift; sourceTree = "<group>"; };
 		887B299D2C1B14A9009F3630 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
@@ -144,6 +150,7 @@
 		883A7DC12C1B0A6C00A4665E /* MeaningOut */ = {
 			isa = PBXGroup;
 			children = (
+				8874E5EB2C2EC9DB00DF0CE4 /* Font */,
 				883E55872C255EBB00A74170 /* API */,
 				88FBDF722C1DD68700AB0BC9 /* Model */,
 				8871F66D2C1C6F7200A7A36B /* Mananger */,
@@ -191,6 +198,16 @@
 				8871F66E2C1C6F9400A7A36B /* UserDefaultsManager.swift */,
 			);
 			path = Mananger;
+			sourceTree = "<group>";
+		};
+		8874E5EB2C2EC9DB00DF0CE4 /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				8874E5ED2C2EC9E600DF0CE4 /* GmarketSansBold.otf */,
+				8874E5EE2C2EC9E600DF0CE4 /* GmarketSansLight.otf */,
+				8874E5EC2C2EC9E600DF0CE4 /* GmarketSansMedium.otf */,
+			);
+			path = Font;
 			sourceTree = "<group>";
 		};
 		887B29962C1B1323009F3630 /* ViewController */ = {
@@ -319,7 +336,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8874E5F02C2EC9E600DF0CE4 /* GmarketSansBold.otf in Resources */,
+				8874E5F12C2EC9E600DF0CE4 /* GmarketSansLight.otf in Resources */,
 				883A7DD72C1B0B5C00A4665E /* .gitignore in Resources */,
+				8874E5EF2C2EC9E600DF0CE4 /* GmarketSansMedium.otf in Resources */,
 				883A7DCC2C1B0A6D00A4665E /* Assets.xcassets in Resources */,
 				883A7DCF2C1B0A6D00A4665E /* Base in Resources */,
 			);

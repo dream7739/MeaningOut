@@ -123,6 +123,8 @@ extension SearchViewController: BaseProtocol {
     }
     
     func configureUI() {
+        searchController.searchBar.searchTextField.backgroundColor = Design.ColorType.tertiary.withAlphaComponent(0.1)
+        
         recentLabel.text = "최근 검색"
         recentLabel.font = .systemFont(ofSize: 16, weight: .black)
         

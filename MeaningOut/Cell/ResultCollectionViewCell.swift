@@ -143,7 +143,7 @@ extension ResultCollectionViewCell: BaseProtocol {
         itemImage.contentMode = .scaleAspectFill
         
         companyLabel.font = Design.FontType.quaternary
-        companyLabel.textColor = Design.ColorType.tertiary
+        companyLabel.textColor = Design.ColorType.secondary
         
         nameLabel.font = Design.FontType.tertiary
         nameLabel.textColor = Design.ColorType.black

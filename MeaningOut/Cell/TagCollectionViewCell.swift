@@ -14,7 +14,7 @@ class TagCollectionViewCell: UICollectionViewCell {
     var isClicked: Bool = false{
         didSet {
             if isClicked {
-                tagLabel.backgroundColor = Design.ColorType.primary
+                tagLabel.backgroundColor = Design.ColorType.black
                 tagLabel.textColor = Design.ColorType.white
             }else{
                 tagLabel.backgroundColor = Design.ColorType.white

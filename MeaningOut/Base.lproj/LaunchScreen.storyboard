@@ -17,27 +17,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MeaningOut" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kAA-5o-glf">
-                                <rect key="frame" x="77.666666666666686" y="139" width="238" height="48"/>
-                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="40"/>
-                                <color key="textColor" red="0.93725490196078431" green="0.53725490196078429" blue="0.27843137254901962" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launch" translatesAutoresizingMaskIntoConstraints="NO" id="Szg-pV-jb7">
-                                <rect key="frame" x="76" y="246.99999999999997" width="241" height="321.33333333333326"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="Szg-pV-jb7" secondAttribute="height" multiplier="3:4" id="VXW-8e-30O"/>
-                                </constraints>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash" translatesAutoresizingMaskIntoConstraints="NO" id="ixY-2t-aEJ">
+                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="kAA-5o-glf" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="E3v-fc-gNz"/>
-                            <constraint firstItem="Szg-pV-jb7" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="76" id="NJL-k1-YFB"/>
-                            <constraint firstItem="Szg-pV-jb7" firstAttribute="top" secondItem="kAA-5o-glf" secondAttribute="bottom" constant="60" id="lva-om-VKf"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Szg-pV-jb7" secondAttribute="trailing" constant="76" id="nYg-bU-8IN"/>
-                            <constraint firstItem="kAA-5o-glf" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="80" id="wy7-As-pbp"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ixY-2t-aEJ" secondAttribute="trailing" id="FTH-x7-mf8"/>
+                            <constraint firstItem="ixY-2t-aEJ" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="LPI-T3-NzG"/>
+                            <constraint firstItem="ixY-2t-aEJ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Yml-Xd-PZf"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="ixY-2t-aEJ" secondAttribute="bottom" id="heb-jg-iyk"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -47,7 +37,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="launch" width="350" height="263.33334350585938"/>
+        <image name="splash" width="375" height="812"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

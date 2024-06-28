@@ -42,14 +42,15 @@ extension OnboardingViewController: BaseProtocol {
     
     func configureLayout() {
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(80)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(110)
             make.centerX.equalTo(view.safeAreaLayoutGuide)
+            make.height.equalTo(60)
         }
         
         launchImage.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(60)
-            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(76)
-            make.height.equalTo(launchImage.snp.width).multipliedBy(1.3)
+            make.top.equalTo(titleLabel.snp.bottom).offset(50)
+            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(60)
+            make.height.equalTo(launchImage.snp.width).multipliedBy(1.2)
             make.centerX.equalTo(view.safeAreaLayoutGuide)
         }
         
@@ -61,11 +62,12 @@ extension OnboardingViewController: BaseProtocol {
     
     func configureUI() {
         titleLabel.text = Design.serviceName
-        titleLabel.font = .systemFont(ofSize: 40, weight: .heavy)
-        titleLabel.textColor = Design.ColorType.theme
+        titleLabel.font = Design.FontType.gmarketBold
+        titleLabel.textColor = Design.ColorType.black
         
         launchImage.contentMode = .scaleAspectFill
-        launchImage.image = Design.ImageType.start
+        launchImage.layer.cornerRadius = 10
+        launchImage.clipsToBounds = true
         
         startButton.setTitle("시작하기", for: .normal)
         

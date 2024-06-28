@@ -88,6 +88,11 @@ extension ResultViewController {
             APIManager.shared.request(model: ShopResult.self, request: .shop(request: request)) { result in
                 switch result {
                 case .success(let value):
+                    
+                    if self.networkView.isHidden == false {
+                        self.networkView.isHidden = true
+                    }
+                    
                     if value.total == 0 {
                         self.emptyView.isHidden = false
                         return
@@ -190,7 +195,7 @@ extension ResultViewController: BaseProtocol {
     }
     
     func configureUI() {
-        resultLabel.font = .boldSystemFont(ofSize: 14)
+        resultLabel.font = .boldSystemFont(ofSize: 15)
         resultLabel.textColor = Design.ColorType.theme
         emptyView.isHidden = true
         networkView.isHidden = true
