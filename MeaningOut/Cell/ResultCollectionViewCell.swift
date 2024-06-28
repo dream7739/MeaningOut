@@ -60,7 +60,7 @@ extension ResultCollectionViewCell {
         nameLabel.text = data.titleDescription
         priceLabel.text = data.priceDescription
         
-        if !UserManager.likeList.isEmpty && UserManager.likeList.contains(data.productId) {
+        if let _ = UserManager.likeDict[data.productId], !UserManager.likeDict.isEmpty {
             isClicked = true
         }else{
             isClicked = false
@@ -76,9 +76,8 @@ extension ResultCollectionViewCell {
         
         isClicked.toggle()
 
-        let info: [String: Any] = [
-            ShopNotificationKey.indexPath: indexPath,
-            ShopNotificationKey.click: isClicked
+        let info: [String: (IndexPath, Bool)] = [
+            ShopNotificationKey.indexPath: (indexPath, isClicked)
         ]
 
         NotificationCenter.default.post(

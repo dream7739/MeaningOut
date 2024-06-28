@@ -15,7 +15,7 @@ class NicknameViewController: UIViewController {
     let validLabel = UILabel()
     let completeButton = RoundButton()
     
-    var viewType: Constant.ViewType =  .nickname
+    var viewType: ViewType =  .nickname
     var isValid = false
     var selectedProfileImage: String?
     
@@ -36,6 +36,7 @@ class NicknameViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         if let selectedProfileImage {
             profileView.profileImage.image = UIImage(named: selectedProfileImage)
         }
@@ -126,7 +127,7 @@ extension NicknameViewController {
     
     func changeScreen(){
         if viewType == .nickname {
-            let tabBarController = TabBarController()
+            let tabBarController = ShopTabBarController()
             configureRootView(tabBarController)
         }else if viewType == .editNickname {
             navigationController?.popViewController(animated: true)
@@ -219,7 +220,7 @@ extension NicknameViewController: BaseProtocol {
         }
         profileView.profileImage.image = UIImage(named: selectedProfileImage!)
         
-        nicknameField.placeholder = Constant.PlaceholderType.nickname.rawValue
+        nicknameField.placeholder = Display.PlaceholderType.nickname.rawValue
         nicknameField.clearButtonMode = .whileEditing
         
         validLabel.font = Constant.FontType.tertiary

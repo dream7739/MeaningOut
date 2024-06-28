@@ -16,7 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: scene)
         
         let onboardVC = UINavigationController(rootViewController: OnboardingViewController())
-        let tabBarVC = TabBarController()
+        let tabBarVC = ShopTabBarController()
         
         if UserManager.isUser {
             window?.rootViewController = tabBarVC

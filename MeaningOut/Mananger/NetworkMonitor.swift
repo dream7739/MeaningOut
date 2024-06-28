@@ -20,16 +20,9 @@ final class NetworkMonitor {
     private init(){ }
     
     func startMonitoring(){
-        print(#function)
         monitor.start(queue: queue)
-        
-        //네트워크 경로 변경 시 호출할 블록. start가 호출될 때까지 호출되지 않음
-        //NWPath.Status
-        //해당 경로 네트워크가 가능 > satisfied
-        //해당 경로 네트워크가 불가능 > unsatisfied
-        //해당 경로 네트워크 불가능하지만 연결을 시도 > requiresConnection
+     
         monitor.pathUpdateHandler = { [weak self] path in
-            print("path: \(path)")
             
             if path.status == .satisfied {
                 self?.isConnected = true
@@ -49,7 +42,6 @@ final class NetworkMonitor {
     }
     
      func stopMonitoring(){
-        print(#function)
         monitor.cancel()
     }
     

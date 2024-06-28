@@ -8,14 +8,14 @@
 import Foundation
 
 @propertyWrapper
-struct UserDefaultsManager<T> {
+struct UserDefaultsManager<T: Codable> {
     let defaultValue: T
     let key: String
     let storage: UserDefaults
     
     var wrappedValue: T {
         get{
-            self.storage.object(forKey: key) as? T ?? defaultValue
+            return self.storage.object(forKey: key) as? T ?? defaultValue
         }
         set{
             self.storage.set(newValue, forKey: key)
@@ -32,7 +32,7 @@ class UserManager {
         storage: .standard
     )
     static var isUser: Bool
-
+    
     
     @UserDefaultsManager(
         defaultValue: "",
@@ -61,26 +61,20 @@ class UserManager {
         storage: .standard
     )
     static var savedList: [String]
-    
-    static var recentList: [String] = []
-    
+        
     @UserDefaultsManager(
-        defaultValue: [],
-        key: "likeList",
+        defaultValue: [:],
+        key: "likeDict",
         storage: .standard
     )
-    static var likeList: [String]
+    static var likeDict: [String: Int]
     
     static func addLikeList(_ productId: String){
-        if !UserManager.likeList.contains(productId){
-            UserManager.likeList.append(productId)
-        }
+        UserManager.likeDict[productId] = 0
     }
     
     static func removeLikeList(_ productId: String){
-        if UserManager.likeList.contains(productId){
-            UserManager.likeList.removeAll(where: {$0 == productId })
-        }
+        UserManager.likeDict[productId] = nil
     }
     
     static func resetAll(){

@@ -8,13 +8,13 @@
 import UIKit
 import Toast
 
+
 extension UIViewController {
-    
     func configureView(){
         view.backgroundColor = .white
     }
     
-    func configureNav(_ viewType: Constant.ViewType){
+    func configureNav(_ viewType: ViewType){
         navigationItem.title = viewType.navigationTitle
         
         let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
@@ -59,4 +59,47 @@ extension UIViewController {
         
     }
     
+    static func resultLayout() -> UICollectionViewLayout {
+        let layout = UICollectionViewFlowLayout()
+        let spacing: CGFloat = 20
+        let horizontalInset: CGFloat = 20
+        let verticalInset: CGFloat = 20
+        layout.scrollDirection = .vertical
+        layout.minimumLineSpacing = spacing
+        layout.minimumInteritemSpacing = spacing
+        layout.sectionInset = UIEdgeInsets(top: verticalInset, left: horizontalInset, bottom: verticalInset, right: horizontalInset)
+        
+        return layout
+    }
 }
+
+extension UIViewController {
+    enum ViewType {
+        case onboard
+        case nickname
+        case profile
+        case search
+        case result
+        case detail
+        case setting
+        case editNickname
+        case editProfile
+
+        var navigationTitle: String {
+            switch self {
+            case .nickname, .profile:
+                return "PROFILE SETTING"
+            case .search:
+                return "\(UserManager.nickname)`s MEANING OUT"
+            case .onboard, .result, .detail:
+                return ""
+            case .setting:
+                return "SETTING"
+            case .editNickname, .editProfile:
+                return "EDIT PROFILE"
+            }
+        }
+        
+    }
+}
+

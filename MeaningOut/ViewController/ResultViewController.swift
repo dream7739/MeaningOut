@@ -18,7 +18,7 @@ class ResultViewController: UIViewController {
     
     lazy var tagCollectionView = UICollectionView(frame: .zero, collectionViewLayout: tagLayout())
     
-    lazy var resultCollectionView = UICollectionView(frame: .zero, collectionViewLayout: resultLayout())
+    lazy var resultCollectionView = UICollectionView(frame: .zero, collectionViewLayout: ResultViewController.resultLayout())
     
     func tagLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()
@@ -34,19 +34,6 @@ class ResultViewController: UIViewController {
         return layout
     }
     
-    func resultLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewFlowLayout()
-        let spacing: CGFloat = 20
-        let horizontalInset: CGFloat = 20
-        let verticalInset: CGFloat = 20
-        layout.scrollDirection = .vertical
-        layout.minimumLineSpacing = spacing
-        layout.minimumInteritemSpacing = spacing
-        layout.sectionInset = UIEdgeInsets(top: verticalInset, left: horizontalInset, bottom: verticalInset, right: horizontalInset)
-        
-        return layout
-    }
-    
     var selectedIndexPath: IndexPath = IndexPath(row: 0, section: 0)
     
     var keyword: String?
@@ -55,7 +42,7 @@ class ResultViewController: UIViewController {
     
     var display = 30
     
-    var sort: String = Constant.SortType.sim.sortParam
+    var sort: String = Display.SortType.sim.sortParam
     
     var shopResult = ShopResult(total: 0, start: 0, display: 0, items: [])
     
@@ -68,18 +55,9 @@ class ResultViewController: UIViewController {
         configureUI()
         configureCollectionView()
         
-        guard let keyword else { return }
         navigationItem.title = keyword
-        
-        if NetworkMonitor.shared.isConnected {
-                let request = ShopRequest(query: keyword, start: start, display: display, sort: sort)
-                APIManager.shared.callNaverShop(req: request, completion: configureResponse)
-        }else{
-            networkView.isHidden = false
-        }
-     
+        callNaverShop()
     }
-    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -95,11 +73,53 @@ class ResultViewController: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         NotificationCenter.default.removeObserver(self)
     }
 }
 
 extension ResultViewController {
+    func callNaverShop(){
+        guard let keyword else { return }
+
+        if NetworkMonitor.shared.isConnected {
+            let request = ShopRequest(query: keyword, start: start, display: display, sort: sort)
+            
+            APIManager.shared.request(model: ShopResult.self, request: .shop(request: request)) { result in
+                switch result {
+                case .success(let value):
+                    if value.total == 0 {
+                        self.emptyView.isHidden = false
+                        return
+                    }
+                    
+                    if self.start == 1 {
+                        self.shopResult = value
+                        self.resultLabel.text = self.shopResult.totalDescription
+                    }else{
+                        self.shopResult.items.append(contentsOf: value.items)
+                    }
+                    
+                    self.resultCollectionView.reloadData()
+                    
+                    if self.start == 1 {
+                        self.resultCollectionView.scrollToItem(
+                            at: IndexPath(item: 0, section: 0),
+                            at: .top,
+                            animated: false
+                        )
+                    }
+                case .failure(let error):
+                    print(error)
+                    self.emptyView.isHidden = false
+                    self.showToast("결과를 가져오는데 실패하였습니다.")
+                }
+            }
+        }else{
+            networkView.isHidden = false
+        }
+    }
+    
     func configureCollectionView(){
         tagCollectionView.delegate = self
         tagCollectionView.dataSource = self
@@ -112,41 +132,15 @@ extension ResultViewController {
         
     }
     
-    func configureResponse(_ response: Result<ShopResult, Error>){
-        switch response {
-        case .success(let value):
-            if value.total == 0 {
-                emptyView.isHidden = false
-                return
-            }
-            
-            if self.start == 1 {
-                shopResult = value
-                resultLabel.text = self.shopResult.totalDescription
-            }else{
-                shopResult.items.append(contentsOf: value.items)
-            }
-            
-            resultCollectionView.reloadData()
-            
-            if start == 1 {
-                resultCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
-            }
-            
-        case .failure(let error):
-            print(error)
-            emptyView.isHidden = false
-            showToast("결과를 가져오는데 실패하였습니다.")
-        }
-    }
-    
     @objc func likeButtonClicked(notification: Notification){
-        guard let indexPath = notification.userInfo?[ShopNotificationKey.indexPath] as? IndexPath,
-              let click = notification.userInfo?[ShopNotificationKey.click] as? Bool else { return }
-
+        guard let item = notification.userInfo?[ShopNotificationKey.indexPath] as? (IndexPath, Bool) else { return }
+        
+        let indexPath = item.0
+        let isClicked = item.1
+        
         let productId = shopResult.items[indexPath.row].productId
         
-        if click {
+        if isClicked {
             UserManager.addLikeList(productId)
         }else{
             UserManager.removeLikeList(productId)
@@ -154,15 +148,7 @@ extension ResultViewController {
     }
     
     @objc func retryButtonClicked(notification: Notification){
-        guard let keyword else { return }
-        
-        if NetworkMonitor.shared.isConnected {
-            networkView.isHidden = true
-            let request = ShopRequest(query: keyword, start: start, display: display, sort: sort)
-            APIManager.shared.callNaverShop(req: request, completion: configureResponse)
-        }else{
-            networkView.isHidden = false
-        }
+        callNaverShop()
     }
 }
 
@@ -214,7 +200,7 @@ extension ResultViewController: BaseProtocol {
 extension ResultViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == tagCollectionView {
-            return Constant.SortType.allCases.count
+            return Display.SortType.allCases.count
         }else{
             return shopResult.items.count
         }
@@ -222,9 +208,11 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == tagCollectionView {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagCollectionViewCell.identifier, for: indexPath) as! TagCollectionViewCell
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagCollectionViewCell.identifier, for: indexPath) as? TagCollectionViewCell else {
+                return UICollectionViewCell()
+            }
             
-            let data = Constant.SortType.allCases[indexPath.row]
+            let data = Display.SortType.allCases[indexPath.row]
             cell.configureData(data)
             
             if indexPath == selectedIndexPath {
@@ -235,7 +223,9 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
             
             return cell
         }else{
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ResultCollectionViewCell.identifier, for: indexPath) as! ResultCollectionViewCell
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ResultCollectionViewCell.identifier, for: indexPath) as? ResultCollectionViewCell else {
+                return UICollectionViewCell()
+            }
             let data = shopResult.items[indexPath.row]
             cell.indexPath = indexPath
             cell.configureData(data)
@@ -247,7 +237,7 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == tagCollectionView {
             let label = PaddingLabel()
-            label.text = Constant.SortType.allCases[indexPath.row].title
+            label.text = Display.SortType.allCases[indexPath.row].title
             label.font = Constant.FontType.secondary
             
             let size = label.intrinsicContentSize
@@ -271,18 +261,10 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
                 selectedIndexPath = indexPath
                 collectionView.reloadData()
                 
-                sort = Constant.SortType.allCases[indexPath.row].sortParam
+                sort = Display.SortType.allCases[indexPath.row].sortParam
                 start = 1
                 
-                guard let keyword else { return }
-                
-                if NetworkMonitor.shared.isConnected{
-                    let request = ShopRequest(query: keyword, start: start, display: display, sort: sort)
-                    APIManager.shared.callNaverShop(req: request, completion: configureResponse)
-                }else{
-                    networkView.isHidden = false
-                }
-
+                callNaverShop()
             }
         }else if collectionView == resultCollectionView {
             let data = shopResult.items[indexPath.row]
@@ -299,20 +281,12 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
 extension ResultViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         for idx in indexPaths {
-
+            
             if idx.item == shopResult.items.count - 4 {
                 start += display
                 
                 if start <= 1000 && start <= shopResult.total {
-                    
-                    guard let keyword else { return }
-
-                    if NetworkMonitor.shared.isConnected{
-                        let request = ShopRequest(query: keyword, start: start, display: display, sort: sort)
-                        APIManager.shared.callNaverShop(req: request, completion: configureResponse)
-                    }else{
-                        networkView.isHidden = false
-                    }
+                    callNaverShop()
                 }
             }
         }
@@ -320,7 +294,9 @@ extension ResultViewController: UICollectionViewDataSourcePrefetching {
     
     func collectionView(_ collectionView: UICollectionView, cancelPrefetchingForItemsAt indexPaths: [IndexPath]) {
         for idx in indexPaths {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ResultCollectionViewCell.identifier, for: idx) as! ResultCollectionViewCell
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ResultCollectionViewCell.identifier, for: idx) as? ResultCollectionViewCell else {
+                return
+            }
             cell.cancelDownload()
         }
     }

@@ -30,11 +30,11 @@ class SettingTableViewCell: UITableViewCell {
 }
 
 extension SettingTableViewCell {
-    func configureData(_ data: Constant.SettingType){
+    func configureData(_ data: Display.SettingType){
         nameLabel.text = data.title
         
         if data == .cart {
-            let countText = "\(UserManager.likeList.count)개의 상품"
+            let countText = "\(UserManager.likeDict.count)개의 상품"
             countLabel.text = countText
             
             let font = UIFont.boldSystemFont(ofSize: 14)
@@ -91,3 +91,4 @@ extension SettingTableViewCell: BaseProtocol {
         countLabel.font = Constant.FontType.tertiary
     }
 }
+

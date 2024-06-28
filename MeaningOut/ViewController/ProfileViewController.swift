@@ -17,7 +17,7 @@ class ProfileViewController: UIViewController {
     var selectedProfile: String?
     var profileDataSender: ((_ data: String?) -> Void)?
     
-    var viewType: Constant.ViewType = .profile
+    var viewType: UIViewController.ViewType = .profile
     
     func layout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()
@@ -47,6 +47,7 @@ class ProfileViewController: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         profileDataSender?(selectedProfile)
     }
     
@@ -94,7 +95,8 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProfileCollectionViewCell.identifier, for: indexPath) as! ProfileCollectionViewCell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProfileCollectionViewCell.identifier, for: indexPath) as? ProfileCollectionViewCell else { return UICollectionViewCell()
+        }
         
         let data = Constant.ImageType.ProfileType.allCases[indexPath.row]
         
@@ -121,8 +123,8 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         selectedIndexPath = indexPath
         collectionView.reloadData()
-        
-        let image = Constant.ImageType.ProfileType.allCases[selectedIndexPath!.row].rawValue
+        guard let selectedPath =  selectedIndexPath else { return }
+        let image = Constant.ImageType.ProfileType.allCases[selectedPath.row].rawValue
         selectedProfile = image
         profileView.profileImage.image = UIImage(named: image)
     }
