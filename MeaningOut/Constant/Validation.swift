@@ -27,4 +27,12 @@ enum Validation {
             }
         }
     }
+    
+    enum Network: Error {
+        case failedRequest
+        case noData
+        case invalidResponse
+        case invalidData
+        case invalidURL
+    }
 }

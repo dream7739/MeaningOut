@@ -6,41 +6,67 @@
 //
 
 import Foundation
-import Alamofire
 
 class APIManager {
     private init(){ }
     
     static let shared = APIManager()
     
-    func callNaverShop(req: ShopRequest,
-                       completion: @escaping (Result<ShopResult, Error>) -> ()){
+    func request<T: Decodable>(model: T.Type, request: APIRequest,
+                               completion: @escaping (Result<T, Validation.Network>) -> Void){
         
-        let header: HTTPHeaders = [
-            "X-Naver-Client-Id" : APIKey.clientID,
-            "X-Naver-Client-Secret": APIKey.clientSecret]
+        guard var component = URLComponents(string: request.baseURL + request.endPoint) else {
+            completion(.failure(.invalidURL))
+            return
+        }
         
-        let param: Parameters = [
-            "query" : req.query,
-            "start": req.start,
-            "display": req.display,
-            "sort": req.sort
-        ]
+        let queryItems = request.param.map {
+            URLQueryItem(name: $0.key, value: $0.value)
+        }
         
-        AF.request(
-            APIURL.naverURL,
-            method: .get,
-            parameters: param,
-            encoding: URLEncoding.queryString,
-            headers: header
-        ).responseDecodable(of: ShopResult.self, completionHandler: {
-            response in
-            switch response.result {
-            case .success(let value):
-                completion(.success(value))
-            case .failure(let error):
-                completion(.failure(error))
+        component.queryItems = queryItems
+        
+        guard let url = component.url else {
+            completion(.failure(.invalidURL))
+            return
+        }
+        
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = request.method
+     
+        urlRequest.allHTTPHeaderFields = request.header
+        
+        URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+            DispatchQueue.main.async {
+                
+                guard error == nil else {
+                    completion(.failure(.failedRequest))
+                    return
+                }
+                
+                guard let data = data else {
+                    completion(.failure(.noData))
+                    return
+                }
+                
+                guard let response = response as? HTTPURLResponse else {
+                    completion(.failure(.invalidResponse))
+                    return
+                }
+                
+                guard response.statusCode == 200 else {
+                    completion(.failure(.invalidData))
+                    return
+                }
+                
+                do {
+                    let result = try JSONDecoder().decode(T.self, from: data)
+                    completion(.success(result))
+                }catch {
+                    completion(.failure(.invalidData))
+                }
             }
-        })
+        }.resume()
     }
 }
+

@@ -15,7 +15,6 @@
 		883A7DD72C1B0B5C00A4665E /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 883A7DD62C1B0B5C00A4665E /* .gitignore */; };
 		883A7DDA2C1B0B7700A4665E /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 883A7DD92C1B0B7700A4665E /* IQKeyboardManagerSwift */; };
 		883A7DDD2C1B0B8000A4665E /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 883A7DDC2C1B0B8000A4665E /* SnapKit */; };
-		883A7DE02C1B0B8A00A4665E /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 883A7DDF2C1B0B8A00A4665E /* Alamofire */; };
 		883A7DE32C1B0B9700A4665E /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 883A7DE22C1B0B9700A4665E /* Toast */; };
 		883A7DE62C1B0BA400A4665E /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 883A7DE52C1B0BA400A4665E /* Kingfisher */; };
 		883E55892C255ED600A74170 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883E55882C255ED600A74170 /* APIManager.swift */; };
@@ -42,6 +41,7 @@
 		88CE76922C2003C700644F7A /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CE76912C2003C700644F7A /* Notification.swift */; };
 		88CE76942C202CB200644F7A /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CE76932C202CB200644F7A /* Date+Extension.swift */; };
 		88D6B6942C2D7C2A008A598B /* Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D6B6932C2D7C2A008A598B /* Display.swift */; };
+		88D6B69A2C2D89F6008A598B /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D6B6992C2D89F6008A598B /* APIRequest.swift */; };
 		88FBDF632C1D844600AB0BC9 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FBDF622C1D844600AB0BC9 /* EmptyView.swift */; };
 		88FBDF652C1D87DE00AB0BC9 /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FBDF642C1D87DE00AB0BC9 /* SearchTableViewCell.swift */; };
 		88FBDF672C1DA27800AB0BC9 /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FBDF662C1DA27800AB0BC9 /* ResultViewController.swift */; };
@@ -86,6 +86,7 @@
 		88CE76912C2003C700644F7A /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		88CE76932C202CB200644F7A /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		88D6B6932C2D7C2A008A598B /* Display.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Display.swift; sourceTree = "<group>"; };
+		88D6B6992C2D89F6008A598B /* APIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
 		88FBDF622C1D844600AB0BC9 /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
 		88FBDF642C1D87DE00AB0BC9 /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
 		88FBDF662C1DA27800AB0BC9 /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
@@ -103,7 +104,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				883A7DE32C1B0B9700A4665E /* Toast in Frameworks */,
-				883A7DE02C1B0B8A00A4665E /* Alamofire in Frameworks */,
 				883A7DDA2C1B0B7700A4665E /* IQKeyboardManagerSwift in Frameworks */,
 				883A7DDD2C1B0B8000A4665E /* SnapKit in Frameworks */,
 				883A7DE62C1B0BA400A4665E /* Kingfisher in Frameworks */,
@@ -167,6 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				883E55882C255ED600A74170 /* APIManager.swift */,
+				88D6B6992C2D89F6008A598B /* APIRequest.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -267,7 +268,6 @@
 			packageProductDependencies = (
 				883A7DD92C1B0B7700A4665E /* IQKeyboardManagerSwift */,
 				883A7DDC2C1B0B8000A4665E /* SnapKit */,
-				883A7DDF2C1B0B8A00A4665E /* Alamofire */,
 				883A7DE22C1B0B9700A4665E /* Toast */,
 				883A7DE52C1B0BA400A4665E /* Kingfisher */,
 			);
@@ -302,7 +302,6 @@
 			packageReferences = (
 				883A7DD82C1B0B7700A4665E /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 				883A7DDB2C1B0B8000A4665E /* XCRemoteSwiftPackageReference "SnapKit" */,
-				883A7DDE2C1B0B8A00A4665E /* XCRemoteSwiftPackageReference "Alamofire" */,
 				883A7DE12C1B0B9700A4665E /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 				883A7DE42C1B0BA400A4665E /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
@@ -335,6 +334,7 @@
 			files = (
 				887B29A12C1B1592009F3630 /* RoundButton.swift in Sources */,
 				887B299B2C1B1424009F3630 /* BaseProtocol.swift in Sources */,
+				88D6B69A2C2D89F6008A598B /* APIRequest.swift in Sources */,
 				8899152D2C1BEA460088C795 /* RoundImageView.swift in Sources */,
 				8871F6672C1C6DAA00A7A36B /* SearchViewController.swift in Sources */,
 				88FEFBA72C2703CB00EB2FAB /* Validation.swift in Sources */,
@@ -611,14 +611,6 @@
 				minimumVersion = 5.7.1;
 			};
 		};
-		883A7DDE2C1B0B8A00A4665E /* XCRemoteSwiftPackageReference "Alamofire" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.9.1;
-			};
-		};
 		883A7DE12C1B0B9700A4665E /* XCRemoteSwiftPackageReference "Toast-Swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/scalessec/Toast-Swift.git";
@@ -647,11 +639,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 883A7DDB2C1B0B8000A4665E /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
-		};
-		883A7DDF2C1B0B8A00A4665E /* Alamofire */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 883A7DDE2C1B0B8A00A4665E /* XCRemoteSwiftPackageReference "Alamofire" */;
-			productName = Alamofire;
 		};
 		883A7DE22C1B0B9700A4665E /* Toast */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -55,17 +55,9 @@ class ResultViewController: UIViewController {
         configureUI()
         configureCollectionView()
         
-        guard let keyword else { return }
         navigationItem.title = keyword
-        
-        if NetworkMonitor.shared.isConnected {
-            let request = ShopRequest(query: keyword, start: start, display: display, sort: sort)
-            APIManager.shared.callNaverShop(req: request, completion: configureResponse)
-        }else{
-            networkView.isHidden = false
-        }
+        callNaverShop()
     }
-    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -87,6 +79,47 @@ class ResultViewController: UIViewController {
 }
 
 extension ResultViewController {
+    func callNaverShop(){
+        guard let keyword else { return }
+
+        if NetworkMonitor.shared.isConnected {
+            let request = ShopRequest(query: keyword, start: start, display: display, sort: sort)
+            
+            APIManager.shared.request(model: ShopResult.self, request: .shop(request: request)) { result in
+                switch result {
+                case .success(let value):
+                    if value.total == 0 {
+                        self.emptyView.isHidden = false
+                        return
+                    }
+                    
+                    if self.start == 1 {
+                        self.shopResult = value
+                        self.resultLabel.text = self.shopResult.totalDescription
+                    }else{
+                        self.shopResult.items.append(contentsOf: value.items)
+                    }
+                    
+                    self.resultCollectionView.reloadData()
+                    
+                    if self.start == 1 {
+                        self.resultCollectionView.scrollToItem(
+                            at: IndexPath(item: 0, section: 0),
+                            at: .top,
+                            animated: false
+                        )
+                    }
+                case .failure(let error):
+                    print(error)
+                    self.emptyView.isHidden = false
+                    self.showToast("결과를 가져오는데 실패하였습니다.")
+                }
+            }
+        }else{
+            networkView.isHidden = false
+        }
+    }
+    
     func configureCollectionView(){
         tagCollectionView.delegate = self
         tagCollectionView.dataSource = self
@@ -97,34 +130,6 @@ extension ResultViewController {
         resultCollectionView.prefetchDataSource = self
         resultCollectionView.register(ResultCollectionViewCell.self, forCellWithReuseIdentifier: ResultCollectionViewCell.identifier)
         
-    }
-    
-    func configureResponse(_ response: Result<ShopResult, Error>){
-        switch response {
-        case .success(let value):
-            if value.total == 0 {
-                emptyView.isHidden = false
-                return
-            }
-            
-            if self.start == 1 {
-                shopResult = value
-                resultLabel.text = self.shopResult.totalDescription
-            }else{
-                shopResult.items.append(contentsOf: value.items)
-            }
-            
-            resultCollectionView.reloadData()
-            
-            if start == 1 {
-                resultCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
-            }
-            
-        case .failure(let error):
-            print(error)
-            emptyView.isHidden = false
-            showToast("결과를 가져오는데 실패하였습니다.")
-        }
     }
     
     @objc func likeButtonClicked(notification: Notification){
@@ -143,15 +148,7 @@ extension ResultViewController {
     }
     
     @objc func retryButtonClicked(notification: Notification){
-        guard let keyword else { return }
-        
-        if NetworkMonitor.shared.isConnected {
-            networkView.isHidden = true
-            let request = ShopRequest(query: keyword, start: start, display: display, sort: sort)
-            APIManager.shared.callNaverShop(req: request, completion: configureResponse)
-        }else{
-            networkView.isHidden = false
-        }
+        callNaverShop()
     }
 }
 
@@ -267,15 +264,7 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
                 sort = Display.SortType.allCases[indexPath.row].sortParam
                 start = 1
                 
-                guard let keyword else { return }
-                
-                if NetworkMonitor.shared.isConnected{
-                    let request = ShopRequest(query: keyword, start: start, display: display, sort: sort)
-                    APIManager.shared.callNaverShop(req: request, completion: configureResponse)
-                }else{
-                    networkView.isHidden = false
-                }
-                
+                callNaverShop()
             }
         }else if collectionView == resultCollectionView {
             let data = shopResult.items[indexPath.row]
@@ -297,15 +286,7 @@ extension ResultViewController: UICollectionViewDataSourcePrefetching {
                 start += display
                 
                 if start <= 1000 && start <= shopResult.total {
-                    
-                    guard let keyword else { return }
-                    
-                    if NetworkMonitor.shared.isConnected{
-                        let request = ShopRequest(query: keyword, start: start, display: display, sort: sort)
-                        APIManager.shared.callNaverShop(req: request, completion: configureResponse)
-                    }else{
-                        networkView.isHidden = false
-                    }
+                    callNaverShop()
                 }
             }
         }
