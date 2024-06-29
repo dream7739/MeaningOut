@@ -8,7 +8,7 @@
 import UIKit
 
 enum CustomLayout {
-    static func tagCollection() -> UICollectionViewLayout {
+    static let tagCollection = {
         let layout = UICollectionViewFlowLayout()
         let spacing: CGFloat = 10
         let horizontalInset: CGFloat = 20
@@ -22,7 +22,7 @@ enum CustomLayout {
         return layout
     }
     
-    static func resultCollection() -> UICollectionViewLayout {
+    static let resultCollection = {
         let layout = UICollectionViewFlowLayout()
         let spacing: CGFloat = 20
         let horizontalInset: CGFloat = 20

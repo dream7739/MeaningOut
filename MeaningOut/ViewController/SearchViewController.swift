@@ -82,7 +82,6 @@ extension SearchViewController {
     
     @objc func deleteButtonClicked(notification: Notification){
         guard let indexPath = notification.userInfo?[ShopNotificationKey.indexPath] as? IndexPath else { return }
-        
         UserManager.savedList.remove(at: indexPath.row)
         tableView.reloadData()
         
@@ -143,7 +142,6 @@ extension SearchViewController: BaseProtocol {
 }
 
 extension SearchViewController: UISearchBarDelegate {
-    //검색 키를 누르면 검색 상세 화면으로 이동
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         let input = searchBar.text!.trimmingCharacters(in: .whitespaces)
         

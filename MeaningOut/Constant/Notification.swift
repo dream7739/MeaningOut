@@ -15,5 +15,4 @@ struct ShopNotification {
 
 struct ShopNotificationKey {
     static let indexPath = "indexPath"
-    static let click = "click"
 }
