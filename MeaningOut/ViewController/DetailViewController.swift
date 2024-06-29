@@ -116,7 +116,6 @@ extension DetailViewController : WKNavigationDelegate {
         
         if url.lowercased().starts(with: "https://") ||
             url.lowercased().starts(with: "http://"){
-            indicator.startAnimating()
             decisionHandler(.allow)
             return
         }else{
@@ -124,6 +123,10 @@ extension DetailViewController : WKNavigationDelegate {
             decisionHandler(.cancel)
             return
         }
+    }
+    
+    func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
+        indicator.startAnimating()
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
