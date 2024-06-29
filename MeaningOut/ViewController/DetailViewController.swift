@@ -107,24 +107,6 @@ extension DetailViewController: BaseProtocol {
 }
 
 extension DetailViewController : WKNavigationDelegate {
-    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        guard let url = webView.url?.absoluteString else {
-            configureFailLoad(with: .invalidURL)
-            decisionHandler(.cancel)
-            return
-        }
-        
-        if url.lowercased().starts(with: "https://") ||
-            url.lowercased().starts(with: "http://"){
-            decisionHandler(.allow)
-            return
-        }else{
-            configureFailLoad(with: .invalidURL)
-            decisionHandler(.cancel)
-            return
-        }
-    }
-    
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
         indicator.startAnimating()
     }
@@ -134,12 +116,12 @@ extension DetailViewController : WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: any Error) {
-        print(error.localizedDescription)
+        print(#function, error.localizedDescription)
         configureFailLoad(with: .failLoad)
     }
     
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: any Error) {
-        print(error.localizedDescription)
+        print(#function, error.localizedDescription)
         configureFailLoad(with: .failNavigation)
     }
     
