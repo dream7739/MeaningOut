@@ -11,11 +11,8 @@ import SnapKit
 class SearchTableViewCell: UITableViewCell {
 
     let timeImage = UIImageView()
-    
     let recentLabel = UILabel()
-    
     let deleteButton = UIButton()
-    
     let deleteImage = UIImageView()
         
     var indexPath: IndexPath?

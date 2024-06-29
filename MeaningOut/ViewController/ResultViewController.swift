@@ -16,25 +16,17 @@ class ResultViewController: UIViewController {
     
     let networkView = NetworkView()
     
-    lazy var tagCollectionView = UICollectionView(frame: .zero, collectionViewLayout: tagLayout())
+    let tagCollectionView = UICollectionView(
+        frame: .zero,
+        collectionViewLayout: CustomLayout.tagCollection()
+    )
     
-    lazy var resultCollectionView = UICollectionView(frame: .zero, collectionViewLayout: ResultViewController.resultLayout())
+    let resultCollectionView = UICollectionView(
+        frame: .zero,
+        collectionViewLayout: CustomLayout.resultCollection()
+    )
     
-    func tagLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewFlowLayout()
-        let spacing: CGFloat = 10
-        let horizontalInset: CGFloat = 20
-        let verticalInset: CGFloat = 5
-        
-        layout.minimumLineSpacing = spacing
-        layout.minimumInteritemSpacing = spacing
-        
-        layout.scrollDirection = .horizontal
-        layout.sectionInset = UIEdgeInsets(top: verticalInset, left: horizontalInset, bottom: verticalInset, right: horizontalInset)
-        return layout
-    }
-    
-    var selectedIndexPath: IndexPath = IndexPath(row: 0, section: 0)
+    var selectedIndexPath = IndexPath(row: 0, section: 0)
     
     var keyword: String?
     
@@ -83,13 +75,21 @@ extension ResultViewController {
         guard let keyword else { return }
 
         if NetworkMonitor.shared.isConnected {
-            let request = ShopRequest(query: keyword, start: start, display: display, sort: sort)
+            self.networkView.isHidden = true
+
+            let request = ShopRequest(
+                query: keyword,
+                start: start,
+                display: display,
+                sort: sort
+            )
             
-            APIManager.shared.request(model: ShopResult.self, request: .shop(request: request)) { result in
+            APIManager.shared.request(
+                model: ShopResult.self,
+                request: .shop(request: request)
+            ) { result in
                 switch result {
                 case .success(let value):
-                    
-                    self.networkView.isHidden = true
                     
                     if value.total == 0 {
                         self.emptyView.isHidden = false
@@ -107,7 +107,7 @@ extension ResultViewController {
                     
                     if self.start == 1 {
                         self.resultCollectionView.scrollToItem(
-                            at: IndexPath(item: 0, section: 0),
+                            at: IndexPath(item: -1, section: 0),
                             at: .top,
                             animated: false
                         )
@@ -231,6 +231,7 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
             }
             let data = shopResult.items[indexPath.row]
             cell.indexPath = indexPath
+            cell.keyword = keyword
             cell.configureData(data)
             return cell
         }
@@ -251,7 +252,6 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
             let verticalInset: CGFloat = 10
             let width: CGFloat = (view.bounds.width - spacing - horizontalInset * 2) / 2
             let height: CGFloat = (view.bounds.height - spacing - verticalInset * 2) / 2.9
-            
             return CGSize(width: width, height: height)
         }
         

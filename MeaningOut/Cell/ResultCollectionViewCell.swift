@@ -10,22 +10,17 @@ import Kingfisher
 import SnapKit
 
 class ResultCollectionViewCell: UICollectionViewCell {
+    
     let itemImage = UIImageView()
-    
     let companyLabel = UILabel()
-    
     let nameLabel = UILabel()
-    
     let priceLabel = UILabel()
-    
     let likeView = UIView()
-    
     let likeImage = UIImageView()
-    
     let likeButton = UIButton()
     
+    var keyword: String?
     var indexPath: IndexPath?
-    
     var isClicked: Bool = false {
         didSet {
             if isClicked {
@@ -56,8 +51,13 @@ extension ResultCollectionViewCell {
     func configureData(_ data: Shop){
         itemImage.kf.indicatorType = .activity
         itemImage.kf.setImage(with: URL(string: data.image))
+        
         companyLabel.text = data.mallName
-        nameLabel.text = data.titleDescription
+        
+        if let keyword {
+            nameLabel.attributedText = data.titleDescription.highLightKeyword(keyword)
+        }
+        
         priceLabel.text = data.priceDescription
         
         if let _ = UserManager.likeDict[data.productId], !UserManager.likeDict.isEmpty {

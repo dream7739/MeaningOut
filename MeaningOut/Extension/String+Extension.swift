@@ -8,7 +8,7 @@
 import Foundation
 
 extension String {
-    func htmlToAttributedString() -> NSAttributedString? {
+    func htmlToString() -> String? {
         guard let data = self.data(using: .utf8) else { return nil }
         
         let options: [NSAttributedString.DocumentReadingOptionKey: Any] = [
@@ -18,10 +18,19 @@ extension String {
         
         guard let attributedString = try? NSAttributedString(data: data, options: options, documentAttributes: nil) else { return nil }
         
+        return attributedString.string
+    }
+    
+    func highLightKeyword(_ keyword: String) -> NSMutableAttributedString{
+        let range = (self as NSString).range(of: keyword)
+        let attributedString = NSMutableAttributedString(string: self)
+        
+        attributedString.addAttributes([
+            .backgroundColor : Design.ColorType.subTheme.withAlphaComponent(0.5)],
+            range: range
+        )
+       
         return attributedString
     }
     
-  
-    
-
 }

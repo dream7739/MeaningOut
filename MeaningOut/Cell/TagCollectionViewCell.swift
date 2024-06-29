@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 
 class TagCollectionViewCell: UICollectionViewCell {
+    
     let tagLabel = PaddingLabel()
     
     var isClicked: Bool = false{

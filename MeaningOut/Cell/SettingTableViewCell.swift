@@ -11,9 +11,7 @@ import SnapKit
 class SettingTableViewCell: UITableViewCell {
     
     let nameLabel = UILabel()
-    
     let likeImage = UIImageView()
-    
     let countLabel = UILabel()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

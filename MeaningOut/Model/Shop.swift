@@ -74,7 +74,7 @@ struct Shop: Decodable {
         self.lprice = try container.decode(String.self, forKey: .lprice)
         self.mallName = try container.decode(String.self, forKey: .mallName)
         self.productId = try container.decode(String.self, forKey: .productId)
-        self.titleDescription = title.htmlToAttributedString()?.string ?? title
+        self.titleDescription = title.htmlToString() ?? title
         if let price = Int(self.lprice) {
             self.priceDescription = price.formatted() + "원"
         }else{
