@@ -35,6 +35,14 @@ class DetailViewController: UIViewController {
         
         navigationItem.title = name
         addLikeBarButton()
+        
+        guard let link, let url = URL(string: link) else {
+            emptyView.isHidden = false
+            return
+        }
+        
+        let request = URLRequest(url: url)
+        webView.load(request)
     }
 }
 
@@ -93,29 +101,50 @@ extension DetailViewController: BaseProtocol {
     func configureUI() {
         webView.navigationDelegate = self
         indicator.color = Design.ColorType.secondary
-        indicator.isHidden = true
+        indicator.hidesWhenStopped = true
         emptyView.isHidden = true
-        
-        guard let link, let url = URL(string: link) else {
-            emptyView.isHidden = false
-            return
-        }
-        
-        let request = URLRequest(url: url)
-        webView.load(request)
     }
 }
 
 extension DetailViewController : WKNavigationDelegate {
-    func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
-        indicator.isHidden = false
-        indicator.startAnimating()
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        guard let url = webView.url?.absoluteString else {
+            configureFailLoad(with: .invalidURL)
+            decisionHandler(.cancel)
+            return
+        }
+        
+        if url.lowercased().starts(with: "https://") ||
+            url.lowercased().starts(with: "http://"){
+            indicator.startAnimating()
+            decisionHandler(.allow)
+            return
+        }else{
+            configureFailLoad(with: .invalidURL)
+            decisionHandler(.cancel)
+            return
+        }
     }
     
-    
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        indicator.isHidden = true
         indicator.stopAnimating()
+    }
+    
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: any Error) {
+        print(error.localizedDescription)
+        configureFailLoad(with: .failLoad)
+    }
+    
+    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: any Error) {
+        print(error.localizedDescription)
+        configureFailLoad(with: .failNavigation)
+    }
+    
+    func configureFailLoad(with error: Validation.Web){
+        indicator.stopAnimating()
+        emptyView.isHidden = false
+        emptyView.descriptionLabel.text = ""
+        showToast(error.rawValue)
     }
     
 }

@@ -35,4 +35,10 @@ enum Validation {
         case invalidData
         case invalidURL
     }
+    
+    enum Web: String, Error {
+        case failNavigation = "웹페이지를 불러올 수 없습니다."
+        case failLoad = "컨텐츠를 가져올 수 없습니다."
+        case invalidURL = "웹페이지 주소가 유효하지 않습니다."
+    }
 }
