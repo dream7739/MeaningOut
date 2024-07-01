@@ -7,21 +7,21 @@
 
 import UIKit
 
-class SettingViewController: UIViewController {
+final class SettingViewController: UIViewController {
     
-    let headerView = UIView()
+    private let headerView = UIView()
     
-    let profileImage = RoundImageView(type: .highlight)
+    private let profileImage = RoundImageView(type: .highlight)
     
-    let nicknameLabel = UILabel()
+    private let nicknameLabel = UILabel()
     
-    let dateLabel = UILabel()
+    private let dateLabel = UILabel()
     
-    let indicatorImage = UIImageView()
+    private let indicatorImage = UIImageView()
     
-    let sepratorLabel = UILabel()
+    private let sepratorLabel = UILabel()
     
-    let tableView = UITableView()
+    private let tableView = UITableView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +32,11 @@ class SettingViewController: UIViewController {
         configureUI()
         configureTableView()
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(headerViewClicked))
+        let tapGesture = UITapGestureRecognizer(
+            target: self,
+            action: #selector(headerViewClicked)
+        )
+        
         headerView.addGestureRecognizer(tapGesture)
     }
     
@@ -49,7 +53,7 @@ class SettingViewController: UIViewController {
 
 extension SettingViewController {
     
-    func configureTableView(){
+    private func configureTableView(){
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(SettingTableViewCell.self, forCellReuseIdentifier: SettingTableViewCell.identifier)
@@ -58,7 +62,8 @@ extension SettingViewController {
         tableView.isScrollEnabled = false
     }
     
-    @objc func headerViewClicked(){
+    @objc
+    private func headerViewClicked(){
         let vc = NicknameViewController()
         vc.viewType = .editNickname
         navigationController?.pushViewController(vc, animated: true)

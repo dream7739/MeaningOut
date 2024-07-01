@@ -8,11 +8,11 @@
 import UIKit
 import SnapKit
 
-class SettingTableViewCell: UITableViewCell {
+final class SettingTableViewCell: UITableViewCell {
     
-    let nameLabel = UILabel()
-    let likeImage = UIImageView()
-    let countLabel = UILabel()
+    private let nameLabel = UILabel()
+    private let likeImage = UIImageView()
+    private let countLabel = UILabel()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

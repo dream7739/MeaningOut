@@ -8,9 +8,9 @@
 import UIKit
 import SnapKit
 
-class EmptyView: UIView {
+final class EmptyView: UIView {
     
-    let emptyImage = UIImageView()
+    private let emptyImage = UIImageView()
     let descriptionLabel = UILabel()
     
     init(type: EmptyView.EmptyType) {

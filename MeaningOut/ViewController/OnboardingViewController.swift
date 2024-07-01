@@ -8,11 +8,11 @@
 import UIKit
 import SnapKit
 
-class OnboardingViewController: UIViewController {
+final class OnboardingViewController: UIViewController {
 
-    let titleLabel = UILabel()
-    let launchImage = UIImageView()
-    let startButton = RoundButton()
+    private let titleLabel = UILabel()
+    private let launchImage = UIImageView()
+    private let startButton = RoundButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,12 +22,17 @@ class OnboardingViewController: UIViewController {
         configureLayout()
         configureUI()
         
-        startButton.addTarget(self, action: #selector(startButtonClicked), for: .touchUpInside)
+        startButton.addTarget(
+            self,
+            action: #selector(startButtonClicked),
+            for: .touchUpInside
+        )
     }
 }
 
 extension OnboardingViewController {
-    @objc func startButtonClicked(){
+    @objc 
+    private func startButtonClicked(){
         let vc = NicknameViewController()
         navigationController?.pushViewController(vc, animated: true)
     }

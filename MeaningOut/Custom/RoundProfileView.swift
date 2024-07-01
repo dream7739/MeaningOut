@@ -8,9 +8,9 @@
 import UIKit
 import SnapKit
 
-class RoundProfileView: UIView {
+final class RoundProfileView: UIView {
     let profileImage = RoundImageView(type: .highlight)
-    let cameraImage = UIImageView()
+    private let cameraImage = UIImageView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)

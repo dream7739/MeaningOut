@@ -8,9 +8,9 @@
 import UIKit
 import SnapKit
 
-class TagCollectionViewCell: UICollectionViewCell {
+final class TagCollectionViewCell: UICollectionViewCell {
     
-    let tagLabel = PaddingLabel()
+    private let tagLabel = PaddingLabel()
     
     var isClicked: Bool = false{
         didSet {

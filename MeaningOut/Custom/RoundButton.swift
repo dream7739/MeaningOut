@@ -7,7 +7,7 @@
 
 import UIKit
 
-class RoundButton: UIButton {
+final class RoundButton: UIButton {
     
     override init(frame: CGRect) {
         super.init(frame: frame)

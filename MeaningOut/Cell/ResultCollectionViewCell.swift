@@ -9,15 +9,15 @@ import UIKit
 import Kingfisher
 import SnapKit
 
-class ResultCollectionViewCell: UICollectionViewCell {
+final class ResultCollectionViewCell: UICollectionViewCell {
     
-    let itemImage = UIImageView()
-    let companyLabel = UILabel()
-    let nameLabel = UILabel()
-    let priceLabel = UILabel()
-    let likeView = UIView()
-    let likeImage = UIImageView()
-    let likeButton = UIButton()
+    private let itemImage = UIImageView()
+    private let companyLabel = UILabel()
+    private let nameLabel = UILabel()
+    private let priceLabel = UILabel()
+    private let likeView = UIView()
+    private let likeImage = UIImageView()
+    private let likeButton = UIButton()
     
     var keyword: String?
     var indexPath: IndexPath?
@@ -38,7 +38,11 @@ class ResultCollectionViewCell: UICollectionViewCell {
         configureHierarchy()
         configureLayout()
         configureUI()
-        likeButton.addTarget(self, action: #selector(likeButtonClicked), for: .touchUpInside)
+        likeButton.addTarget(
+            self,
+            action: #selector(likeButtonClicked),
+            for: .touchUpInside
+        )
     }
   
     required init?(coder: NSCoder) {
@@ -71,7 +75,8 @@ extension ResultCollectionViewCell {
         itemImage.kf.cancelDownloadTask()
     }
     
-    @objc func likeButtonClicked(){
+    @objc 
+    func likeButtonClicked(){
         guard let indexPath else { return }
         
         isClicked.toggle()

@@ -8,8 +8,8 @@
 import UIKit
 import SnapKit
 
-class UnderLineTextField : UITextField {
-    let underline = UIView(frame: .zero)
+final class UnderLineTextField : UITextField {
+    private let underline = UIView(frame: .zero)
     
     override init(frame: CGRect) {
         super.init(frame: frame)

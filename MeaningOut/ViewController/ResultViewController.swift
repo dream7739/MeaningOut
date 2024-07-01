@@ -8,20 +8,20 @@
 import UIKit
 import SnapKit
 
-class ResultViewController: UIViewController {
+final class ResultViewController: UIViewController {
     
-    let resultLabel = UILabel()
+    private let resultLabel = UILabel()
     
-    let emptyView = EmptyView(type: .result)
+    private let emptyView = EmptyView(type: .result)
     
-    let networkView = NetworkView()
+    private let networkView = NetworkView()
     
-    let tagCollectionView = UICollectionView(
+    private let tagCollectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: CustomLayout.tagCollection()
     )
     
-    let resultCollectionView = UICollectionView(
+    private let resultCollectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: CustomLayout.resultCollection()
     )
@@ -71,7 +71,7 @@ class ResultViewController: UIViewController {
 }
 
 extension ResultViewController {
-    func callNaverShop(){
+    private func callNaverShop(){
         guard let keyword else { return }
 
         if NetworkMonitor.shared.isConnected {
@@ -123,7 +123,7 @@ extension ResultViewController {
         }
     }
     
-    func configureCollectionView(){
+    private func configureCollectionView(){
         tagCollectionView.delegate = self
         tagCollectionView.dataSource = self
         tagCollectionView.register(TagCollectionViewCell.self, forCellWithReuseIdentifier: TagCollectionViewCell.identifier)
@@ -135,7 +135,8 @@ extension ResultViewController {
         
     }
     
-    @objc func likeButtonClicked(notification: Notification){
+    @objc 
+    private func likeButtonClicked(notification: Notification){
         guard let item = notification.userInfo?[ShopNotificationKey.indexPath] as? (IndexPath, Bool) else { return }
         
         let indexPath = item.0
@@ -150,7 +151,8 @@ extension ResultViewController {
         }
     }
     
-    @objc func retryButtonClicked(notification: Notification){
+    @objc
+    private func retryButtonClicked(notification: Notification){
         callNaverShop()
     }
 }

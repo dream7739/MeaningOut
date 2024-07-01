@@ -8,10 +8,13 @@
 import UIKit
 import SnapKit
 
-class ProfileViewController: UIViewController {
+final class ProfileViewController: UIViewController {
     
-    let profileView = RoundProfileView()
-    lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
+    private let profileView = RoundProfileView()
+    private lazy var collectionView = UICollectionView(
+        frame: .zero,
+        collectionViewLayout: layout()
+    )
     
     var selectedIndexPath: IndexPath?
     var selectedProfile: String?
@@ -19,7 +22,7 @@ class ProfileViewController: UIViewController {
     
     var viewType: UIViewController.ViewType = .profile
     
-    func layout() -> UICollectionViewLayout {
+    private func layout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.collectionView?.isScrollEnabled = false
@@ -55,7 +58,7 @@ class ProfileViewController: UIViewController {
 }
 
 extension ProfileViewController {
-    func configureCollectionView(){
+    private func configureCollectionView(){
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(ProfileCollectionViewCell.self, forCellWithReuseIdentifier: ProfileCollectionViewCell.identifier)

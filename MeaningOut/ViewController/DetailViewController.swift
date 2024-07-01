@@ -9,13 +9,13 @@ import UIKit
 import WebKit
 import SnapKit
 
-class DetailViewController: UIViewController {
+final class DetailViewController: UIViewController {
     
-    let webView = WKWebView()
+    private let webView = WKWebView()
     
-    let indicator = UIActivityIndicatorView(style: .large)
+    private let indicator = UIActivityIndicatorView(style: .large)
     
-    let emptyView = EmptyView(type: .link)
+    private let emptyView = EmptyView(type: .link)
     
     var productId: String?
     
@@ -47,7 +47,7 @@ class DetailViewController: UIViewController {
 }
 
 extension DetailViewController {
-    func addLikeBarButton(){
+    private func addLikeBarButton(){
         guard let productId else { return }
         let image: UIImage
         
@@ -62,7 +62,8 @@ extension DetailViewController {
         navigationItem.rightBarButtonItem = likeButton
     }
     
-    @objc func likeButtonClicked(){
+    @objc
+    private func likeButtonClicked(){
         guard let productId else { return }
         
         isClicked.toggle()

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class RoundImageView: UIImageView {
+final class RoundImageView: UIImageView {
     
     init(type: RoundImageView.ImageType){
         super.init(frame: .zero)

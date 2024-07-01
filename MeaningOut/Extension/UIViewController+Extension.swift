@@ -3,11 +3,10 @@
 //  MeaningOut
 //
 //  Created by 홍정민 on 6/13/24.
-//x
+//
 
 import UIKit
 import Toast
-
 
 extension UIViewController {
     func configureView(){
@@ -21,7 +20,13 @@ extension UIViewController {
             NSAttributedString.Key.font: Design.FontType.gmarketMedium!
         ]
         
-        let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        let backBarButtonItem = UIBarButtonItem(
+            title: "",
+            style: .plain,
+            target: self,
+            action: nil
+        )
+        
         backBarButtonItem.tintColor = .black
         navigationItem.backBarButtonItem = backBarButtonItem
     }

@@ -8,12 +8,12 @@
 import UIKit
 import SnapKit
 
-class NicknameViewController: UIViewController {
+final class NicknameViewController: UIViewController {
     
-    let profileView = RoundProfileView()
-    let nicknameField = UnderLineTextField()
-    let validLabel = UILabel()
-    let completeButton = RoundButton()
+    private let profileView = RoundProfileView()
+    private let nicknameField = UnderLineTextField()
+    private let validLabel = UILabel()
+    private let completeButton = RoundButton()
     
     var viewType: ViewType =  .nickname
     var isValid = false
@@ -27,12 +27,29 @@ class NicknameViewController: UIViewController {
         configureLayout()
         configureUI()
         
-        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(profileImageClicked))
+        let tapRecognizer = UITapGestureRecognizer(
+            target: self,
+            action: #selector(profileImageClicked)
+        )
         profileView.addGestureRecognizer(tapRecognizer)
         
-        nicknameField.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
-        nicknameField.addTarget(self, action: #selector(returnKeyClicked), for: .editingDidEndOnExit)
-        completeButton.addTarget(self, action: #selector(completeButtonClicked), for: .touchUpInside)
+        nicknameField.addTarget(
+            self,
+            action: #selector(textFieldChanged),
+            for: .editingChanged
+        )
+        
+        nicknameField.addTarget(
+            self,
+            action: #selector(returnKeyClicked),
+            for: .editingDidEndOnExit
+        )
+        
+        completeButton.addTarget(
+            self,
+            action: #selector(completeButtonClicked),
+            for: .touchUpInside
+        )
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -51,7 +68,7 @@ class NicknameViewController: UIViewController {
 extension NicknameViewController {
     
     @discardableResult
-    func validateUserInput(_ input: String) throws -> Bool {
+    private func validateUserInput(_ input: String) throws -> Bool {
         guard !input.isEmpty else{
             throw Validation.Nickname.isEmpty
         }
@@ -71,7 +88,7 @@ extension NicknameViewController {
         return true
     }
     
-    func checkUserInput(_ input: String){
+    private func checkUserInput(_ input: String){
         do {
             isValid = try validateUserInput(input)
             validLabel.text = "사용 가능한 닉네임입니다 :)"
@@ -98,12 +115,12 @@ extension NicknameViewController {
             nicknameField.setLineColor(type: .inValid)
             validLabel.textColor = Design.ColorType.theme
         }catch {
-            print("Etc error occured")
+            print(#function, "error occured")
         }
         
     }
     
-    func saveUserData(){
+    private func saveUserData(){
         if viewType == .nickname {
             UserManager.isUser = true
             UserManager.nickname = nicknameField.text!.trimmingCharacters(in: .whitespaces)
@@ -125,7 +142,7 @@ extension NicknameViewController {
         }
     }
     
-    func changeScreen(){
+    private func changeScreen(){
         if viewType == .nickname {
             let tabBarController = ShopTabBarController()
             configureRootView(tabBarController)
@@ -134,7 +151,8 @@ extension NicknameViewController {
         }
     }
     
-    @objc func profileImageClicked(){
+    @objc
+    private func profileImageClicked(){
         let vc = ProfileViewController()
         
         vc.profileDataSender = { profile in
@@ -152,16 +170,19 @@ extension NicknameViewController {
         navigationController?.pushViewController(vc, animated: true)
     }
     
-    @objc func textFieldChanged(){
+    @objc
+    private func textFieldChanged(){
         let input = nicknameField.text!.trimmingCharacters(in: .whitespaces)
         checkUserInput(input)
     }
     
-    @objc func returnKeyClicked(){
+    @objc
+    private func returnKeyClicked(){
         completeButtonClicked()
     }
     
-    @objc func completeButtonClicked(){
+    @objc
+    private func completeButtonClicked(){
         if isValid {
             saveUserData()
             changeScreen()
@@ -229,7 +250,7 @@ extension NicknameViewController: BaseProtocol {
         completeButton.setTitle("완료", for: .normal)
     }
     
-    func addSaveButton(){
+    private func addSaveButton(){
         let save = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(completeButtonClicked))
         save.tintColor = .black
         navigationItem.rightBarButtonItem = save

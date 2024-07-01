@@ -8,9 +8,9 @@
 import UIKit
 import SnapKit
 
-class ProfileCollectionViewCell: UICollectionViewCell {
+final class ProfileCollectionViewCell: UICollectionViewCell {
     
-    let profileImage = RoundImageView(type: .regular)
+    private let profileImage = RoundImageView(type: .regular)
         
     var isClicked = false {
         didSet{

@@ -23,7 +23,7 @@ struct UserDefaultsManager<T: Codable> {
     }
 }
 
-class UserManager {
+final class UserManager {
     private init(){}
     
     @UserDefaultsManager(

@@ -8,12 +8,12 @@
 import UIKit
 import SnapKit
 
-class SearchTableViewCell: UITableViewCell {
+final class SearchTableViewCell: UITableViewCell {
 
-    let timeImage = UIImageView()
-    let recentLabel = UILabel()
-    let deleteButton = UIButton()
-    let deleteImage = UIImageView()
+    private let timeImage = UIImageView()
+    private let recentLabel = UILabel()
+    private let deleteButton = UIButton()
+    private let deleteImage = UIImageView()
         
     var indexPath: IndexPath?
     
@@ -36,7 +36,8 @@ extension SearchTableViewCell {
         recentLabel.text = data
     }
     
-    @objc func deleteButtonClicked(){
+    @objc
+    func deleteButtonClicked(){
         guard let indexPath else { return }
         NotificationCenter.default.post(
             name: ShopNotification.delete,

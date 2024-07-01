@@ -8,16 +8,16 @@
 import UIKit
 import SnapKit
 
-class SearchViewController: UIViewController {
-    let searchController = UISearchController()
+final class SearchViewController: UIViewController {
+    private let searchController = UISearchController()
     
-    let recentLabel = UILabel()
+    private let recentLabel = UILabel()
     
-    let resetButton = UIButton()
+    private let resetButton = UIButton()
     
-    let tableView = UITableView()
+    private let tableView = UITableView()
     
-    let emptyView = EmptyView(type: .search)
+    private let emptyView = EmptyView(type: .search)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +29,11 @@ class SearchViewController: UIViewController {
         configureLayout()
         configureUI()
         
-        resetButton.addTarget(self, action: #selector(resetButtonClicked), for: .touchUpInside)
+        resetButton.addTarget(
+            self,
+            action: #selector(resetButtonClicked),
+            for: .touchUpInside
+        )
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -54,14 +58,14 @@ class SearchViewController: UIViewController {
 }
 
 extension SearchViewController {
-    func configureSearch(){
+    private func configureSearch(){
         navigationItem.searchController = searchController
         searchController.searchBar.searchTextField.placeholder = Display.Placeholder.search.rawValue
         searchController.searchBar.tintColor = Design.ColorType.black
         searchController.searchBar.delegate = self
     }
     
-    func configureTableView(){
+    private func configureTableView(){
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(SearchTableViewCell.self, forCellReuseIdentifier: SearchTableViewCell.identifier)
@@ -69,18 +73,20 @@ extension SearchViewController {
         tableView.rowHeight = 46
     }
     
-    func setContentEmpty(){
+    private func setContentEmpty(){
         emptyView.isHidden = false
         searchController.searchBar.searchTextField.text = ""
         searchController.isActive = false
     }
     
-    @objc func resetButtonClicked(){
+    @objc 
+    private func resetButtonClicked(){
         UserManager.savedList.removeAll()
         setContentEmpty()
     }
     
-    @objc func deleteButtonClicked(notification: Notification){
+    @objc 
+    private func deleteButtonClicked(notification: Notification){
         guard let indexPath = notification.userInfo?[ShopNotificationKey.indexPath] as? IndexPath else { return }
         UserManager.savedList.remove(at: indexPath.row)
         tableView.reloadData()
