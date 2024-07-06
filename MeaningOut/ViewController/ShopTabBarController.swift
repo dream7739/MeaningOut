@@ -18,12 +18,16 @@ final class ShopTabBarController : UITabBarController {
         let searchVC = SearchViewController()
         let nav1 = UINavigationController(rootViewController: searchVC)
 
+        let likeVC = LikeViewControlller()
+        let nav2 = UINavigationController(rootViewController: likeVC)
+        
         let settingVC = SettingViewController()
-        let nav2 = UINavigationController(rootViewController: settingVC)
+        let nav3 = UINavigationController(rootViewController: settingVC)
         
         nav1.tabBarItem = UITabBarItem(title: "검색", image: Design.ImageType.search, tag: 0)
-        nav2.tabBarItem = UITabBarItem(title: "설정", image: Design.ImageType.profile, tag: 1)
+        nav2.tabBarItem = UITabBarItem(title: "좋아요", image: Design.ImageType.like_unselected, tag: 1)
+        nav3.tabBarItem = UITabBarItem(title: "설정", image: Design.ImageType.profile, tag: 2)
         
-        setViewControllers([nav1, nav2], animated: true)
+        setViewControllers([nav1, nav2, nav3], animated: true)
    }
 }

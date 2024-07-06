@@ -12,18 +12,12 @@ import SnapKit
 final class DetailViewController: UIViewController {
     
     private let webView = WKWebView()
-    
     private let indicator = UIActivityIndicatorView(style: .large)
-    
     private let emptyView = EmptyView(type: .link)
     
-    var productId: String?
-    
-    var link: String?
-    
-    var name: String?
-    
+    let repository = RealmRepository()
     var isClicked: Bool = false
+    var data: Shop?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,10 +27,12 @@ final class DetailViewController: UIViewController {
         configureLayout()
         configureUI()
         
-        navigationItem.title = name
+        guard let data else { return }
+        
+        navigationItem.title = data.titleDescription
         addLikeBarButton()
         
-        guard let link, let url = URL(string: link) else {
+        guard let url = URL(string: data.link) else {
             emptyView.isHidden = false
             return
         }
@@ -48,31 +44,42 @@ final class DetailViewController: UIViewController {
 
 extension DetailViewController {
     private func addLikeBarButton(){
-        guard let productId else { return }
+        guard let data else { return }
+  
         let image: UIImage
         
-        if let _ = UserManager.likeDict[productId], !UserManager.likeDict.isEmpty {
+        if repository.isExistLike(id: Int(data.productId)!){
             isClicked = true
             image = Design.ImageType.like_selected ?? UIImage()
         }else{
             isClicked = false
             image = Design.ImageType.like_unselected ?? UIImage()
         }
+       
         let likeButton = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(likeButtonClicked))
         navigationItem.rightBarButtonItem = likeButton
     }
     
     @objc
     private func likeButtonClicked(){
-        guard let productId else { return }
+        guard let data else { return }
         
         isClicked.toggle()
         
         if isClicked {
-            UserManager.addLikeList(productId)
+            let like = Like(
+                productId: Int(data.productId)!,
+                title: data.title,
+                link: data.link,
+                image: data.image,
+                lprice: data.lprice,
+                mallName: data.mallName
+            )
+            
+            repository.addLike(like)
             navigationItem.rightBarButtonItem?.image = Design.ImageType.like_selected ?? UIImage()
         }else{
-            UserManager.removeLikeList(productId)
+            repository.deleteLike(Int(data.productId)!)
             navigationItem.rightBarButtonItem?.image = Design.ImageType.like_unselected ?? UIImage()
         }
     }

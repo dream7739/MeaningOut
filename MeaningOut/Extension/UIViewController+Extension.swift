@@ -77,6 +77,7 @@ extension UIViewController {
         case profile
         case search
         case result
+        case like
         case detail
         case setting
         case editNickname
@@ -94,6 +95,8 @@ extension UIViewController {
                 return "SETTING"
             case .editNickname, .editProfile:
                 return "EDIT PROFILE"
+            case .like:
+                return "LIKED PRODUCTS"
             }
         }
         

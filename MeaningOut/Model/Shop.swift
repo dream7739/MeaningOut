@@ -12,7 +12,6 @@ struct ShopRequest {
     var start: Int
     var display: Int
     var sort: String
-    
 }
 
 struct ShopResult: Decodable {

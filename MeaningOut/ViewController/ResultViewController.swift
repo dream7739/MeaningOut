@@ -6,37 +6,30 @@
 //
 
 import UIKit
+import RealmSwift
 import SnapKit
 
 final class ResultViewController: UIViewController {
     
     private let resultLabel = UILabel()
-    
     private let emptyView = EmptyView(type: .result)
-    
     private let networkView = NetworkView()
-    
     private let tagCollectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: CustomLayout.tagCollection()
     )
-    
     private let resultCollectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: CustomLayout.resultCollection()
     )
     
     var selectedIndexPath = IndexPath(row: 0, section: 0)
-    
     var keyword: String?
-    
     var start = 1
-    
     var display = 30
-    
     var sort: String = Display.SortOption.sim.sortParam
-    
     var shopResult = ShopResult(total: 0, start: 0, display: 0, items: [])
+    let repository = RealmRepository()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,6 +42,8 @@ final class ResultViewController: UIViewController {
         
         navigationItem.title = keyword
         callNaverShop()
+        
+        print(try! Realm().configuration.fileURL)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -142,13 +137,23 @@ extension ResultViewController {
         let indexPath = item.0
         let isClicked = item.1
         
-        let productId = shopResult.items[indexPath.row].productId
+        let data = shopResult.items[indexPath.row]
         
+        //좋아요 선택 => DB에 값을 넣음
+        //좋아요 해제 => DB에 값을 지움
         if isClicked {
-            UserManager.addLikeList(productId)
+            let like = Like(
+                productId: Int(data.productId)!,
+                title: data.title,
+                link: data.link,
+                image: data.image,
+                lprice: data.lprice,
+                mallName: data.mallName
+            )
+            repository.addLike(like)
         }else{
-            UserManager.removeLikeList(productId)
-        }
+            repository.deleteLike(Int(data.productId)!)
+       }
     }
     
     @objc
@@ -275,9 +280,7 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
             let data = shopResult.items[indexPath.row]
             
             let vc = DetailViewController()
-            vc.productId = data.productId
-            vc.link = data.link
-            vc.name = data.titleDescription
+            vc.data = data
             navigationController?.pushViewController(vc, animated: true)
         }
     }

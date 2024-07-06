@@ -8,7 +8,7 @@
 import Foundation
 
 @propertyWrapper
-struct UserDefaultsManager<T: Codable> {
+struct UserDefaultsManager<T> {
     let defaultValue: T
     let key: String
     let storage: UserDefaults

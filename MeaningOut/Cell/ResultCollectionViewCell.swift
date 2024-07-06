@@ -7,6 +7,7 @@
 
 import UIKit
 import Kingfisher
+import RealmSwift
 import SnapKit
 
 final class ResultCollectionViewCell: UICollectionViewCell {
@@ -19,6 +20,7 @@ final class ResultCollectionViewCell: UICollectionViewCell {
     private let likeImage = UIImageView()
     private let likeButton = UIButton()
     
+    let repository = RealmRepository()
     var keyword: String?
     var indexPath: IndexPath?
     var isClicked: Bool = false {
@@ -64,7 +66,7 @@ extension ResultCollectionViewCell {
         
         priceLabel.text = data.priceDescription
         
-        if let _ = UserManager.likeDict[data.productId], !UserManager.likeDict.isEmpty {
+        if repository.isExistLike(id: Int(data.productId)!){
             isClicked = true
         }else{
             isClicked = false
