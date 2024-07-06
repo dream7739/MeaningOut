@@ -25,6 +25,10 @@ class RealmRepository: RealmProtocol {
         return realm.objects(Like.self)
     }
     
+    func fetchAllCount() -> Int {
+        return fetchAll().count
+    }
+    
     func deleteLike(_ id: Int) {
         if let item = realm.object(ofType: Like.self, forPrimaryKey: id){
             do{
@@ -34,6 +38,16 @@ class RealmRepository: RealmProtocol {
             }catch{
                 print("deleLike Failed")
             }
+        }
+    }
+    
+    func deleteLike(_ item: Like) {
+        do{
+            try realm.write {
+                realm.delete(item)
+            }
+        }catch{
+            print("deleLike Failed")
         }
     }
     

@@ -23,7 +23,7 @@ final class ResultViewController: UIViewController {
         collectionViewLayout: CustomLayout.resultCollection()
     )
     
-    var selectedIndexPath = IndexPath(row: 0, section: 0)
+    var selectedIndexPath = IndexPath(item: 0, section: 0)
     var keyword: String?
     var start = 1
     var display = 30
@@ -137,10 +137,8 @@ extension ResultViewController {
         let indexPath = item.0
         let isClicked = item.1
         
-        let data = shopResult.items[indexPath.row]
+        let data = shopResult.items[indexPath.item]
         
-        //좋아요 선택 => DB에 값을 넣음
-        //좋아요 해제 => DB에 값을 지움
         if isClicked {
             let like = Like(
                 productId: Int(data.productId)!,
@@ -222,7 +220,7 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
                 return UICollectionViewCell()
             }
             
-            let data = Display.SortOption.allCases[indexPath.row]
+            let data = Display.SortOption.allCases[indexPath.item]
             cell.configureData(data)
             
             if indexPath == selectedIndexPath {
@@ -236,7 +234,7 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ResultCollectionViewCell.identifier, for: indexPath) as? ResultCollectionViewCell else {
                 return UICollectionViewCell()
             }
-            let data = shopResult.items[indexPath.row]
+            let data = shopResult.items[indexPath.item]
             cell.indexPath = indexPath
             cell.keyword = keyword
             cell.configureData(data)
@@ -248,7 +246,7 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == tagCollectionView {
             let label = PaddingLabel()
-            label.text = Display.SortOption.allCases[indexPath.row].title
+            label.text = Display.SortOption.allCases[indexPath.item].title
             label.font = Design.FontType.secondary
             
             let size = label.intrinsicContentSize
@@ -277,7 +275,7 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
                 callNaverShop()
             }
         }else if collectionView == resultCollectionView {
-            let data = shopResult.items[indexPath.row]
+            let data = shopResult.items[indexPath.item]
             
             let vc = DetailViewController()
             vc.data = data

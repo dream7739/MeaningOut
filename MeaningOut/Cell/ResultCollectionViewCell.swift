@@ -62,6 +62,8 @@ extension ResultCollectionViewCell {
         
         if let keyword {
             nameLabel.attributedText = data.titleDescription.highLightKeyword(keyword)
+        }else{
+            nameLabel.text = data.titleDescription
         }
         
         priceLabel.text = data.priceDescription

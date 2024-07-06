@@ -65,6 +65,21 @@ struct Shop: Decodable {
         case productId
     }
     
+    init(title: String, link: String, image: String, lprice:String, mallName: String, productId: String){
+        self.title = title
+        self.link = link
+        self.image = image
+        self.lprice = lprice
+        self.mallName = mallName
+        self.productId = productId
+        self.titleDescription = title.htmlToString() ?? title
+        if let price = Int(self.lprice) {
+            self.priceDescription = price.formatted() + "원"
+        }else{
+            self.priceDescription = lprice + "원"
+        }
+    }
+    
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.title = try container.decode(String.self, forKey: .title)
@@ -80,5 +95,6 @@ struct Shop: Decodable {
             self.priceDescription = lprice + "원"
         }
     }
+    
  
 }
