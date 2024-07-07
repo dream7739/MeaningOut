@@ -56,6 +56,7 @@ extension DetailViewController {
         }
        
         let likeButton = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(likeButtonClicked))
+        likeButton.tintColor = Design.ColorType.theme
         navigationItem.rightBarButtonItem = likeButton
     }
     

@@ -86,6 +86,7 @@ extension SettingTableViewCell: BaseProtocol {
         nameLabel.font = Design.FontType.secondary
         
         likeImage.image = Design.ImageType.like_selected
+        likeImage.tintColor = Design.ColorType.theme
     
         countLabel.textColor = Design.ColorType.black
         countLabel.font = Design.FontType.tertiary

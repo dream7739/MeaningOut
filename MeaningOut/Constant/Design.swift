@@ -40,8 +40,8 @@ enum Design {
         static let close = UIImage(systemName: "xmark")
         static let photo = UIImage(systemName: "camera.fill")
         static let empty = UIImage(named: "empty")
-        static let like_unselected = UIImage(named: "like_unselected")?.withRenderingMode(.alwaysOriginal)
-        static let like_selected = UIImage(named: "like_selected")?.withRenderingMode(.alwaysOriginal)
+        static let like_unselected = UIImage(systemName: "heart")
+        static let like_selected = UIImage(systemName: "heart.fill")
         static let wifi = UIImage(systemName: "wifi")
         
         enum ProfileType:String, CaseIterable {

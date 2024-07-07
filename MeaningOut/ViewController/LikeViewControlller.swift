@@ -123,6 +123,7 @@ extension LikeViewControlller {
         navigationItem.searchController = searchController
         searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
+        searchController.searchBar.setValue("취소", forKey: "cancelButtonText")
         searchController.searchBar.tintColor = Design.ColorType.black
         searchController.searchBar.searchTextField.placeholder = Display.Placeholder.search.rawValue
     }

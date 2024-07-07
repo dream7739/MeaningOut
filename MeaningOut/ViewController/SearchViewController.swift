@@ -37,9 +37,9 @@ final class SearchViewController: UIViewController {
         configureNav(.search)
         
         searchController.searchBar.searchTextField.text = ""
-        
         searchController.isActive = false
-        
+        searchController.searchBar.setValue("취소", forKey: "cancelButtonText")
+
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(deleteButtonClicked),
                                                name: ShopNotification.delete,

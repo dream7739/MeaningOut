@@ -26,7 +26,6 @@ final class ResultCollectionViewCell: UICollectionViewCell {
     var isClicked: Bool = false {
         didSet {
             if isClicked {
-                likeView.backgroundColor = Design.ColorType.white
                 likeImage.image = Design.ImageType.like_selected
             }else{
                 likeView.backgroundColor = Design.ColorType.black.withAlphaComponent(0.3)
@@ -130,13 +129,13 @@ extension ResultCollectionViewCell: BaseProtocol {
         }
         
         likeView.snp.makeConstraints { make in
-            make.bottom.trailing.equalTo(itemImage).inset(15)
+            make.bottom.trailing.equalTo(itemImage).inset(10)
             make.size.equalTo(30)
         }
         
         likeImage.snp.makeConstraints { make in
             make.center.equalToSuperview()
-            make.size.equalTo(20)
+            make.size.equalTo(23)
         }
         
         likeButton.snp.makeConstraints { make in
@@ -165,6 +164,7 @@ extension ResultCollectionViewCell: BaseProtocol {
         likeView.layer.cornerRadius = 7
         
         likeImage.image = Design.ImageType.like_unselected
+        likeImage.tintColor = Design.ColorType.white
         
         likeButton.backgroundColor = .clear
     }
