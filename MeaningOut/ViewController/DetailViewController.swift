@@ -10,13 +10,12 @@ import WebKit
 import SnapKit
 
 final class DetailViewController: UIViewController {
-    
     private let webView = WKWebView()
     private let indicator = UIActivityIndicatorView(style: .large)
     private let emptyView = EmptyView(type: .link)
     
-    let repository = RealmRepository()
-    var isClicked: Bool = false
+    private let repository = RealmRepository()
+    private var isClicked: Bool = false
     var data: Shop?
     
     override func viewDidLoad() {

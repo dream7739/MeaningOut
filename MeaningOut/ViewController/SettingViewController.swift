@@ -8,19 +8,12 @@
 import UIKit
 
 final class SettingViewController: UIViewController {
-    
     private let headerView = UIView()
-    
     private let profileImage = RoundImageView(type: .highlight)
-    
     private let nicknameLabel = UILabel()
-    
     private let dateLabel = UILabel()
-    
     private let indicatorImage = UIImageView()
-    
     private let sepratorLabel = UILabel()
-    
     private let tableView = UITableView()
 
     override func viewDidLoad() {

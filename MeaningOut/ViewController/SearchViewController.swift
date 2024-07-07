@@ -10,13 +10,9 @@ import SnapKit
 
 final class SearchViewController: UIViewController {
     private let searchController = UISearchController()
-    
     private let recentLabel = UILabel()
-    
     private let resetButton = UIButton()
-    
     private let tableView = UITableView()
-    
     private let emptyView = EmptyView(type: .search)
     
     override func viewDidLoad() {

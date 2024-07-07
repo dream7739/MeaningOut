@@ -7,11 +7,21 @@
 
 import Foundation
 
+enum DateFormat: String {
+    case yyyyMMdd = "yyyy.MM.dd"
+}
+
+extension DateFormatter {
+    static let dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = DateFormat.yyyyMMdd.rawValue
+        return dateFormatter
+    }()
+}
+
 extension Date{
     func toString() -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy.MM.dd"
-        let dateStr = dateFormatter.string(from: self)
+        let dateStr = DateFormatter.dateFormatter.string(from: self)
         return dateStr
     }
 }

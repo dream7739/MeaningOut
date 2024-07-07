@@ -20,7 +20,7 @@ final class ResultCollectionViewCell: UICollectionViewCell {
     private let likeImage = UIImageView()
     private let likeButton = UIButton()
     
-    let repository = RealmRepository()
+    private let repository = RealmRepository()
     var keyword: String?
     var indexPath: IndexPath?
     var isClicked: Bool = false {

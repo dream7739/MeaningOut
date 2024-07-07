@@ -23,13 +23,13 @@ final class ResultViewController: UIViewController {
         collectionViewLayout: CustomLayout.resultCollection()
     )
     
-    var selectedIndexPath = IndexPath(item: 0, section: 0)
     var keyword: String?
-    var start = 1
-    var display = 30
-    var sort: String = Display.SortOption.sim.sortParam
-    var shopResult = ShopResult(total: 0, start: 0, display: 0, items: [])
-    let repository = RealmRepository()
+    private var start = 1
+    private var display = 30
+    private var sort: String = Display.SortOption.sim.sortParam
+    private var selectedIndexPath = IndexPath(item: 0, section: 0)
+    private var shopResult = ShopResult(total: 0, start: 0, display: 0, items: [])
+    private let repository = RealmRepository()
     
     override func viewDidLoad() {
         super.viewDidLoad()

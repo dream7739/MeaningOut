@@ -61,7 +61,3 @@ extension TagCollectionViewCell: BaseProtocol {
         tagLabel.clipsToBounds = true
     }
 }
-
-extension TagCollectionViewCell {
-   
-}

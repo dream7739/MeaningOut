@@ -12,7 +12,7 @@ import SnapKit
 final class LikeViewControlller: UIViewController {
     private let resultLabel = UILabel()
     private let searchController = UISearchController(searchResultsController: nil)
-    private let emptyView = EmptyView(type: .result)
+    private let emptyView = EmptyView(type: .like)
     private let resultCollectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: CustomLayout.resultCollection()
@@ -20,12 +20,17 @@ final class LikeViewControlller: UIViewController {
     
     private let repository = RealmRepository()
     private var list: Results<Like>!
+    private var keyword: String?
     private var count: Int = 0 {
         didSet {
+            if count == 0 {
+                emptyView.isHidden = false
+            }else{
+                emptyView.isHidden = true
+            }
             resultLabel.text = count.formatted() + "개의 좋아요한 상품"
         }
     }
-    private var keyword: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,12 +40,7 @@ final class LikeViewControlller: UIViewController {
         configureLayout()
         configureUI()
         configureCollectionView()
-    
-        navigationItem.searchController = searchController
-        searchController.searchResultsUpdater = self
-        searchController.searchBar.delegate = self
-        searchController.searchBar.tintColor = Design.ColorType.black
-        searchController.searchBar.searchTextField.placeholder = Display.Placeholder.search.rawValue
+        configureSearchController()
         
         list = repository.fetchAll()
         count = list.count
@@ -76,8 +76,7 @@ extension LikeViewControlller: BaseProtocol {
         }
         
         emptyView.snp.makeConstraints { make in
-            make.top.equalTo(resultLabel.snp.bottom)
-            make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
+            make.edges.equalTo(view.safeAreaLayoutGuide)
         }
         
         resultCollectionView.snp.makeConstraints { make in
@@ -90,7 +89,6 @@ extension LikeViewControlller: BaseProtocol {
     func configureUI() {
         resultLabel.font = .boldSystemFont(ofSize: 15)
         resultLabel.textColor = Design.ColorType.theme
-        emptyView.isHidden = true
     }
 }
 
@@ -121,6 +119,14 @@ extension LikeViewControlller {
         
     }
     
+    private func configureSearchController(){
+        navigationItem.searchController = searchController
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
+        searchController.searchBar.tintColor = Design.ColorType.black
+        searchController.searchBar.searchTextField.placeholder = Display.Placeholder.search.rawValue
+    }
+    
     @objc
     private func likeButtonClicked(notification: Notification){
         guard let item = notification.userInfo?[ShopNotificationKey.indexPath] as? (IndexPath, Bool) else { return }
@@ -137,7 +143,6 @@ extension LikeViewControlller {
         }
     }
 }
-
 
 extension LikeViewControlller: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
