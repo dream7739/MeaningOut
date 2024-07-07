@@ -140,15 +140,7 @@ extension ResultViewController {
         let data = shopResult.items[indexPath.item]
         
         if isClicked {
-            let like = Like(
-                productId: Int(data.productId)!,
-                title: data.title,
-                link: data.link,
-                image: data.image,
-                lprice: data.lprice,
-                mallName: data.mallName
-            )
-            repository.addLike(like)
+            repository.addLike(data.managedObject())
         }else{
             repository.deleteLike(Int(data.productId)!)
        }

@@ -67,16 +67,7 @@ extension DetailViewController {
         isClicked.toggle()
         
         if isClicked {
-            let like = Like(
-                productId: Int(data.productId)!,
-                title: data.title,
-                link: data.link,
-                image: data.image,
-                lprice: data.lprice,
-                mallName: data.mallName
-            )
-            
-            repository.addLike(like)
+            repository.addLike(data.managedObject())
             navigationItem.rightBarButtonItem?.image = Design.ImageType.like_selected ?? UIImage()
         }else{
             repository.deleteLike(Int(data.productId)!)

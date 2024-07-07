@@ -8,11 +8,16 @@
 import Foundation
 import RealmSwift
 
-//CRUD
 protocol RealmProtocol {
     func addLike(_ item: Like)
     func fetchAll() -> Results<Like>
     func fetchAllCount() -> Int
     func deleteLike(_ id: Int)
     func isExistLike(id: Int) -> Bool
+}
+
+protocol Persistable {
+    associatedtype ManagedObject: RealmSwift.Object
+    init(managedObject: ManagedObject)
+    func managedObject() -> ManagedObject
 }

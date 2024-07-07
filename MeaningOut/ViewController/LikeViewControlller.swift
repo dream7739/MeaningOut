@@ -133,17 +133,7 @@ extension LikeViewControlller: UICollectionViewDataSource, UICollectionViewDeleg
         }
         
         let data = list[indexPath.item]
-        
-        let convertData = Shop(
-            title: data.title,
-            link: data.link ?? "",
-            image: data.image ?? "",
-            lprice: data.lprice ?? "",
-            mallName: data.mallName ?? "",
-            productId: "\(data.productId)"
-        )
-        
-        cell.configureData(convertData)
+        cell.configureData(Shop.init(managedObject: data))
         cell.indexPath = indexPath
         return cell
         
@@ -162,41 +152,7 @@ extension LikeViewControlller: UICollectionViewDataSource, UICollectionViewDeleg
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = DetailViewController()
         let data = list[indexPath.item]
-        let convertData = Shop(
-            title: data.title,
-            link: data.link ?? "",
-            image: data.image ?? "",
-            lprice: data.lprice ?? "",
-            mallName: data.mallName ?? "",
-            productId: "\(data.productId)"
-        )
-        vc.data = convertData
+        vc.data = Shop.init(managedObject: data)
         navigationController?.pushViewController(vc, animated: true)
     }
 }
-
-//extension LikeViewControlller: UICollectionViewDataSourcePrefetching {
-//    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-//        for idx in indexPaths {
-//
-//            if idx.item == shopResult.items.count - 4 {
-//                start += display
-//
-//                if start <= 1000 && start <= shopResult.total {
-//                    callNaverShop()
-//                }
-//            }
-//        }
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, cancelPrefetchingForItemsAt indexPaths: [IndexPath]) {
-//        for idx in indexPaths {
-//            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ResultCollectionViewCell.identifier, for: idx) as? ResultCollectionViewCell else {
-//                return
-//            }
-//            cell.cancelDownload()
-//        }
-//    }
-//
-//
-//}
