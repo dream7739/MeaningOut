@@ -62,21 +62,6 @@ final class UserManager {
     )
     static var savedList: [String]
         
-    @UserDefaultsManager(
-        defaultValue: [:],
-        key: "likeDict",
-        storage: .standard
-    )
-    static var likeDict: [String: Int]
-    
-    static func addLikeList(_ productId: String){
-        UserManager.likeDict[productId] = 0
-    }
-    
-    static func removeLikeList(_ productId: String){
-        UserManager.likeDict[productId] = nil
-    }
-    
     static func resetAll(){
         for key in UserDefaults.standard.dictionaryRepresentation().keys {
             UserDefaults.standard.removeObject(forKey: key.description)

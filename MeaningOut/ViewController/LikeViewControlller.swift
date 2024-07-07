@@ -18,13 +18,14 @@ final class LikeViewControlller: UIViewController {
         collectionViewLayout: CustomLayout.resultCollection()
     )
     
-    let repository = RealmRepository()
-    var list: Results<Like>!
-    var count: Int = 0 {
+    private let repository = RealmRepository()
+    private var list: Results<Like>!
+    private var count: Int = 0 {
         didSet {
             resultLabel.text = count.formatted() + "개의 좋아요한 상품"
         }
     }
+    private var keyword: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,11 +37,12 @@ final class LikeViewControlller: UIViewController {
         configureCollectionView()
     
         navigationItem.searchController = searchController
-        searchController.searchBar.placeholder = "찾으실 상품을 검색하세요"
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.tintColor = Design.ColorType.black
+        searchController.searchBar.searchTextField.placeholder = Display.Placeholder.search.rawValue
         
         list = repository.fetchAll()
-        count = repository.fetchAllCount()
-        
+        count = list.count
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -49,42 +51,13 @@ final class LikeViewControlller: UIViewController {
                                                selector: #selector(likeButtonClicked),
                                                name: ShopNotification.like,
                                                object: nil)
-        
-        count = repository.fetchAllCount()
+        count = list.count
         resultCollectionView.reloadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NotificationCenter.default.removeObserver(self)
-    }
-}
-
-extension LikeViewControlller {
-    
-    private func configureCollectionView(){
-        resultCollectionView.delegate = self
-        resultCollectionView.dataSource = self
-        resultCollectionView.register(ResultCollectionViewCell.self, forCellWithReuseIdentifier: ResultCollectionViewCell.identifier)
-        
-    }
-    
-    @objc
-    private func likeButtonClicked(notification: Notification){
-        guard let item = notification.userInfo?[ShopNotificationKey.indexPath] as? (IndexPath, Bool) else { return }
-        
-        let indexPath = item.0
-        let isClicked = item.1
-        
-        let data = list[indexPath.row]
-        
-        if isClicked {
-            repository.addLike(data)
-            resultCollectionView.reloadData()
-        }else{
-            repository.deleteLike(data)
-            resultCollectionView.reloadData()
-        }
     }
 }
 
@@ -120,6 +93,47 @@ extension LikeViewControlller: BaseProtocol {
     }
 }
 
+extension LikeViewControlller: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        if let keyword = searchController.searchBar.text, !keyword.trimmingCharacters(in: .whitespaces).isEmpty {
+            list = repository.fetchAll(keyword)
+            self.keyword = keyword
+        }else{
+            list = repository.fetchAll()
+        }
+        
+        count = list.count
+        resultCollectionView.reloadData()
+    }
+}
+
+extension LikeViewControlller {
+    private func configureCollectionView(){
+        resultCollectionView.delegate = self
+        resultCollectionView.dataSource = self
+        resultCollectionView.register(ResultCollectionViewCell.self, forCellWithReuseIdentifier: ResultCollectionViewCell.identifier)
+        resultCollectionView.keyboardDismissMode = .onDrag
+        
+    }
+    
+    @objc
+    private func likeButtonClicked(notification: Notification){
+        guard let item = notification.userInfo?[ShopNotificationKey.indexPath] as? (IndexPath, Bool) else { return }
+        
+        let indexPath = item.0
+        let isClicked = item.1
+        
+        let data = list[indexPath.row]
+        
+        if !isClicked{
+            repository.deleteLike(data)
+            count = list.count
+            resultCollectionView.reloadData()
+        }
+    }
+}
+
+
 extension LikeViewControlller: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -133,6 +147,7 @@ extension LikeViewControlller: UICollectionViewDataSource, UICollectionViewDeleg
         }
         
         let data = list[indexPath.item]
+        cell.keyword = keyword
         cell.configureData(Shop.init(managedObject: data))
         cell.indexPath = indexPath
         return cell

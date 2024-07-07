@@ -13,6 +13,8 @@ final class SettingTableViewCell: UITableViewCell {
     private let nameLabel = UILabel()
     private let likeImage = UIImageView()
     private let countLabel = UILabel()
+    
+    private let repository = RealmRepository()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -32,7 +34,7 @@ extension SettingTableViewCell {
         nameLabel.text = data.title
         
         if data == .cart {
-            let countText = "\(UserManager.likeDict.count)개의 상품"
+            let countText = "\(repository.fetchAll().count)개의 상품"
             countLabel.text = countText
             
             let font = UIFont.boldSystemFont(ofSize: 14)

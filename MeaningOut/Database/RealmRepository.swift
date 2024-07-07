@@ -9,6 +9,7 @@ import Foundation
 import RealmSwift
 
 class RealmRepository: RealmProtocol {
+    
     private let realm = try! Realm()
     
     func addLike(_ item: Like) {
@@ -21,12 +22,14 @@ class RealmRepository: RealmProtocol {
         }
     }
     
-    func fetchAll() -> RealmSwift.Results<Like> {
+    func fetchAll() -> Results<Like> {
         return realm.objects(Like.self)
     }
     
-    func fetchAllCount() -> Int {
-        return fetchAll().count
+    func fetchAll(_ keyword: String) -> Results<Like> {
+        return realm.objects(Like.self).where {
+            $0.title.contains(keyword, options: .caseInsensitive)
+        }
     }
     
     func deleteLike(_ id: Int) {

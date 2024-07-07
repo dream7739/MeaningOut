@@ -11,7 +11,7 @@ import RealmSwift
 protocol RealmProtocol {
     func addLike(_ item: Like)
     func fetchAll() -> Results<Like>
-    func fetchAllCount() -> Int
+    func fetchAll(_ keyword: String) -> Results<Like>
     func deleteLike(_ id: Int)
     func isExistLike(id: Int) -> Bool
 }

@@ -15,6 +15,7 @@ class Like: Object {
     @Persisted var image: String
     @Persisted var lprice: String
     @Persisted var mallName: String
+    @Persisted var regDate: Date
     
     convenience init(productId: Int, title: String, link: String, image: String, lprice: String, mallName: String) {
         self.init()
@@ -24,5 +25,6 @@ class Like: Object {
         self.image = image
         self.lprice = lprice
         self.mallName = mallName
+        self.regDate = Date()
     }
 }
