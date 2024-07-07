@@ -38,6 +38,7 @@ final class LikeViewControlller: UIViewController {
     
         navigationItem.searchController = searchController
         searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
         searchController.searchBar.tintColor = Design.ColorType.black
         searchController.searchBar.searchTextField.placeholder = Display.Placeholder.search.rawValue
         
@@ -93,17 +94,21 @@ extension LikeViewControlller: BaseProtocol {
     }
 }
 
-extension LikeViewControlller: UISearchResultsUpdating {
+extension LikeViewControlller: UISearchResultsUpdating, UISearchBarDelegate {
     func updateSearchResults(for searchController: UISearchController) {
         if let keyword = searchController.searchBar.text, !keyword.trimmingCharacters(in: .whitespaces).isEmpty {
             list = repository.fetchAll(keyword)
             self.keyword = keyword
         }else{
             list = repository.fetchAll()
+            self.keyword = nil
         }
-        
         count = list.count
         resultCollectionView.reloadData()
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        keyword = nil
     }
 }
 

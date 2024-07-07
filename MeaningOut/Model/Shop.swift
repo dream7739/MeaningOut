@@ -61,8 +61,9 @@ extension Shop : Persistable {
     }
     
     //Shop -> Like
+    //DB로 타이틀 저장할 때 HTML 태그 제거해서 저장
     func managedObject() -> Like {
-        let like = Like(productId: Int(productId)!, title: title, link: link, image: image, lprice: lprice, mallName: mallName)
+        let like = Like(productId: Int(productId)!, title: titleDescription, link: link, image: image, lprice: lprice, mallName: mallName)
         return like
     }
 }
