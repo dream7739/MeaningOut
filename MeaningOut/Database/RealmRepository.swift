@@ -23,13 +23,13 @@ class RealmRepository: RealmProtocol {
     }
     
     func fetchAll() -> Results<Like> {
-        return realm.objects(Like.self)
+        return realm.objects(Like.self).sorted(byKeyPath: "regDate", ascending: false)
     }
     
     func fetchAll(_ keyword: String) -> Results<Like> {
         return realm.objects(Like.self).where {
             $0.title.contains(keyword, options: .caseInsensitive)
-        }
+        }.sorted(byKeyPath: "regDate", ascending: false)
     }
     
     func deleteLike(_ id: Int) {
