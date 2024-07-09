@@ -43,7 +43,6 @@ struct Shop: Decodable {
 extension Shop : Persistable {
     typealias ManagedObject = Like
 
-    //Like -> Shop
     init(managedObject: Like) {
         title = managedObject.title
         link = managedObject.link
@@ -53,8 +52,6 @@ extension Shop : Persistable {
         productId = "\(managedObject.productId)"
     }
     
-    //Shop -> Like
-    //DB로 타이틀 저장할 때 HTML 태그 제거해서 저장
     func managedObject() -> Like {
         let like = Like(
             productId: Int(productId)!,
@@ -64,6 +61,7 @@ extension Shop : Persistable {
             lprice: lprice,
             mallName: mallName
         )
+        
         return like
     }
 }

@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-class RealmRepository: RealmProtocol {
+final class RealmRepository: RealmProtocol {
     
     private let realm = try! Realm()
     
@@ -30,6 +30,16 @@ class RealmRepository: RealmProtocol {
         return realm.objects(Like.self).where {
             $0.title.contains(keyword, options: .caseInsensitive)
         }.sorted(byKeyPath: "regDate", ascending: false)
+    }
+    
+    func deleteAll() {
+        do{
+            try realm.write {
+                realm.deleteAll()
+            }
+        }catch{
+            print("deleteAll Failed")
+        }
     }
     
     func deleteLike(_ id: Int) {

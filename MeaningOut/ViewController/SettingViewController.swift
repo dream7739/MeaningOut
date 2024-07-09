@@ -16,6 +16,8 @@ final class SettingViewController: UIViewController {
     private let sepratorLabel = UILabel()
     private let tableView = UITableView()
 
+    private let repository = RealmRepository()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
@@ -154,8 +156,9 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
         if indexPath.row == 4 {
             showAlert("탈퇴하기", "탈퇴를 하면 데이터가 모두 초기화됩니다. 탈퇴 하시겠습니까?") { _ in
                 UserManager.resetAll()
+                self.repository.deleteAll()
                 let onboardingViewController = UINavigationController(rootViewController: OnboardingViewController())
-                self.configureRootView(onboardingViewController)
+                self.transitionScene(onboardingViewController)
             }
         }
     }

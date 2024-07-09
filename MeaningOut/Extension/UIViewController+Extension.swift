@@ -9,6 +9,7 @@ import UIKit
 import Toast
 
 extension UIViewController {
+    
     func configureView(){
         view.backgroundColor = .white
     }
@@ -29,13 +30,6 @@ extension UIViewController {
         
         backBarButtonItem.tintColor = .black
         navigationItem.backBarButtonItem = backBarButtonItem
-    }
-    
-    func configureRootView(_ viewController: UIViewController){
-        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-        let sceneDelegate = windowScene?.delegate as? SceneDelegate
-        sceneDelegate?.window?.rootViewController = viewController
-        sceneDelegate?.window?.makeKeyAndVisible()
     }
     
     func showAlert(_ title: String?, _ message: String?, 
@@ -68,4 +62,37 @@ extension UIViewController {
         
     }
     
+}
+
+extension UIViewController {
+    enum Navigation {
+        case push
+        case pop
+        case modal
+        case modalFullscreen
+        case dismiss
+    }
+    
+    func transition<T: UIViewController>(_ viewController: T, _ style: Navigation){
+        switch style {
+        case .push:
+            navigationController?.pushViewController(viewController, animated: true)
+        case .pop:
+            navigationController?.popViewController(animated: true)
+        case .modal:
+            present(viewController, animated: true)
+        case .modalFullscreen:
+            viewController.modalPresentationStyle = .fullScreen
+            present(viewController, animated: true)
+        case .dismiss:
+            dismiss(animated: true)
+        }
+    }
+    
+    func transitionScene<T: UIViewController>(_ viewController: T){
+        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+        let sceneDelegate = windowScene?.delegate as? SceneDelegate
+        sceneDelegate?.window?.rootViewController = viewController
+        sceneDelegate?.window?.makeKeyAndVisible()
+    }
 }

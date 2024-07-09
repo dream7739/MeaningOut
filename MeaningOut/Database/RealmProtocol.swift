@@ -12,6 +12,7 @@ protocol RealmProtocol {
     func addLike(_ item: Like)
     func fetchAll() -> Results<Like>
     func fetchAll(_ keyword: String) -> Results<Like>
+    func deleteAll()
     func deleteLike(_ id: Int)
     func deleteLike(_ item: Like)
     func isExistLike(id: Int) -> Bool

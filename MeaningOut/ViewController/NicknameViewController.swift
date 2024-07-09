@@ -26,30 +26,6 @@ final class NicknameViewController: UIViewController {
         configureLayout()
         configureUI()
         bindData()
-        
-        let tapRecognizer = UITapGestureRecognizer(
-            target: self,
-            action: #selector(profileImageClicked)
-        )
-        profileView.addGestureRecognizer(tapRecognizer)
-        
-        nicknameField.addTarget(
-            self,
-            action: #selector(textFieldChanged),
-            for: .editingChanged
-        )
-        
-        nicknameField.addTarget(
-            self,
-            action: #selector(completeButtonClicked),
-            for: .editingDidEndOnExit
-        )
-        
-        completeButton.addTarget(
-            self,
-            action: #selector(completeButtonClicked),
-            for: .touchUpInside
-        )
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -87,12 +63,12 @@ extension NicknameViewController {
         
         viewModel.outputSaveButton.bind { value in
             guard let _ = value else { return }
-            
             switch self.viewType.detail {
             case .add:
-                self.configureRootView(ShopTabBarController())
+                let vc = ShopTabBarController()
+                self.transitionScene(vc)
             case .edit:
-                self.navigationController?.popViewController(animated: true)
+                self.transition(self, .pop)
             }
         }
     }
@@ -108,7 +84,8 @@ extension NicknameViewController {
         
         vc.viewType = .profile(viewType.detail)
         vc.selectedProfile = viewModel.inputProfileImage.value
-        navigationController?.pushViewController(vc, animated: true)
+        vc.selectedProfile = viewModel.inputProfileImage.value
+        transition(vc, .push)
     }
     
     @objc
@@ -177,6 +154,30 @@ extension NicknameViewController: BaseProtocol {
         validLabel.textColor = Design.ColorType.theme
         
         completeButton.setTitle("완료", for: .normal)
+        
+        let tapRecognizer = UITapGestureRecognizer(
+            target: self,
+            action: #selector(profileImageClicked)
+        )
+        profileView.addGestureRecognizer(tapRecognizer)
+        
+        nicknameField.addTarget(
+            self,
+            action: #selector(textFieldChanged),
+            for: .editingChanged
+        )
+        
+        nicknameField.addTarget(
+            self,
+            action: #selector(completeButtonClicked),
+            for: .editingDidEndOnExit
+        )
+        
+        completeButton.addTarget(
+            self,
+            action: #selector(completeButtonClicked),
+            for: .touchUpInside
+        )
     }
     
     private func addSaveBarButton(){
