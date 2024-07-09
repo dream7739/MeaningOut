@@ -34,6 +34,7 @@ extension OnboardingViewController {
     @objc 
     private func startButtonClicked(){
         let vc = NicknameViewController()
+        vc.viewType = .nickname(.add)
         navigationController?.pushViewController(vc, animated: true)
     }
 }

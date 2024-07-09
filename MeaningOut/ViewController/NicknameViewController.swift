@@ -15,11 +15,9 @@ final class NicknameViewController: UIViewController {
     private let validLabel = UILabel()
     private let completeButton = RoundButton()
     
-    let viewModel = NicknameViewModel()
-    var viewType: ViewType =  .nickname
-    var isValid = false
-    var selectedProfileImage: String?
-    
+    private let viewModel = NicknameViewModel()
+    var viewType: ViewType!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
@@ -43,7 +41,7 @@ final class NicknameViewController: UIViewController {
         
         nicknameField.addTarget(
             self,
-            action: #selector(returnKeyClicked),
+            action: #selector(completeButtonClicked),
             for: .editingDidEndOnExit
         )
         
@@ -56,19 +54,23 @@ final class NicknameViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if let selectedProfileImage {
-            profileView.profileImage.image = UIImage(named: selectedProfileImage)
+        if let image =  viewModel.inputProfileImage.value {
+            profileView.profileImage.image = UIImage(named: image)
         }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-            self.nicknameField.becomeFirstResponder()
+        nicknameField.becomeFirstResponder()
     }
 }
 
 extension NicknameViewController {
     func bindData(){
+        viewModel.inputViewDidLoadTrigger.value = ()
+        
+        viewModel.inputViewType.value = viewType.detail
+        
         viewModel.outputNicknameText.bind { value in
             self.validLabel.text = value
         }
@@ -82,38 +84,16 @@ extension NicknameViewController {
                 self.validLabel.textColor = Design.ColorType.theme
             }
         }
-    }
-    
-   
-    
-    private func saveUserData(){
-        if viewType == .nickname {
-            UserManager.isUser = true
-            UserManager.nickname = nicknameField.text!.trimmingCharacters(in: .whitespaces)
+        
+        viewModel.outputSaveButton.bind { value in
+            guard let _ = value else { return }
             
-            if let image = selectedProfileImage {
-                UserManager.profileImage = image
+            switch self.viewType.detail {
+            case .add:
+                self.configureRootView(ShopTabBarController())
+            case .edit:
+                self.navigationController?.popViewController(animated: true)
             }
-            
-            let date = Date()
-            let joinDate = date.toString()
-            UserManager.joinDate = joinDate
-            
-        }else if viewType == .editNickname {
-            UserManager.nickname = nicknameField.text!.trimmingCharacters(in: .whitespaces)
-            
-            if let image = selectedProfileImage {
-                UserManager.profileImage = image
-            }
-        }
-    }
-    
-    private func changeScreen(){
-        if viewType == .nickname {
-            let tabBarController = ShopTabBarController()
-            configureRootView(tabBarController)
-        }else if viewType == .editNickname {
-            navigationController?.popViewController(animated: true)
         }
     }
     
@@ -123,36 +103,22 @@ extension NicknameViewController {
         
         vc.profileDataSender = { profile in
             guard let image = profile else { return }
-            self.selectedProfileImage = image
+            self.viewModel.inputProfileImage.value = image
         }
         
-        if viewType == .editNickname {
-            vc.viewType = .editProfile
-        }else if viewType == .nickname {
-            vc.viewType = .profile
-        }
-        
-        vc.selectedProfile = selectedProfileImage
+        vc.viewType = .profile(viewType.detail)
+        vc.selectedProfile = viewModel.inputProfileImage.value
         navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc
     private func textFieldChanged(){
         viewModel.inputNickname.value = nicknameField.text!.trimmingCharacters(in: .whitespaces)
-        let input = nicknameField.text!.trimmingCharacters(in: .whitespaces)
-    }
-    
-    @objc
-    private func returnKeyClicked(){
-        completeButtonClicked()
     }
     
     @objc
     private func completeButtonClicked(){
-        if isValid {
-            saveUserData()
-            changeScreen()
-        }
+        viewModel.inputSaveButton.value = ()
     }
 }
 
@@ -190,22 +156,19 @@ extension NicknameViewController: BaseProtocol {
     }
     
     func configureUI() {
-        //진입 지점에 따른 분기 처리
-        if viewType == .editNickname {
+        switch viewType.detail {
+        case .add:
+            nicknameField.text = ""
+        case .edit:
+            viewModel.inputNickname.value = UserManager.nickname
+            addSaveBarButton()
             nicknameField.text = UserManager.nickname
             completeButton.isHidden = true
-            addSaveButton()
-            viewModel.inputNickname.value = UserManager.nickname
-        }else if viewType == .nickname {
-            nicknameField.text = ""
         }
         
-        if UserManager.profileImage.isEmpty {
-            selectedProfileImage = Design.ImageType.ProfileType.randomTitle
-        }else{
-            selectedProfileImage = UserManager.profileImage
+        if let image = viewModel.inputProfileImage.value {
+            profileView.profileImage.image = UIImage(named: image)
         }
-        profileView.profileImage.image = UIImage(named: selectedProfileImage!)
         
         nicknameField.placeholder = Display.Placeholder.nickname.rawValue
         nicknameField.clearButtonMode = .whileEditing
@@ -216,8 +179,13 @@ extension NicknameViewController: BaseProtocol {
         completeButton.setTitle("완료", for: .normal)
     }
     
-    private func addSaveButton(){
-        let save = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(completeButtonClicked))
+    private func addSaveBarButton(){
+        let save = UIBarButtonItem(
+            title: "저장",
+            style: .plain,
+            target: self,
+            action: #selector(completeButtonClicked)
+        )
         save.tintColor = .black
         navigationItem.rightBarButtonItem = save
     }

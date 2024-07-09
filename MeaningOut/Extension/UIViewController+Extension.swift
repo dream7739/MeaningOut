@@ -13,8 +13,8 @@ extension UIViewController {
         view.backgroundColor = .white
     }
     
-    func configureNav(_ viewType: ViewType){
-        navigationItem.title = viewType.navigationTitle
+    func configureNav(_ navigation: ViewType){
+        navigationItem.title = navigation.title
         
         navigationController?.navigationBar.titleTextAttributes = [
             NSAttributedString.Key.font: Design.FontType.gmarketMedium!
@@ -69,37 +69,3 @@ extension UIViewController {
     }
     
 }
-
-extension UIViewController {
-    enum ViewType {
-        case onboard
-        case nickname
-        case profile
-        case search
-        case result
-        case like
-        case detail
-        case setting
-        case editNickname
-        case editProfile
-
-        var navigationTitle: String {
-            switch self {
-            case .nickname, .profile:
-                return "PROFILE SETTING"
-            case .search:
-                return "\(UserManager.nickname)`s MEANING OUT"
-            case .onboard, .result, .detail:
-                return ""
-            case .setting:
-                return "SETTING"
-            case .editNickname, .editProfile:
-                return "EDIT PROFILE"
-            case .like:
-                return "LIKED PRODUCTS"
-            }
-        }
-        
-    }
-}
-

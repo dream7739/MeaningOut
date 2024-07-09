@@ -8,14 +8,28 @@
 import Foundation
 
 class NicknameViewModel{
+    typealias ViewDetailType = ViewType.ViewDetailType
+    
+    var inputViewDidLoadTrigger: Observable<Void?> = Observable(nil)
+    var inputViewType: Observable<ViewDetailType?> = Observable(nil)
+    var inputProfileImage: Observable<String?> = Observable("")
     var inputNickname: Observable<String> = Observable("")
-    
     var outputNicknameText: Observable<String> = Observable("")
-    
     var outputNicknameValid: Observable<Bool> = Observable(false)
-    
+    var inputSaveButton: Observable<Void?> = Observable(nil)
+    var outputSaveButton: Observable<Void?> = Observable(nil)
     
     init(){
+        
+        inputViewDidLoadTrigger.bind { value in
+            guard let _ = value else { return }
+            if UserManager.profileImage.isEmpty {
+                self.inputProfileImage.value = Design.ProfileType.randomTitle
+            }else{
+                self.inputProfileImage.value = UserManager.profileImage
+            }
+        }
+        
         inputNickname.bind { value in
             do {
                 self.outputNicknameValid.value = try self.validateUserInput(value)
@@ -34,6 +48,31 @@ class NicknameViewModel{
                 self.outputNicknameText.value = Validation.Nickname.isSpecialChar.description
             }catch {
                 print(#function, "error occured")
+            }
+        }
+        
+        inputSaveButton.bind { value in
+            guard let _ = value, let viewType = self.inputViewType.value else { return }
+            if self.outputNicknameValid.value {
+                self.saveUserDefaultsData(viewType)
+                self.outputSaveButton.value = ()
+            }
+        }
+    }
+    
+    private func saveUserDefaultsData(_ type: ViewDetailType){
+        switch type {
+        case .add:
+            UserManager.isUser = true
+            if let image = inputProfileImage.value {
+                UserManager.profileImage = image
+            }
+            UserManager.nickname = inputNickname.value
+            UserManager.joinDate = Date().toString()
+        case .edit:
+            UserManager.nickname = inputNickname.value
+            if let image = inputProfileImage.value {
+                UserManager.profileImage = image
             }
         }
     }

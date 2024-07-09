@@ -20,7 +20,7 @@ final class ProfileViewController: UIViewController {
     var selectedProfile: String?
     var profileDataSender: ((_ data: String?) -> Void)?
     
-    var viewType: UIViewController.ViewType = .profile
+    var viewType: ViewType!
     
     private func layout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()
@@ -95,14 +95,14 @@ extension ProfileViewController: BaseProtocol {
 
 extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return Design.ImageType.ProfileType.allCases.count
+        return Design.ProfileType.allCases.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProfileCollectionViewCell.identifier, for: indexPath) as? ProfileCollectionViewCell else { return UICollectionViewCell()
         }
         
-        let data = Design.ImageType.ProfileType.allCases[indexPath.row]
+        let data = Design.ProfileType.allCases[indexPath.row]
         
         cell.configureData(data: data)
         
@@ -128,7 +128,7 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
         selectedIndexPath = indexPath
         collectionView.reloadData()
         guard let selectedPath =  selectedIndexPath else { return }
-        let image = Design.ImageType.ProfileType.allCases[selectedPath.row].rawValue
+        let image = Design.ProfileType.allCases[selectedPath.row].rawValue
         selectedProfile = image
         profileView.profileImage.image = UIImage(named: image)
     }

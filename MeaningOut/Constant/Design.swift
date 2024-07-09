@@ -43,24 +43,22 @@ enum Design {
         static let like_unselected = UIImage(systemName: "heart")
         static let like_selected = UIImage(systemName: "heart.fill")
         static let wifi = UIImage(systemName: "wifi")
-        
-        enum ProfileType:String, CaseIterable {
-            case profile_0
-            case profile_1
-            case profile_2
-            case profile_3
-            case profile_4
-            case profile_5
-            case profile_6
-            case profile_7
-            case profile_8
-
-            static var randomTitle: String {
-                return ProfileType.allCases.randomElement()!.rawValue
-            }
-
-        }
     }
     
-    
+    enum ProfileType:String, CaseIterable {
+        case profile_0
+        case profile_1
+        case profile_2
+        case profile_3
+        case profile_4
+        case profile_5
+        case profile_6
+        case profile_7
+        case profile_8
+
+        static var randomTitle: String {
+            return ProfileType.allCases.randomElement()!.rawValue
+        }
+
+    }
 }

@@ -58,7 +58,7 @@ extension SettingViewController {
     @objc
     private func headerViewClicked(){
         let vc = NicknameViewController()
-        vc.viewType = .editNickname
+        vc.viewType = .nickname(.edit)
         navigationController?.pushViewController(vc, animated: true)
     }
 }
