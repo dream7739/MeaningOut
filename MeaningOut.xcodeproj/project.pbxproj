@@ -44,6 +44,8 @@
 		8891D23E2C1ECD9F0007F60E /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8891D23D2C1ECD9F0007F60E /* SettingTableViewCell.swift */; };
 		8899152D2C1BEA460088C795 /* RoundImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8899152C2C1BEA460088C795 /* RoundImageView.swift */; };
 		8899152F2C1BEA5C0088C795 /* UnderLineTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8899152E2C1BEA5C0088C795 /* UnderLineTextField.swift */; };
+		88AD96262C3D1840001EC620 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88AD96252C3D1840001EC620 /* Observable.swift */; };
+		88AD96292C3D1A7B001EC620 /* NicknameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88AD96282C3D1A7B001EC620 /* NicknameViewModel.swift */; };
 		88B875382C1C199C00F19CE6 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B875372C1C199C00F19CE6 /* String+Extension.swift */; };
 		88B8753A2C1C2AFE00F19CE6 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B875392C1C2AFE00F19CE6 /* ProfileViewController.swift */; };
 		88B8753C2C1C2B7100F19CE6 /* ShopTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B8753B2C1C2B7100F19CE6 /* ShopTabBarController.swift */; };
@@ -113,6 +115,8 @@
 		8891D23D2C1ECD9F0007F60E /* SettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewCell.swift; sourceTree = "<group>"; };
 		8899152C2C1BEA460088C795 /* RoundImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundImageView.swift; sourceTree = "<group>"; };
 		8899152E2C1BEA5C0088C795 /* UnderLineTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderLineTextField.swift; sourceTree = "<group>"; };
+		88AD96252C3D1840001EC620 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		88AD96282C3D1A7B001EC620 /* NicknameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewModel.swift; sourceTree = "<group>"; };
 		88B875372C1C199C00F19CE6 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		88B875392C1C2AFE00F19CE6 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		88B8753B2C1C2B7100F19CE6 /* ShopTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopTabBarController.swift; sourceTree = "<group>"; };
@@ -192,6 +196,7 @@
 		883A7DC12C1B0A6C00A4665E /* MeaningOut */ = {
 			isa = PBXGroup;
 			children = (
+				88AD96272C3D1A73001EC620 /* ViewModel */,
 				881D78DB2C396E2E00E04336 /* Database */,
 				8874E5EB2C2EC9DB00DF0CE4 /* Font */,
 				883E55872C255EBB00A74170 /* API */,
@@ -209,6 +214,7 @@
 				883A7DCD2C1B0A6D00A4665E /* LaunchScreen.storyboard */,
 				883A7DD02C1B0A6D00A4665E /* Info.plist */,
 				88FBDF702C1DD13000AB0BC9 /* APIKey.swift */,
+				88AD96252C3D1840001EC620 /* Observable.swift */,
 			);
 			path = MeaningOut;
 			sourceTree = "<group>";
@@ -301,6 +307,14 @@
 				8849DF492C26A7CD00F2711B /* NetworkView.swift */,
 			);
 			path = Custom;
+			sourceTree = "<group>";
+		};
+		88AD96272C3D1A73001EC620 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				88AD96282C3D1A7B001EC620 /* NicknameViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		88FBDF722C1DD68700AB0BC9 /* Model */ = {
@@ -421,6 +435,7 @@
 				887B29982C1B133C009F3630 /* OnboardingViewController.swift in Sources */,
 				887B299E2C1B14A9009F3630 /* UIViewController+Extension.swift in Sources */,
 				883A7DC52C1B0A6C00A4665E /* SceneDelegate.swift in Sources */,
+				88AD96292C3D1A7B001EC620 /* NicknameViewModel.swift in Sources */,
 				88DFBEA22C2FD250006C2CF7 /* CustomLayout.swift in Sources */,
 				883E55892C255ED600A74170 /* APIManager.swift in Sources */,
 				887B29A32C1B1AEE009F3630 /* NicknameViewController.swift in Sources */,
@@ -432,6 +447,7 @@
 				88D6B6942C2D7C2A008A598B /* Display.swift in Sources */,
 				88CE76922C2003C700644F7A /* Notification.swift in Sources */,
 				8849DF4A2C26A7CD00F2711B /* NetworkView.swift in Sources */,
+				88AD96262C3D1840001EC620 /* Observable.swift in Sources */,
 				88CE76942C202CB200644F7A /* Date+Extension.swift in Sources */,
 				8871F66F2C1C6F9400A7A36B /* UserDefaultsManager.swift in Sources */,
 				88FBDF712C1DD13000AB0BC9 /* APIKey.swift in Sources */,

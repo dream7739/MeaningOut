@@ -15,6 +15,7 @@ final class NicknameViewController: UIViewController {
     private let validLabel = UILabel()
     private let completeButton = RoundButton()
     
+    let viewModel = NicknameViewModel()
     var viewType: ViewType =  .nickname
     var isValid = false
     var selectedProfileImage: String?
@@ -26,6 +27,7 @@ final class NicknameViewController: UIViewController {
         configureHierarchy()
         configureLayout()
         configureUI()
+        bindData()
         
         let tapRecognizer = UITapGestureRecognizer(
             target: self,
@@ -66,59 +68,23 @@ final class NicknameViewController: UIViewController {
 }
 
 extension NicknameViewController {
-    
-    @discardableResult
-    private func validateUserInput(_ input: String) throws -> Bool {
-        guard !input.isEmpty else{
-            throw Validation.Nickname.isEmpty
+    func bindData(){
+        viewModel.outputNicknameText.bind { value in
+            self.validLabel.text = value
         }
         
-        guard input.count >= 2 && input.count <= 10 else {
-            throw Validation.Nickname.countLimit
+        viewModel.outputNicknameValid.bind { value in
+            if value {
+                self.nicknameField.setLineColor(type: .valid)
+                self.validLabel.textColor = Design.ColorType.black
+            }else{
+                self.nicknameField.setLineColor(type: .inValid)
+                self.validLabel.textColor = Design.ColorType.theme
+            }
         }
-        
-        guard (input.range(of:  #"[@#$%]"#, options: .regularExpression) == nil) else {
-            throw Validation.Nickname.isSpecialChar
-        }
-        
-        guard (input.range(of: #"[0-9]"#, options: .regularExpression) == nil) else {
-            throw Validation.Nickname.isNumber
-        }
-        
-        return true
     }
     
-    private func checkUserInput(_ input: String){
-        do {
-            isValid = try validateUserInput(input)
-            validLabel.text = "사용 가능한 닉네임입니다 :)"
-            nicknameField.setLineColor(type: .valid)
-            validLabel.textColor = Design.ColorType.black
-        }catch Validation.Nickname.isEmpty {
-            isValid = false
-            validLabel.text =  Validation.Nickname.isEmpty.description
-            nicknameField.setLineColor(type: .inValid)
-            validLabel.textColor = Design.ColorType.theme
-        }catch Validation.Nickname.countLimit {
-            isValid = false
-            validLabel.text = Validation.Nickname.countLimit.description
-            nicknameField.setLineColor(type: .inValid)
-            validLabel.textColor = Design.ColorType.theme
-        }catch Validation.Nickname.isNumber{
-            isValid = false
-            validLabel.text = Validation.Nickname.isNumber.description
-            nicknameField.setLineColor(type: .inValid)
-            validLabel.textColor = Design.ColorType.theme
-        }catch Validation.Nickname.isSpecialChar {
-            isValid = false
-            validLabel.text = Validation.Nickname.isSpecialChar.description
-            nicknameField.setLineColor(type: .inValid)
-            validLabel.textColor = Design.ColorType.theme
-        }catch {
-            print(#function, "error occured")
-        }
-        
-    }
+   
     
     private func saveUserData(){
         if viewType == .nickname {
@@ -172,8 +138,8 @@ extension NicknameViewController {
     
     @objc
     private func textFieldChanged(){
+        viewModel.inputNickname.value = nicknameField.text!.trimmingCharacters(in: .whitespaces)
         let input = nicknameField.text!.trimmingCharacters(in: .whitespaces)
-        checkUserInput(input)
     }
     
     @objc
@@ -229,7 +195,7 @@ extension NicknameViewController: BaseProtocol {
             nicknameField.text = UserManager.nickname
             completeButton.isHidden = true
             addSaveButton()
-            checkUserInput(UserManager.nickname)
+            viewModel.inputNickname.value = UserManager.nickname
         }else if viewType == .nickname {
             nicknameField.text = ""
         }
