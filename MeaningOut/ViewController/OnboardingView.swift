@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class OnboardingViewController: UIViewController {
+final class OnboardingView: UIViewController {
 
     private let titleLabel = UILabel()
     private let launchImage = UIImageView()
@@ -30,16 +30,16 @@ final class OnboardingViewController: UIViewController {
     }
 }
 
-extension OnboardingViewController {
+extension OnboardingView {
     @objc 
     private func startButtonClicked(){
-        let vc = NicknameViewController()
+        let vc = NicknameView()
         vc.viewType = .nickname(.add)
         navigationController?.pushViewController(vc, animated: true)
     }
 }
 
-extension OnboardingViewController: BaseProtocol {
+extension OnboardingView: BaseProtocol {
     func configureHierarchy() {
         view.addSubview(titleLabel)
         view.addSubview(launchImage)

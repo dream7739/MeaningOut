@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class NicknameViewController: UIViewController {
+final class NicknameView: UIViewController {
     
     private let profileView = RoundProfileView()
     private let nicknameField = UnderLineTextField()
@@ -20,6 +20,7 @@ final class NicknameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(self, #function)
         configureView()
         configureNav(viewType)
         configureHierarchy()
@@ -30,9 +31,6 @@ final class NicknameViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if let image =  viewModel.inputProfileImage.value {
-            profileView.profileImage.image = UIImage(named: image)
-        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -43,9 +41,13 @@ final class NicknameViewController: UIViewController {
 
 extension NicknameViewController {
     func bindData(){
-        viewModel.inputViewDidLoadTrigger.value = ()
-        
         viewModel.inputViewType.value = viewType.detail
+        
+        viewModel.outputProfileImage.bind { value in
+            if let value {
+                self.profileView.profileImage.image = UIImage(named: value)
+            }
+        }
         
         viewModel.outputNicknameText.bind { value in
             self.validLabel.text = value
@@ -61,8 +63,7 @@ extension NicknameViewController {
             }
         }
         
-        viewModel.outputSaveButton.bind { value in
-            guard let _ = value else { return }
+        viewModel.outputSaveButton.bind { _ in
             switch self.viewType.detail {
             case .add:
                 let vc = ShopTabBarController()
@@ -71,6 +72,9 @@ extension NicknameViewController {
                 self.transition(self, .pop)
             }
         }
+        
+        viewModel.inputViewDidLoadTrigger.value = ()
+
     }
     
     @objc
@@ -78,13 +82,12 @@ extension NicknameViewController {
         let vc = ProfileViewController()
         
         vc.profileDataSender = { profile in
-            guard let image = profile else { return }
-            self.viewModel.inputProfileImage.value = image
+            self.viewModel.outputProfileImage.value = profile
         }
         
         vc.viewType = .profile(viewType.detail)
-        vc.selectedProfile = viewModel.inputProfileImage.value
-        vc.selectedProfile = viewModel.inputProfileImage.value
+        vc.selectedProfile = viewModel.outputProfileImage.value
+        vc.selectedProfile = viewModel.outputProfileImage.value
         transition(vc, .push)
     }
     
@@ -137,14 +140,10 @@ extension NicknameViewController: BaseProtocol {
         case .add:
             nicknameField.text = ""
         case .edit:
-            viewModel.inputNickname.value = UserManager.nickname
             addSaveBarButton()
+            viewModel.inputNickname.value = UserManager.nickname
             nicknameField.text = UserManager.nickname
             completeButton.isHidden = true
-        }
-        
-        if let image = viewModel.inputProfileImage.value {
-            profileView.profileImage.image = UIImage(named: image)
         }
         
         nicknameField.placeholder = Display.Placeholder.nickname.rawValue

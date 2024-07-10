@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class ProfileViewController: UIViewController {
+final class ProfileView: UIViewController {
     
     private let profileView = RoundProfileView()
     private lazy var collectionView = UICollectionView(
@@ -57,7 +57,7 @@ final class ProfileViewController: UIViewController {
     
 }
 
-extension ProfileViewController {
+extension ProfileView {
     private func configureCollectionView(){
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -65,7 +65,7 @@ extension ProfileViewController {
     }
 }
 
-extension ProfileViewController: BaseProtocol {
+extension ProfileView: BaseProtocol {
     
     func configureHierarchy() {
         view.addSubview(profileView)
@@ -93,7 +93,7 @@ extension ProfileViewController: BaseProtocol {
     
 }
 
-extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension ProfileView: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return Design.ProfileType.allCases.count
     }
