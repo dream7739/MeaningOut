@@ -13,9 +13,9 @@ final class LikeViewControlller: UIViewController {
     private let resultLabel = UILabel()
     private let searchController = UISearchController(searchResultsController: nil)
     private let emptyView = EmptyView(type: .like)
-    private let resultCollectionView = UICollectionView(
+    lazy var resultCollectionView = UICollectionView(
         frame: .zero,
-        collectionViewLayout: CustomLayout.resultCollection()
+        collectionViewLayout: CustomLayout.product(view).get()
     )
     
     private let repository = RealmRepository()

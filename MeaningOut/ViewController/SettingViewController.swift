@@ -59,7 +59,7 @@ extension SettingViewController {
     
     @objc
     private func headerViewClicked(){
-        let vc = NicknameViewController()
+        let vc = NicknameView()
         vc.viewType = .nickname(.edit)
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -157,7 +157,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
             showAlert("탈퇴하기", "탈퇴를 하면 데이터가 모두 초기화됩니다. 탈퇴 하시겠습니까?") { _ in
                 UserManager.resetAll()
                 self.repository.deleteAll()
-                let onboardingViewController = UINavigationController(rootViewController: OnboardingViewController())
+                let onboardingViewController = UINavigationController(rootViewController: OnboardingView())
                 self.transitionScene(onboardingViewController)
             }
         }

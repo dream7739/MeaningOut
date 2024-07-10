@@ -7,12 +7,12 @@
 
 import Foundation
 
-class NicknameViewModel{
+final class NicknameViewModel{
     typealias ViewDetailType = ViewType.ViewDetailType
     
     var inputViewDidLoadTrigger: Observable<Void?> = Observable(nil)
     var inputViewType: Observable<ViewDetailType?> = Observable(nil)
-    var inputProfileImage: Observable<String?> = Observable("")
+    var outputProfileImage: Observable<String?> = Observable("")
     var inputNickname: Observable<String> = Observable("")
     var outputNicknameText: Observable<String> = Observable("")
     var outputNicknameValid: Observable<Bool> = Observable(false)
@@ -20,13 +20,16 @@ class NicknameViewModel{
     var outputSaveButton: Observable<Void?> = Observable(nil)
     
     init(){
-        
+       print(self, #function)
+       transform()
+    }
+    
+    private func transform(){
         inputViewDidLoadTrigger.bind { value in
-            guard let _ = value else { return }
             if UserManager.profileImage.isEmpty {
-                self.inputProfileImage.value = Design.ProfileType.randomTitle
+                self.outputProfileImage.value = Design.ProfileType.randomTitle
             }else{
-                self.inputProfileImage.value = UserManager.profileImage
+                self.outputProfileImage.value = UserManager.profileImage
             }
         }
         
@@ -52,7 +55,7 @@ class NicknameViewModel{
         }
         
         inputSaveButton.bind { value in
-            guard let _ = value, let viewType = self.inputViewType.value else { return }
+            guard let viewType = self.inputViewType.value else { return }
             if self.outputNicknameValid.value {
                 self.saveUserDefaultsData(viewType)
                 self.outputSaveButton.value = ()
@@ -60,23 +63,9 @@ class NicknameViewModel{
         }
     }
     
-    private func saveUserDefaultsData(_ type: ViewDetailType){
-        switch type {
-        case .add:
-            UserManager.isUser = true
-            if let image = inputProfileImage.value {
-                UserManager.profileImage = image
-            }
-            UserManager.nickname = inputNickname.value
-            UserManager.joinDate = Date().toString()
-        case .edit:
-            UserManager.nickname = inputNickname.value
-            if let image = inputProfileImage.value {
-                UserManager.profileImage = image
-            }
-        }
-    }
-    
+}
+
+extension NicknameViewModel {
     @discardableResult
     private func validateUserInput(_ input: String) throws -> Bool {
         guard !input.isEmpty else{
@@ -96,6 +85,23 @@ class NicknameViewModel{
         }
         
         return true
+    }
+    
+    private func saveUserDefaultsData(_ type: ViewDetailType){
+        switch type {
+        case .add:
+            UserManager.isUser = true
+            if let image = outputProfileImage.value {
+                UserManager.profileImage = image
+            }
+            UserManager.nickname = inputNickname.value
+            UserManager.joinDate = Date().toString()
+        case .edit:
+            UserManager.nickname = inputNickname.value
+            if let image = outputProfileImage.value {
+                UserManager.profileImage = image
+            }
+        }
     }
     
 }

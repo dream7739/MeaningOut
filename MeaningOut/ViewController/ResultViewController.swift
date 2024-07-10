@@ -14,13 +14,13 @@ final class ResultViewController: UIViewController {
     private let resultLabel = UILabel()
     private let emptyView = EmptyView(type: .result)
     private let networkView = NetworkView()
-    private let tagCollectionView = UICollectionView(
+    private lazy var tagCollectionView = UICollectionView(
         frame: .zero,
-        collectionViewLayout: CustomLayout.tagCollection()
+        collectionViewLayout: CustomLayout.sort(view).get()
     )
-    private let resultCollectionView = UICollectionView(
+    private lazy var resultCollectionView = UICollectionView(
         frame: .zero,
-        collectionViewLayout: CustomLayout.resultCollection()
+        collectionViewLayout: CustomLayout.product(view).get()
     )
     
     var keyword: String?

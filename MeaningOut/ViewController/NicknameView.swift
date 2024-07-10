@@ -1,5 +1,5 @@
 //
-//  NicknameViewController.swift
+//  NicknameView.swift
 //  MeaningOut
 //
 //  Created by 홍정민 on 6/13/24.
@@ -39,8 +39,8 @@ final class NicknameView: UIViewController {
     }
 }
 
-extension NicknameViewController {
-    func bindData(){
+extension NicknameView {
+    private func bindData(){
         viewModel.inputViewType.value = viewType.detail
         
         viewModel.outputProfileImage.bind { value in
@@ -79,15 +79,12 @@ extension NicknameViewController {
     
     @objc
     private func profileImageClicked(){
-        let vc = ProfileViewController()
-        
-        vc.profileDataSender = { profile in
+        let vc = ProfileView()
+        vc.viewModel.profileImageSender.value = { profile in
             self.viewModel.outputProfileImage.value = profile
         }
-        
-        vc.viewType = .profile(viewType.detail)
-        vc.selectedProfile = viewModel.outputProfileImage.value
-        vc.selectedProfile = viewModel.outputProfileImage.value
+        vc.viewModel.inputViewType.value = .profile(viewType.detail)
+        vc.viewModel.outputProfileImage.value = viewModel.outputProfileImage.value
         transition(vc, .push)
     }
     
@@ -102,7 +99,7 @@ extension NicknameViewController {
     }
 }
 
-extension NicknameViewController: BaseProtocol {
+extension NicknameView: BaseProtocol {
     func configureHierarchy() {
         view.addSubview(profileView)
         view.addSubview(nicknameField)

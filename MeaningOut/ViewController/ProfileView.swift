@@ -9,55 +9,46 @@ import UIKit
 import SnapKit
 
 final class ProfileView: UIViewController {
-    
     private let profileView = RoundProfileView()
     private lazy var collectionView = UICollectionView(
         frame: .zero,
-        collectionViewLayout: layout()
+        collectionViewLayout: CustomLayout.profile(view).get()
     )
     
-    var selectedIndexPath: IndexPath?
-    var selectedProfile: String?
-    var profileDataSender: ((_ data: String?) -> Void)?
-    
-    var viewType: ViewType!
-    
-    private func layout() -> UICollectionViewLayout {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        layout.collectionView?.isScrollEnabled = false
-        
-        let spacing: CGFloat = 10
-        let verticalInset: CGFloat = 20
-        let horizontalInset: CGFloat = 30
-        let width = (view.bounds.width - (spacing * 2) - (horizontalInset * 2)) / 3
-        
-        layout.itemSize = CGSize(width: width, height: width)
-        layout.minimumLineSpacing = spacing
-        layout.minimumInteritemSpacing = spacing
-        layout.sectionInset = UIEdgeInsets(top: verticalInset, left: horizontalInset, bottom: verticalInset, right: horizontalInset)
-        
-        return layout
-    }
+    private let viewModel = ProfileViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
-        configureNav(viewType)
+        configureNav(viewModel.inputViewType.value!)
         configureHierarchy()
         configureLayout()
-        configureUI()
         configureCollectionView()
+        bindData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        profileDataSender?(selectedProfile)
+        viewModel.profileImageSender.value?(viewModel.outputProfileImage.value)
     }
     
 }
 
 extension ProfileView {
+    private func bindData(){
+        viewModel.outputProfileImage.bind { value in
+            if let value {
+                self.profileView.profileImage.image = UIImage(named: value)
+            }
+        }
+        
+        viewModel.outputSelectedIndexPath.bind { _ in
+            self.collectionView.reloadData()
+        }
+        
+        viewModel.inputViewDidLoadTrigger.value = ()
+    }
+    
     private func configureCollectionView(){
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -66,7 +57,6 @@ extension ProfileView {
 }
 
 extension ProfileView: BaseProtocol {
-    
     func configureHierarchy() {
         view.addSubview(profileView)
         view.addSubview(collectionView)
@@ -85,12 +75,6 @@ extension ProfileView: BaseProtocol {
         }
     }
     
-    func configureUI(){
-        if let selectedProfile {
-            profileView.profileImage.image = UIImage(named: selectedProfile)
-        }
-    }
-    
 }
 
 extension ProfileView: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -106,15 +90,15 @@ extension ProfileView: UICollectionViewDelegate, UICollectionViewDataSource {
         
         cell.configureData(data: data)
         
-        guard let selectedIndexPath else {
-            if let selectedProfile, selectedProfile == data.rawValue {
+        guard let selectedIndexPath = viewModel.outputSelectedIndexPath.value else{
+            if viewModel.outputProfileImage.value == data.rawValue {
                 cell.isClicked = true
             }else{
                 cell.isClicked = false
             }
             return cell
         }
-        
+            
         if selectedIndexPath == indexPath {
             cell.isClicked = true
         }else{
@@ -125,12 +109,8 @@ extension ProfileView: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        selectedIndexPath = indexPath
-        collectionView.reloadData()
-        guard let selectedPath =  selectedIndexPath else { return }
-        let image = Design.ProfileType.allCases[selectedPath.row].rawValue
-        selectedProfile = image
-        profileView.profileImage.image = UIImage(named: image)
+        viewModel.outputProfileImage.value = Design.ProfileType.allCases[indexPath.item].rawValue
+        viewModel.outputSelectedIndexPath.value = indexPath
     }
 }
 

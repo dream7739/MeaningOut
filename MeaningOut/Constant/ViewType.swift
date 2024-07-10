@@ -41,7 +41,7 @@ enum ViewType{
     
     var detail: ViewDetailType {
         switch self {
-        case .nickname(let type):
+        case .nickname(let type), .profile(let type):
             return type
         default:
             return .add
