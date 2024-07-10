@@ -9,7 +9,6 @@ import UIKit
 import SnapKit
 
 final class OnboardingView: UIViewController {
-
     private let titleLabel = UILabel()
     private let launchImage = UIImageView()
     private let startButton = RoundButton()

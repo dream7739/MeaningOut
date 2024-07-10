@@ -15,7 +15,7 @@ final class ProfileView: UIViewController {
         collectionViewLayout: CustomLayout.profile(view).get()
     )
     
-    private let viewModel = ProfileViewModel()
+    let viewModel = ProfileViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()

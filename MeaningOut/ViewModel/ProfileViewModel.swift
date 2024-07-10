@@ -9,7 +9,7 @@ import Foundation
 
 final class ProfileViewModel {
     typealias ViewDetailType = ViewType.ViewDetailType
-
+        
     var inputViewDidLoadTrigger: Observable<Void?> = Observable(nil)
     var inputViewType: Observable<ViewType?> = Observable(nil)
     var outputProfileImage: Observable<String?> = Observable(nil)
@@ -26,3 +26,5 @@ final class ProfileViewModel {
         }
     }
 }
+
+
