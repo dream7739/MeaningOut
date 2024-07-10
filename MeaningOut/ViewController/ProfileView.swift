@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 
 final class ProfileView: UIViewController {
+    
     private let profileView = RoundProfileView()
     private lazy var collectionView = UICollectionView(
         frame: .zero,
@@ -16,11 +17,13 @@ final class ProfileView: UIViewController {
     )
     
     let viewModel = ProfileViewModel()
+    lazy var input = viewModel.input
+    lazy var output = viewModel.output
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
-        configureNav(viewModel.inputViewType.value!)
+        configureNav(input.viewType.value!)
         configureHierarchy()
         configureLayout()
         configureCollectionView()
@@ -29,24 +32,24 @@ final class ProfileView: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        viewModel.profileImageSender.value?(viewModel.outputProfileImage.value)
+        input.profileImageSender.value?(output.profileImage.value)
     }
     
 }
 
 extension ProfileView {
     private func bindData(){
-        viewModel.outputProfileImage.bind { value in
+        output.profileImage.bind { value in
             if let value {
                 self.profileView.profileImage.image = UIImage(named: value)
             }
         }
         
-        viewModel.outputSelectedIndexPath.bind { _ in
+        output.selectedIndexPath.bind { _ in
             self.collectionView.reloadData()
         }
         
-        viewModel.inputViewDidLoadTrigger.value = ()
+        input.viewDidLoadTrigger.value = ()
     }
     
     private func configureCollectionView(){
@@ -90,8 +93,8 @@ extension ProfileView: UICollectionViewDelegate, UICollectionViewDataSource {
         
         cell.configureData(data: data)
         
-        guard let selectedIndexPath = viewModel.outputSelectedIndexPath.value else{
-            if viewModel.outputProfileImage.value == data.rawValue {
+        guard let selectedIndexPath = output.selectedIndexPath.value else{
+            if output.profileImage.value == data.rawValue {
                 cell.isClicked = true
             }else{
                 cell.isClicked = false
@@ -109,8 +112,8 @@ extension ProfileView: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        viewModel.outputProfileImage.value = Design.ProfileType.allCases[indexPath.item].rawValue
-        viewModel.outputSelectedIndexPath.value = indexPath
+        output.profileImage.value = Design.ProfileType.allCases[indexPath.item].rawValue
+        output.selectedIndexPath.value = indexPath
     }
 }
 

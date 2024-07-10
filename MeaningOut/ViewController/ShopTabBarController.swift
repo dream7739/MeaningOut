@@ -17,7 +17,7 @@ final class ShopTabBarController : UITabBarController {
     
     func configureTabBarController(){
         
-        let searchVC = SearchViewController()
+        let searchVC = SearchView()
         let searchNav = UINavigationController(rootViewController: searchVC)
 
         let likeVC = LikeViewControlller()

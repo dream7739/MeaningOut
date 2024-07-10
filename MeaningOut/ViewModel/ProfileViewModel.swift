@@ -9,22 +9,34 @@ import Foundation
 
 final class ProfileViewModel {
     typealias ViewDetailType = ViewType.ViewDetailType
-        
-    var inputViewDidLoadTrigger: Observable<Void?> = Observable(nil)
-    var inputViewType: Observable<ViewType?> = Observable(nil)
-    var outputProfileImage: Observable<String?> = Observable(nil)
-    var profileImageSender: Observable<((String?) -> Void)?> = Observable(nil)
-    var outputSelectedIndexPath: Observable<IndexPath?> = Observable(nil)
+
+    let input = Input()
+    let output = Output()
     
     init(){
         transform()
     }
     
     private func transform(){
-        inputViewDidLoadTrigger.bind { _ in
-            self.outputProfileImage.closure?(self.outputProfileImage.value)
+        input.viewDidLoadTrigger.bind { _ in
+            self.output.profileImage.closure?(
+                self.output.profileImage.value
+            )
         }
     }
 }
 
 
+extension ProfileViewModel {
+    struct Input{
+        var viewDidLoadTrigger: Observable<Void?> = Observable(nil)
+        var viewType: Observable<ViewType?> = Observable(nil)
+        var profileImageSender: Observable<((String?) -> Void)?> = Observable(nil)
+    }
+    
+    struct Output {
+        var profileImage: Observable<String?> = Observable(nil)
+        var selectedIndexPath: Observable<IndexPath?> = Observable(nil)
+    }
+    
+}

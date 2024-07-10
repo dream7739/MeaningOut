@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class SearchViewController: UIViewController {
+final class SearchView: UIViewController {
     private let searchController = UISearchController()
     private let recentLabel = UILabel()
     private let resetButton = UIButton()
@@ -53,7 +53,7 @@ final class SearchViewController: UIViewController {
     
 }
 
-extension SearchViewController {
+extension SearchView {
     private func configureSearch(){
         navigationItem.searchController = searchController
         searchController.searchBar.searchTextField.placeholder = Display.Placeholder.search.rawValue
@@ -94,7 +94,7 @@ extension SearchViewController {
     
 }
 
-extension SearchViewController: BaseProtocol {
+extension SearchView: BaseProtocol {
     func configureHierarchy() {
         view.addSubview(recentLabel)
         view.addSubview(resetButton)
@@ -143,7 +143,7 @@ extension SearchViewController: BaseProtocol {
     }
 }
 
-extension SearchViewController: UISearchBarDelegate {
+extension SearchView: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         let input = searchBar.text!.trimmingCharacters(in: .whitespaces)
         
@@ -167,7 +167,7 @@ extension SearchViewController: UISearchBarDelegate {
     }
 }
 
-extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
+extension SearchView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return UserManager.savedList.count
     }

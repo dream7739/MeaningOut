@@ -15,18 +15,18 @@ final class NicknameView: UIViewController {
     private let validLabel = UILabel()
     private let completeButton = RoundButton()
     
-    private let viewModel = NicknameViewModel()
+    let viewModel = NicknameViewModel()
     var viewType: ViewType!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         print(self, #function)
+        bindData()
         configureView()
         configureNav(viewType)
         configureHierarchy()
         configureLayout()
         configureUI()
-        bindData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -41,8 +41,6 @@ final class NicknameView: UIViewController {
 
 extension NicknameView {
     private func bindData(){
-        viewModel.inputViewType.value = viewType.detail
-        
         viewModel.outputProfileImage.bind { value in
             if let value {
                 self.profileView.profileImage.image = UIImage(named: value)
@@ -66,13 +64,13 @@ extension NicknameView {
         viewModel.outputSaveButton.bind { _ in
             switch self.viewType.detail {
             case .add:
-                let vc = ShopTabBarController()
-                self.transitionScene(vc)
+                self.transitionScene(ShopTabBarController())
             case .edit:
                 self.transition(self, .pop)
             }
         }
         
+        viewModel.inputViewType.value = viewType.detail
         viewModel.inputViewDidLoadTrigger.value = ()
 
     }
@@ -80,11 +78,11 @@ extension NicknameView {
     @objc
     private func profileImageClicked(){
         let vc = ProfileView()
-        vc.viewModel.profileImageSender.value = { profile in
+        vc.input.profileImageSender.value = { profile in
             self.viewModel.outputProfileImage.value = profile
         }
-        vc.viewModel.inputViewType.value = .profile(viewType.detail)
-        vc.viewModel.outputProfileImage.value = viewModel.outputProfileImage.value
+        vc.input.viewType.value = .profile(viewType.detail)
+        vc.output.profileImage.value = viewModel.outputProfileImage.value
         transition(vc, .push)
     }
     
@@ -138,23 +136,20 @@ extension NicknameView: BaseProtocol {
             nicknameField.text = ""
         case .edit:
             addSaveBarButton()
-            viewModel.inputNickname.value = UserManager.nickname
-            nicknameField.text = UserManager.nickname
+            nicknameField.text = viewModel.inputNickname.value
             completeButton.isHidden = true
         }
         
         nicknameField.placeholder = Display.Placeholder.nickname.rawValue
         nicknameField.clearButtonMode = .whileEditing
-        
         validLabel.font = Design.FontType.tertiary
-        validLabel.textColor = Design.ColorType.theme
-        
         completeButton.setTitle("완료", for: .normal)
         
         let tapRecognizer = UITapGestureRecognizer(
             target: self,
             action: #selector(profileImageClicked)
         )
+        
         profileView.addGestureRecognizer(tapRecognizer)
         
         nicknameField.addTarget(

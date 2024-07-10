@@ -26,10 +26,17 @@ final class NicknameViewModel{
     
     private func transform(){
         inputViewDidLoadTrigger.bind { value in
+            
             if UserManager.profileImage.isEmpty {
                 self.outputProfileImage.value = Design.ProfileType.randomTitle
             }else{
                 self.outputProfileImage.value = UserManager.profileImage
+            }
+        } 
+        
+        inputViewType.bind { value in
+            if value == .edit {
+                self.inputNickname.value = UserManager.nickname
             }
         }
         
