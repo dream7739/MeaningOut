@@ -50,9 +50,9 @@ extension SearchView {
         viewModel.outputSearchText.bind { _ in
             self.tableView.reloadData()
             
-            let resultVC = ResultViewController()
-            if let keyword = self.viewModel.inputSearchText.value {
-                resultVC.keyword = keyword
+            let resultVC = ResultView()
+            if let searchText = self.viewModel.inputSearchText.value {
+                resultVC.viewModel.inputSearchText.value = searchText
             }
             self.transition(resultVC, .push)
         }
@@ -170,9 +170,9 @@ extension SearchView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = ResultViewController()
-        vc.keyword = UserManager.savedList[indexPath.row]
-        navigationController?.pushViewController(vc, animated: true)
+        let resultVC = ResultView()
+        resultVC.viewModel.inputSearchText.value = UserManager.savedList[indexPath.row]
+        transition(resultVC, .push)
         tableView.reloadRows(at: [indexPath], with: .none)
     }
 }

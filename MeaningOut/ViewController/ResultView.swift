@@ -9,11 +9,12 @@ import UIKit
 import RealmSwift
 import SnapKit
 
-final class ResultViewController: UIViewController {
+final class ResultView: UIViewController {
     
     private let resultLabel = UILabel()
     private let emptyView = EmptyView(type: .result)
     private let networkView = NetworkView()
+    
     private lazy var tagCollectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: CustomLayout.sort(view).get()
@@ -23,27 +24,17 @@ final class ResultViewController: UIViewController {
         collectionViewLayout: CustomLayout.product(view).get()
     )
     
-    var keyword: String?
-    private var start = 1
-    private var display = 30
-    private var sort: String = Display.SortOption.sim.sortParam
-    private var selectedIndexPath = IndexPath(item: 0, section: 0)
-    private var shopResult = ShopResult(total: 0, start: 0, display: 0, items: [])
-    private let repository = RealmRepository()
+    let viewModel = ResultViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
-        configureNav(.result)
+        configureNav(.result(viewModel.inputSearchText.value ?? ""))
         configureHierarchy()
         configureLayout()
         configureUI()
         configureCollectionView()
-        
-        navigationItem.title = keyword
-        callNaverShop()
-        
-        print(try! Realm().configuration.fileURL)
+        bindData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -56,6 +47,8 @@ final class ResultViewController: UIViewController {
                                                selector: #selector(retryButtonClicked),
                                                name: ShopNotification.network,
                                                object: nil)
+        
+        //TODO: - 좋아요 개선: DetailVC에서 좋아요가 변경된 것을 어떻게 알 수 있을까?
         resultCollectionView.reloadData()
     }
     
@@ -65,59 +58,7 @@ final class ResultViewController: UIViewController {
     }
 }
 
-extension ResultViewController {
-    private func callNaverShop(){
-        guard let keyword else { return }
-
-        if NetworkMonitor.shared.isConnected {
-            self.networkView.isHidden = true
-
-            let request = ShopRequest(
-                query: keyword,
-                start: start,
-                display: display,
-                sort: sort
-            )
-            
-            APIManager.shared.request(
-                model: ShopResult.self,
-                request: .shop(request: request)
-            ) { result in
-                switch result {
-                case .success(let value):
-                    
-                    if value.total == 0 {
-                        self.emptyView.isHidden = false
-                        return
-                    }
-                    
-                    if self.start == 1 {
-                        self.shopResult = value
-                        self.resultLabel.text = self.shopResult.totalDescription
-                    }else{
-                        self.shopResult.items.append(contentsOf: value.items)
-                    }
-                    
-                    self.resultCollectionView.reloadData()
-                    
-                    if self.start == 1 {
-                        self.resultCollectionView.scrollToItem(
-                            at: IndexPath(item: -1, section: 0),
-                            at: .top,
-                            animated: false
-                        )
-                    }
-                case .failure(let error):
-                    print(error)
-                    self.emptyView.isHidden = false
-                    self.showToast("결과를 가져오는데 실패하였습니다.")
-                }
-            }
-        }else{
-            networkView.isHidden = false
-        }
-    }
-    
+extension ResultView {
     private func configureCollectionView(){
         tagCollectionView.delegate = self
         tagCollectionView.dataSource = self
@@ -127,32 +68,59 @@ extension ResultViewController {
         resultCollectionView.dataSource = self
         resultCollectionView.prefetchDataSource = self
         resultCollectionView.register(ResultCollectionViewCell.self, forCellWithReuseIdentifier: ResultCollectionViewCell.identifier)
-        
     }
     
-    @objc 
+    private func bindData(){
+        viewModel.outputNetworkConnect.bind { value in
+            self.networkView.isHidden = value
+        }
+        
+        viewModel.outputEmptyResult.bind { value in
+            self.emptyView.isHidden = !value
+        }
+        
+        viewModel.outputSearchResult.bind { value in
+            if let value {
+                self.resultLabel.text = value.totalDescription
+                self.resultCollectionView.reloadData()
+                
+                if self.viewModel.inputSearchRequest.value?.start == 1{
+                    self.resultCollectionView.scrollToItem(
+                        at: IndexPath(item: -1, section: 0),
+                        at: .top,
+                        animated: false
+                    )
+                }
+            }else{
+                self.emptyView.isHidden = false
+                self.showToast("결과를 가져오는데 실패하였습니다.")
+            }
+        }
+        
+        viewModel.inputSortOptionIndex.closure?(IndexPath(item: 0, section: 0))
+    }
+    
+    @objc
     private func likeButtonClicked(notification: Notification){
         guard let item = notification.userInfo?[ShopNotificationKey.indexPath] as? (IndexPath, Bool) else { return }
         
         let indexPath = item.0
         let isClicked = item.1
         
-        let data = shopResult.items[indexPath.item]
-        
-        if isClicked {
-            repository.addLike(data.managedObject())
-        }else{
-            repository.deleteLike(Int(data.productId)!)
-       }
+        guard let result = viewModel.outputSearchResult.value?.items else { return }
+        let data = result[indexPath.item]
+        viewModel.inputLikeSelectedIndex.value = indexPath
+        viewModel.inputLikeIsClicked.value = isClicked
+        viewModel.inputLikeButtonClicked.value = (data)
     }
     
     @objc
     private func retryButtonClicked(notification: Notification){
-        callNaverShop()
+        viewModel.inputRetryButtonClick.value = ()
     }
 }
 
-extension ResultViewController: BaseProtocol {
+extension ResultView: BaseProtocol {
     
     func configureHierarchy() {
         view.addSubview(resultLabel)
@@ -197,12 +165,12 @@ extension ResultViewController: BaseProtocol {
     }
 }
 
-extension ResultViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension ResultView: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == tagCollectionView {
             return Display.SortOption.allCases.count
         }else{
-            return shopResult.items.count
+            return viewModel.outputSearchResult.value?.items.count ?? 0
         }
     }
     
@@ -215,7 +183,7 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
             let data = Display.SortOption.allCases[indexPath.item]
             cell.configureData(data)
             
-            if indexPath == selectedIndexPath {
+            if indexPath == viewModel.inputSortOptionIndex.value {
                 cell.isClicked = true
             }else {
                 cell.isClicked = false
@@ -223,13 +191,14 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
             
             return cell
         }else{
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ResultCollectionViewCell.identifier, for: indexPath) as? ResultCollectionViewCell else {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ResultCollectionViewCell.identifier, for: indexPath) as? ResultCollectionViewCell,
+                  let data = viewModel.outputSearchResult.value?.items else {
                 return UICollectionViewCell()
             }
-            let data = shopResult.items[indexPath.item]
+            
             cell.indexPath = indexPath
-            cell.keyword = keyword
-            cell.configureData(data)
+            cell.keyword = viewModel.inputSearchText.value
+            cell.configureData(data[indexPath.item])
             return cell
         }
         
@@ -256,36 +225,26 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == tagCollectionView {
-            if selectedIndexPath != indexPath {
-                
-                selectedIndexPath = indexPath
-                collectionView.reloadData()
-                
-                sort = Display.SortOption.allCases[indexPath.row].sortParam
-                start = 1
-                
-                callNaverShop()
+            if viewModel.inputSortOptionIndex.value != indexPath {
+                viewModel.inputSortOptionIndex.value = indexPath
+                tagCollectionView.reloadData()
             }
         }else if collectionView == resultCollectionView {
-            let data = shopResult.items[indexPath.item]
-            
-            let vc = DetailViewController()
-            vc.data = data
-            navigationController?.pushViewController(vc, animated: true)
+            guard let data = viewModel.outputSearchResult.value?.items[indexPath.item] else { return }
+            let detailVC = DetailViewController()
+            detailVC.data = data
+            transition(detailVC, .push)
         }
     }
 }
 
-extension ResultViewController: UICollectionViewDataSourcePrefetching {
+extension ResultView: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         for idx in indexPaths {
+            guard let value = viewModel.outputSearchResult.value else { return }
             
-            if idx.item == shopResult.items.count - 4 {
-                start += display
-                
-                if start <= 1000 && start <= shopResult.total {
-                    callNaverShop()
-                }
+            if idx.item == value.items.count - 4 {
+                viewModel.inputPrefetchResult.value = ()
             }
         }
     }
