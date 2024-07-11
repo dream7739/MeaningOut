@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class SettingViewController: UIViewController {
+final class SettingView: UIViewController {
     private let headerView = UIView()
     private let profileImage = RoundImageView(type: .highlight)
     private let nicknameLabel = UILabel()
@@ -26,13 +26,6 @@ final class SettingViewController: UIViewController {
         configureLayout()
         configureUI()
         configureTableView()
-        
-        let tapGesture = UITapGestureRecognizer(
-            target: self,
-            action: #selector(headerViewClicked)
-        )
-        
-        headerView.addGestureRecognizer(tapGesture)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -46,8 +39,7 @@ final class SettingViewController: UIViewController {
 
 
 
-extension SettingViewController {
-    
+extension SettingView {
     private func configureTableView(){
         tableView.delegate = self
         tableView.dataSource = self
@@ -65,7 +57,7 @@ extension SettingViewController {
     }
 }
 
-extension SettingViewController: BaseProtocol {
+extension SettingView: BaseProtocol {
     func configureHierarchy() {
         view.addSubview(headerView)
         headerView.addSubview(profileImage)
@@ -135,11 +127,18 @@ extension SettingViewController: BaseProtocol {
         
         sepratorLabel.backgroundColor = Design.ColorType.tertiary
         
+        let tapGesture = UITapGestureRecognizer(
+            target: self,
+            action: #selector(headerViewClicked)
+        )
+        
+        headerView.addGestureRecognizer(tapGesture)
+        
     }
     
 }
 
-extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
+extension SettingView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return Display.Setting.allCases.count
     }
