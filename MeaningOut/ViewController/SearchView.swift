@@ -15,21 +15,19 @@ final class SearchView: UIViewController {
     private let tableView = UITableView()
     private let emptyView = EmptyView(type: .search)
     
+    let viewModel = SearchViewModel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
         configureNav(.search)
-        configureSearch()
-        configureTableView()
         configureHierarchy()
         configureLayout()
         configureUI()
-        
-        resetButton.addTarget(
-            self,
-            action: #selector(resetButtonClicked),
-            for: .touchUpInside
-        )
+        configureSearch()
+        configureTableView()
+        configureEmptyView()
+        bindData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -54,6 +52,32 @@ final class SearchView: UIViewController {
 }
 
 extension SearchView {
+    private func bindData(){
+        viewModel.outputSearchText.bind { _ in
+            self.tableView.reloadData()
+            let resultVC = ResultViewController()
+            if let keyword = self.viewModel.inputSearchText.value {
+                resultVC.keyword = keyword
+            }
+            self.transition(resultVC, .push)
+        }
+        
+        viewModel.outputDeleteUserList.bind { _ in
+            self.configureEmptyView()
+            self.tableView.reloadData()
+        }
+    }
+    
+    private func configureEmptyView(){
+        if UserManager.savedList.isEmpty {
+            self.emptyView.isHidden = false
+            self.searchController.searchBar.searchTextField.text = ""
+            self.searchController.isActive = false
+        }else{
+            self.emptyView.isHidden = true
+        }
+    }
+    
     private func configureSearch(){
         navigationItem.searchController = searchController
         searchController.searchBar.searchTextField.placeholder = Display.Placeholder.search.rawValue
@@ -69,27 +93,17 @@ extension SearchView {
         tableView.rowHeight = 46
     }
     
-    private func setContentEmpty(){
-        emptyView.isHidden = false
-        searchController.searchBar.searchTextField.text = ""
-        searchController.isActive = false
-    }
-    
     @objc 
     private func resetButtonClicked(){
-        UserManager.savedList.removeAll()
-        setContentEmpty()
+        viewModel.inputResetButtonClick.value = ()
     }
     
     @objc 
     private func deleteButtonClicked(notification: Notification){
         guard let indexPath = notification.userInfo?[ShopNotificationKey.indexPath] as? IndexPath else { return }
-        UserManager.savedList.remove(at: indexPath.row)
-        tableView.reloadData()
         
-        if UserManager.savedList.isEmpty {
-            setContentEmpty()
-        }
+        viewModel.inputDeleteButtonClick.value = indexPath.row
+
     }
     
 }
@@ -133,37 +147,18 @@ extension SearchView: BaseProtocol {
         resetButton.setTitleColor(Design.ColorType.theme, for: .normal)
         resetButton.titleLabel?.font = Design.FontType.tertiary
         
-        if UserManager.savedList.isEmpty {
-            emptyView.isHidden = false
-        }else{
-            UserManager.savedList = UserManager.savedList
-            emptyView.isHidden = true
-        }
+        resetButton.addTarget(
+            self,
+            action: #selector(resetButtonClicked),
+            for: .touchUpInside
+        )
         
     }
 }
 
 extension SearchView: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        let input = searchBar.text!.trimmingCharacters(in: .whitespaces)
-        
-        if !input.isEmpty {
-            let savedInput = input.lowercased()
-            
-            if !UserManager.savedList.contains(savedInput){
-                UserManager.savedList.insert(savedInput, at: 0)
-            }
-            
-            if !emptyView.isHidden {
-                emptyView.isHidden.toggle()
-            }
-            
-            tableView.reloadData()
-            
-            let vc = ResultViewController()
-            vc.keyword = input
-            navigationController?.pushViewController(vc, animated: true)
-        }
+        viewModel.inputSearchText.value = searchBar.text?.trimmingCharacters(in: .whitespaces)
     }
 }
 
