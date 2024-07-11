@@ -23,7 +23,7 @@ final class ShopTabBarController : UITabBarController {
         let likeVC = LikeViewControlller()
         let likeNav = UINavigationController(rootViewController: likeVC)
         
-        let settingVC = SettingViewController()
+        let settingVC = SettingView()
         let settingNav = UINavigationController(rootViewController: settingVC)
         
         searchVC.tabBarItem = UITabBarItem(

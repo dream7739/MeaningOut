@@ -15,8 +15,8 @@ final class SettingView: UIViewController {
     private let indicatorImage = UIImageView()
     private let sepratorLabel = UILabel()
     private let tableView = UITableView()
-
-    private let repository = RealmRepository()
+    
+    let viewModel = SettingViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,9 +32,11 @@ final class SettingView: UIViewController {
         super.viewWillAppear(animated)
         profileImage.image = UIImage(named: UserManager.profileImage)
         nicknameLabel.text = UserManager.nickname
-        tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
+        tableView.reloadRows(
+            at: [IndexPath(row: 0, section: 0)],
+            with: .none
+        )
     }
-    
 }
 
 
@@ -154,8 +156,7 @@ extension SettingView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 4 {
             showAlert("탈퇴하기", "탈퇴를 하면 데이터가 모두 초기화됩니다. 탈퇴 하시겠습니까?") { _ in
-                UserManager.resetAll()
-                self.repository.deleteAll()
+                self.viewModel.inputLeaveClicked.value = ()
                 let onboardingViewController = UINavigationController(rootViewController: OnboardingView())
                 self.transitionScene(onboardingViewController)
             }

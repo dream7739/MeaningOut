@@ -32,12 +32,6 @@ final class SearchView: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        configureNav(.search)
-        
-        searchController.searchBar.searchTextField.text = ""
-        searchController.isActive = false
-        searchController.searchBar.setValue("취소", forKey: "cancelButtonText")
-
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(deleteButtonClicked),
                                                name: ShopNotification.delete,
@@ -55,6 +49,7 @@ extension SearchView {
     private func bindData(){
         viewModel.outputSearchText.bind { _ in
             self.tableView.reloadData()
+            
             let resultVC = ResultViewController()
             if let keyword = self.viewModel.inputSearchText.value {
                 resultVC.keyword = keyword
@@ -101,9 +96,7 @@ extension SearchView {
     @objc 
     private func deleteButtonClicked(notification: Notification){
         guard let indexPath = notification.userInfo?[ShopNotificationKey.indexPath] as? IndexPath else { return }
-        
         viewModel.inputDeleteButtonClick.value = indexPath.row
-
     }
     
 }
