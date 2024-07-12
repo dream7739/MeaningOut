@@ -11,7 +11,7 @@
 		881D78DD2C396E5200E04336 /* RealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881D78DC2C396E5200E04336 /* RealmModel.swift */; };
 		881D78E02C396E8900E04336 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 881D78DF2C396E8900E04336 /* RealmSwift */; };
 		881D78E12C396F5000E04336 /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 881D78DF2C396E8900E04336 /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		881D78E42C39709100E04336 /* LikeViewControlller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881D78E32C39709100E04336 /* LikeViewControlller.swift */; };
+		881D78E42C39709100E04336 /* LikeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881D78E32C39709100E04336 /* LikeView.swift */; };
 		881D78E62C39738600E04336 /* RealmRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881D78E52C39738600E04336 /* RealmRepository.swift */; };
 		881D78E82C39738D00E04336 /* RealmProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881D78E72C39738D00E04336 /* RealmProtocol.swift */; };
 		883A7DC32C1B0A6C00A4665E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883A7DC22C1B0A6C00A4665E /* AppDelegate.swift */; };
@@ -62,6 +62,7 @@
 		88E55CEC2C3D5CA000B07737 /* ViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E55CEB2C3D5CA000B07737 /* ViewType.swift */; };
 		88EB01832C3F5E8700FFD126 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88EB01822C3F5E8700FFD126 /* SearchViewModel.swift */; };
 		88F8BA2D2C2F032B0033F6BB /* URLSession+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F8BA2C2C2F032B0033F6BB /* URLSession+Extension.swift */; };
+		88FBDA022C40D31000B49A09 /* LikeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FBDA012C40D31000B49A09 /* LikeViewModel.swift */; };
 		88FBDF632C1D844600AB0BC9 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FBDF622C1D844600AB0BC9 /* EmptyView.swift */; };
 		88FBDF652C1D87DE00AB0BC9 /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FBDF642C1D87DE00AB0BC9 /* SearchTableViewCell.swift */; };
 		88FBDF672C1DA27800AB0BC9 /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FBDF662C1DA27800AB0BC9 /* ResultView.swift */; };
@@ -90,7 +91,7 @@
 /* Begin PBXFileReference section */
 		880448752C1B0E6C00DB7B26 /* Design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Design.swift; sourceTree = "<group>"; };
 		881D78DC2C396E5200E04336 /* RealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmModel.swift; sourceTree = "<group>"; };
-		881D78E32C39709100E04336 /* LikeViewControlller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeViewControlller.swift; sourceTree = "<group>"; };
+		881D78E32C39709100E04336 /* LikeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeView.swift; sourceTree = "<group>"; };
 		881D78E52C39738600E04336 /* RealmRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmRepository.swift; sourceTree = "<group>"; };
 		881D78E72C39738D00E04336 /* RealmProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmProtocol.swift; sourceTree = "<group>"; };
 		883A7DBF2C1B0A6C00A4665E /* MeaningOut.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeaningOut.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -139,6 +140,7 @@
 		88E55CEB2C3D5CA000B07737 /* ViewType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewType.swift; sourceTree = "<group>"; };
 		88EB01822C3F5E8700FFD126 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		88F8BA2C2C2F032B0033F6BB /* URLSession+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+Extension.swift"; sourceTree = "<group>"; };
+		88FBDA012C40D31000B49A09 /* LikeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeViewModel.swift; sourceTree = "<group>"; };
 		88FBDF622C1D844600AB0BC9 /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
 		88FBDF642C1D87DE00AB0BC9 /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
 		88FBDF662C1DA27800AB0BC9 /* ResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
@@ -283,7 +285,7 @@
 				8871F6682C1C6DD600A7A36B /* SettingView.swift */,
 				88FBDF662C1DA27800AB0BC9 /* ResultView.swift */,
 				8891D23B2C1EB9E20007F60E /* DetailView.swift */,
-				881D78E32C39709100E04336 /* LikeViewControlller.swift */,
+				881D78E32C39709100E04336 /* LikeView.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -331,6 +333,7 @@
 				88B818CF2C3FFF18004B871B /* SettingViewModel.swift */,
 				88B818D12C40066A004B871B /* ResultViewModel.swift */,
 				88B818D32C40242D004B871B /* DetailViewModel.swift */,
+				88FBDA012C40D31000B49A09 /* LikeViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -449,7 +452,8 @@
 				88FBDF6B2C1DB59400AB0BC9 /* ResultCollectionViewCell.swift in Sources */,
 				8871F6612C1C513E00A7A36B /* ReusableProtocol.swift in Sources */,
 				88C445DA2C26982D00F498C7 /* NetworkMonitor.swift in Sources */,
-				881D78E42C39709100E04336 /* LikeViewControlller.swift in Sources */,
+				88FBDA022C40D31000B49A09 /* LikeViewModel.swift in Sources */,
+				881D78E42C39709100E04336 /* LikeView.swift in Sources */,
 				88F8BA2D2C2F032B0033F6BB /* URLSession+Extension.swift in Sources */,
 				88FBDF672C1DA27800AB0BC9 /* ResultView.swift in Sources */,
 				883A7DC32C1B0A6C00A4665E /* AppDelegate.swift in Sources */,
