@@ -9,13 +9,13 @@ import UIKit
 import RealmSwift
 import SnapKit
 
-final class LikeViewControlller: UIViewController {
+final class LikeViewController: UIViewController {
     private let resultLabel = UILabel()
     private let searchController = UISearchController(searchResultsController: nil)
     private let emptyView = EmptyView(type: .like)
     lazy var resultCollectionView = UICollectionView(
         frame: .zero,
-        collectionViewLayout: CustomLayout.product(view).get()
+        collectionViewLayout: productLayout()
     )
     
     let viewModel = LikeViewModel()
@@ -47,7 +47,7 @@ final class LikeViewControlller: UIViewController {
     }
 }
 
-extension LikeViewControlller {
+extension LikeViewController {
     private func bindData(){
         viewModel.ouputLikeResult.bind { value in
             self.resultCollectionView.reloadData()
@@ -77,7 +77,7 @@ extension LikeViewControlller {
         navigationItem.searchController = searchController
         searchController.searchResultsUpdater = self
         searchController.searchBar.setValue("취소", forKey: "cancelButtonText")
-        searchController.searchBar.tintColor = Design.ColorType.black
+        searchController.searchBar.tintColor = ColorType.black
         searchController.searchBar.searchTextField.placeholder = Display.Placeholder.search.rawValue
     }
     
@@ -92,7 +92,7 @@ extension LikeViewControlller {
     }
 }
 
-extension LikeViewControlller: BaseProtocol {
+extension LikeViewController: BaseProtocol {
     func configureHierarchy() {
         view.addSubview(resultLabel)
         view.addSubview(resultCollectionView)
@@ -118,18 +118,18 @@ extension LikeViewControlller: BaseProtocol {
     
     func configureUI() {
         resultLabel.font = .boldSystemFont(ofSize: 15)
-        resultLabel.textColor = Design.ColorType.theme
+        resultLabel.textColor = ColorType.theme
     }
 }
 
-extension LikeViewControlller: UISearchResultsUpdating {
+extension LikeViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         viewModel.inputSearchText.value = searchController.searchBar.text!.trimmingCharacters(in: .whitespaces)
     }
 }
 
 
-extension LikeViewControlller: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension LikeViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
@@ -162,7 +162,7 @@ extension LikeViewControlller: UICollectionViewDataSource, UICollectionViewDeleg
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let list = viewModel.ouputLikeResult.value else { return }
-        let vc = DetailView()
+        let vc = DetailViewController()
         vc.viewModel.inputShopResult.value = Shop.init(managedObject: list[indexPath.item])
         navigationController?.pushViewController(vc, animated: true)
     }

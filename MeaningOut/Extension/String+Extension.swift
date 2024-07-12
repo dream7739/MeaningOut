@@ -26,7 +26,7 @@ extension String {
         let attributedString = NSMutableAttributedString(string: self)
         
         attributedString.addAttributes([
-            .backgroundColor : Design.ColorType.subTheme.withAlphaComponent(0.5)],
+            .backgroundColor : ColorType.subTheme.withAlphaComponent(0.5)],
             range: range
         )
        

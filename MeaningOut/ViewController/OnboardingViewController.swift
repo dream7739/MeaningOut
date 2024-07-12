@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class OnboardingView: UIViewController {
+final class OnboardingViewController: UIViewController {
     private let titleLabel = UILabel()
     private let launchImage = UIImageView()
     private let startButton = RoundButton()
@@ -29,16 +29,16 @@ final class OnboardingView: UIViewController {
     }
 }
 
-extension OnboardingView {
+extension OnboardingViewController {
     @objc 
     private func startButtonClicked(){
-        let vc = NicknameView()
-        vc.viewType = .nickname(.add)
-        navigationController?.pushViewController(vc, animated: true)
+        let nicknameVC = NicknameViewController()
+        nicknameVC.viewModel.viewType = .nickname(.add)
+        transition(nicknameVC, .push)
     }
 }
 
-extension OnboardingView: BaseProtocol {
+extension OnboardingViewController: BaseProtocol {
     func configureHierarchy() {
         view.addSubview(titleLabel)
         view.addSubview(launchImage)
@@ -66,9 +66,9 @@ extension OnboardingView: BaseProtocol {
     }
     
     func configureUI() {
-        titleLabel.text = Design.serviceName
-        titleLabel.font = Design.FontType.gmarketBold
-        titleLabel.textColor = Design.ColorType.black
+        titleLabel.text = DisplayType.serviceName
+        titleLabel.font = FontType.gmarketBold
+        titleLabel.textColor = ColorType.black
         
         launchImage.contentMode = .scaleAspectFill
         launchImage.layer.cornerRadius = 10

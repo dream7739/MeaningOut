@@ -83,17 +83,17 @@ extension SearchTableViewCell: BaseProtocol {
     }
     
     func configureUI() {
-        timeImage.image = Design.ImageType.time
-        timeImage.tintColor = Design.ColorType.black
+        timeImage.image = ImageType.time
+        timeImage.tintColor = ColorType.black
         
-        recentLabel.font = Design.FontType.tertiary
+        recentLabel.font = FontType.tertiary
         recentLabel.numberOfLines = 1
-        recentLabel.textColor = Design.ColorType.black
+        recentLabel.textColor = ColorType.black
         
-        deleteButton.setTitleColor(Design.ColorType.black, for: .normal)
-        deleteButton.tintColor = Design.ColorType.black
+        deleteButton.setTitleColor(ColorType.black, for: .normal)
+        deleteButton.tintColor = ColorType.black
         
-        deleteImage.image = Design.ImageType.close
+        deleteImage.image = ImageType.close
         deleteImage.contentMode = .scaleAspectFill
 
     }

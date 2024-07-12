@@ -16,8 +16,6 @@ final class LikeViewModel {
     var inputLikeIndexPath: Observable<IndexPath> = Observable(IndexPath(item: 0, section: 0))
     var inputLikeIsClicked: Observable<Bool> = Observable(false)
     var inputSearchText: Observable<String> = Observable("")
-    var outputEmptySearchText: Observable<Void?> = Observable(nil)
-    var inputCancelButtonClicked: Observable<Void?> = Observable(nil)
     
     private let repository = RealmRepository()
 

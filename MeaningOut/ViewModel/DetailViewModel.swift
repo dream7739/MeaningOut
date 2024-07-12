@@ -12,6 +12,7 @@ final class DetailViewModel {
     var inputShopResult: Observable<Shop?> = Observable(nil)
     var outputLikeisClicked: Observable<Bool> = Observable(false)
     var inputLikeButtonClicked: Observable<Void?> = Observable(nil)
+   
     private let repository = RealmRepository()
     
     init(){

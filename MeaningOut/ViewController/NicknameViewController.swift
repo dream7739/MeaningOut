@@ -8,22 +8,19 @@
 import UIKit
 import SnapKit
 
-final class NicknameView: UIViewController {
-    
+final class NicknameViewController: UIViewController {
     private let profileView = RoundProfileView()
     private let nicknameField = UnderLineTextField()
     private let validLabel = UILabel()
     private let completeButton = RoundButton()
     
     let viewModel = NicknameViewModel()
-    var viewType: ViewType!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(self, #function)
         bindData()
         configureView()
-        configureNav(viewType)
+        configureNav(viewModel.viewType)
         configureHierarchy()
         configureLayout()
         configureUI()
@@ -39,13 +36,8 @@ final class NicknameView: UIViewController {
     }
 }
 
-extension NicknameView {
+extension NicknameViewController {
     private func bindData(){
-        viewModel.outputProfileImage.bind { value in
-            if let value {
-                self.profileView.profileImage.image = UIImage(named: value)
-            }
-        }
         
         viewModel.outputNicknameText.bind { value in
             self.validLabel.text = value
@@ -54,15 +46,15 @@ extension NicknameView {
         viewModel.outputNicknameValid.bind { value in
             if value {
                 self.nicknameField.setLineColor(type: .valid)
-                self.validLabel.textColor = Design.ColorType.black
+                self.validLabel.textColor = ColorType.black
             }else{
                 self.nicknameField.setLineColor(type: .inValid)
-                self.validLabel.textColor = Design.ColorType.theme
+                self.validLabel.textColor = ColorType.theme
             }
         }
         
         viewModel.outputSaveButton.bind { _ in
-            switch self.viewType.detail {
+            switch self.viewModel.viewType.detail {
             case .add:
                 self.transitionScene(ShopTabBarController())
             case .edit:
@@ -70,19 +62,19 @@ extension NicknameView {
             }
         }
         
-        viewModel.inputViewType.value = viewType.detail
         viewModel.inputViewDidLoadTrigger.value = ()
 
     }
     
     @objc
     private func profileImageClicked(){
-        let vc = ProfileView()
-        vc.input.profileImageSender.value = { profile in
-            self.viewModel.outputProfileImage.value = profile
+        let vc = ProfileViewController()
+        vc.profileImageSender = { profile in
+            self.viewModel.profileImage = profile
+            self.profileView.profileImage.image = UIImage(named: profile ?? "")
         }
-        vc.input.viewType.value = .profile(viewType.detail)
-        vc.output.profileImage.value = viewModel.outputProfileImage.value
+        vc.viewType = .profile(viewModel.viewType.detail)
+        vc.profileImage = viewModel.profileImage
         transition(vc, .push)
     }
     
@@ -97,7 +89,7 @@ extension NicknameView {
     }
 }
 
-extension NicknameView: BaseProtocol {
+extension NicknameViewController: BaseProtocol {
     func configureHierarchy() {
         view.addSubview(profileView)
         view.addSubview(nicknameField)
@@ -131,18 +123,23 @@ extension NicknameView: BaseProtocol {
     }
     
     func configureUI() {
-        switch viewType.detail {
+        if let profileImage = viewModel.profileImage {
+            profileView.profileImage.image = UIImage(named: profileImage)
+        }
+        
+        switch viewModel.viewType.detail {
         case .add:
             nicknameField.text = ""
         case .edit:
             addSaveBarButton()
-            nicknameField.text = viewModel.inputNickname.value
+            viewModel.inputNickname.value = UserManager.nickname
+            nicknameField.text = UserManager.nickname
             completeButton.isHidden = true
         }
         
         nicknameField.placeholder = Display.Placeholder.nickname.rawValue
         nicknameField.clearButtonMode = .whileEditing
-        validLabel.font = Design.FontType.tertiary
+        validLabel.font = FontType.tertiary
         completeButton.setTitle("완료", for: .normal)
         
         let tapRecognizer = UITapGestureRecognizer(

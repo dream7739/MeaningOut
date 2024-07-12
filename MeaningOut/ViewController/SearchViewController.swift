@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class SearchView: UIViewController {
+final class SearchViewController: UIViewController {
     private let searchController = UISearchController()
     private let recentLabel = UILabel()
     private let resetButton = UIButton()
@@ -45,12 +45,12 @@ final class SearchView: UIViewController {
     
 }
 
-extension SearchView {
+extension SearchViewController {
     private func bindData(){
         viewModel.outputSearchText.bind { _ in
             self.tableView.reloadData()
             
-            let resultVC = ResultView()
+            let resultVC = ResultViewController()
             if let searchText = self.viewModel.inputSearchText.value {
                 resultVC.viewModel.inputSearchText.value = searchText
             }
@@ -76,7 +76,7 @@ extension SearchView {
     private func configureSearch(){
         navigationItem.searchController = searchController
         searchController.searchBar.searchTextField.placeholder = Display.Placeholder.search.rawValue
-        searchController.searchBar.tintColor = Design.ColorType.black
+        searchController.searchBar.tintColor = ColorType.black
         searchController.searchBar.delegate = self
     }
     
@@ -101,7 +101,7 @@ extension SearchView {
     
 }
 
-extension SearchView: BaseProtocol {
+extension SearchViewController: BaseProtocol {
     func configureHierarchy() {
         view.addSubview(recentLabel)
         view.addSubview(resetButton)
@@ -131,14 +131,14 @@ extension SearchView: BaseProtocol {
     }
     
     func configureUI() {
-        searchController.searchBar.searchTextField.backgroundColor = Design.ColorType.tertiary.withAlphaComponent(0.1)
+        searchController.searchBar.searchTextField.backgroundColor = ColorType.tertiary.withAlphaComponent(0.1)
         
         recentLabel.text = "최근 검색"
         recentLabel.font = .systemFont(ofSize: 16, weight: .black)
         
         resetButton.setTitle("전체 삭제", for: .normal)
-        resetButton.setTitleColor(Design.ColorType.theme, for: .normal)
-        resetButton.titleLabel?.font = Design.FontType.tertiary
+        resetButton.setTitleColor(ColorType.theme, for: .normal)
+        resetButton.titleLabel?.font = FontType.tertiary
         
         resetButton.addTarget(
             self,
@@ -149,13 +149,13 @@ extension SearchView: BaseProtocol {
     }
 }
 
-extension SearchView: UISearchBarDelegate {
+extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         viewModel.inputSearchText.value = searchBar.text?.trimmingCharacters(in: .whitespaces)
     }
 }
 
-extension SearchView: UITableViewDelegate, UITableViewDataSource {
+extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return UserManager.savedList.count
     }
@@ -170,7 +170,7 @@ extension SearchView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let resultVC = ResultView()
+        let resultVC = ResultViewController()
         resultVC.viewModel.inputSearchText.value = UserManager.savedList[indexPath.row]
         transition(resultVC, .push)
         tableView.reloadRows(at: [indexPath], with: .none)

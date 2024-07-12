@@ -17,28 +17,28 @@ final class ShopTabBarController : UITabBarController {
     
     func configureTabBarController(){
         
-        let searchVC = SearchView()
+        let searchVC = SearchViewController()
         let searchNav = UINavigationController(rootViewController: searchVC)
 
-        let likeVC = LikeViewControlller()
+        let likeVC = LikeViewController()
         let likeNav = UINavigationController(rootViewController: likeVC)
         
-        let settingVC = SettingView()
+        let settingVC = SettingViewController()
         let settingNav = UINavigationController(rootViewController: settingVC)
         
         searchVC.tabBarItem = UITabBarItem(
             title: "검색",
-            image: Design.ImageType.search,
+            image: ImageType.search,
             tag: 0
         )
         likeVC.tabBarItem = UITabBarItem(
             title: "좋아요",
-            image: Design.ImageType.like_unselected,
+            image: ImageType.like_unselected,
             tag: 1
         )
         settingNav.tabBarItem = UITabBarItem(
             title: "설정",
-            image: Design.ImageType.profile,
+            image: ImageType.profile,
             tag: 2
         )
         
@@ -51,6 +51,6 @@ final class ShopTabBarController : UITabBarController {
         apperance.configureWithTransparentBackground()
         tabBar.standardAppearance = apperance
         tabBar.scrollEdgeAppearance = apperance
-        tabBar.tintColor = Design.ColorType.theme
+        tabBar.tintColor = ColorType.theme
     }
 }

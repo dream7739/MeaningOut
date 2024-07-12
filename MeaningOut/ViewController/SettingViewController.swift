@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class SettingView: UIViewController {
+final class SettingViewController: UIViewController {
     private let headerView = UIView()
     private let profileImage = RoundImageView(type: .highlight)
     private let nicknameLabel = UILabel()
@@ -41,7 +41,7 @@ final class SettingView: UIViewController {
 
 
 
-extension SettingView {
+extension SettingViewController {
     private func configureTableView(){
         tableView.delegate = self
         tableView.dataSource = self
@@ -53,13 +53,13 @@ extension SettingView {
     
     @objc
     private func headerViewClicked(){
-        let vc = NicknameView()
-        vc.viewType = .nickname(.edit)
-        navigationController?.pushViewController(vc, animated: true)
+        let nicknameVC = NicknameViewController()
+        nicknameVC.viewModel.viewType = .nickname(.edit)
+        transition(nicknameVC, .push)
     }
 }
 
-extension SettingView: BaseProtocol {
+extension SettingViewController: BaseProtocol {
     func configureHierarchy() {
         view.addSubview(headerView)
         headerView.addSubview(profileImage)
@@ -117,17 +117,17 @@ extension SettingView: BaseProtocol {
         profileImage.image = UIImage(named: UserManager.profileImage)
         
         nicknameLabel.font = .systemFont(ofSize: 16, weight: .heavy)
-        nicknameLabel.textColor = Design.ColorType.black
+        nicknameLabel.textColor = ColorType.black
         nicknameLabel.text = UserManager.nickname
         
-        dateLabel.font = Design.FontType.tertiary
-        dateLabel.textColor = Design.ColorType.secondary
+        dateLabel.font = FontType.tertiary
+        dateLabel.textColor = ColorType.secondary
         dateLabel.text = UserManager.joinDate + " 가입"
         
-        indicatorImage.image = Design.ImageType.next
-        indicatorImage.tintColor = Design.ColorType.secondary
+        indicatorImage.image = ImageType.next
+        indicatorImage.tintColor = ColorType.secondary
         
-        sepratorLabel.backgroundColor = Design.ColorType.tertiary
+        sepratorLabel.backgroundColor = ColorType.tertiary
         
         let tapGesture = UITapGestureRecognizer(
             target: self,
@@ -140,7 +140,7 @@ extension SettingView: BaseProtocol {
     
 }
 
-extension SettingView: UITableViewDelegate, UITableViewDataSource {
+extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return Display.Setting.allCases.count
     }
@@ -157,7 +157,7 @@ extension SettingView: UITableViewDelegate, UITableViewDataSource {
         if indexPath.row == 4 {
             showAlert("탈퇴하기", "탈퇴를 하면 데이터가 모두 초기화됩니다. 탈퇴 하시겠습니까?") { _ in
                 self.viewModel.inputLeaveClicked.value = ()
-                let onboardingViewController = UINavigationController(rootViewController: OnboardingView())
+                let onboardingViewController = UINavigationController(rootViewController: OnboardingViewController())
                 self.transitionScene(onboardingViewController)
             }
         }

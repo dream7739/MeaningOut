@@ -18,7 +18,7 @@ extension UIViewController {
         navigationItem.title = navigation.title
         
         navigationController?.navigationBar.titleTextAttributes = [
-            NSAttributedString.Key.font: Design.FontType.gmarketMedium!
+            NSAttributedString.Key.font: FontType.gmarketMedium!
         ]
         
         let backBarButtonItem = UIBarButtonItem(
@@ -31,8 +31,10 @@ extension UIViewController {
         backBarButtonItem.tintColor = .black
         navigationItem.backBarButtonItem = backBarButtonItem
     }
-    
-    func showAlert(_ title: String?, _ message: String?, 
+}
+
+extension UIViewController {
+    func showAlert(_ title: String?, _ message: String?,
                    _ completion: @escaping (UIAlertAction) -> ()){
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let confirm = UIAlertAction(title: "확인", style: .default, handler: completion)
@@ -48,7 +50,7 @@ extension UIViewController {
         var toastStyle = ToastStyle()
         toastStyle.cornerRadius = 20
         toastStyle.horizontalPadding = 15
-        toastStyle.backgroundColor = Design.ColorType.primary
+        toastStyle.backgroundColor = ColorType.primary
         
         view.makeToast(
             text,
@@ -61,7 +63,6 @@ extension UIViewController {
         )
         
     }
-    
 }
 
 extension UIViewController {
@@ -94,5 +95,31 @@ extension UIViewController {
         let sceneDelegate = windowScene?.delegate as? SceneDelegate
         sceneDelegate?.window?.rootViewController = viewController
         sceneDelegate?.window?.makeKeyAndVisible()
+    }
+}
+
+extension UIViewController {
+    func productLayout() -> UICollectionViewLayout {
+        let layout = UICollectionViewFlowLayout()
+        let spacing: CGFloat = 20
+        let verticalInset: CGFloat = 20
+        let horizontalInset: CGFloat = 20
+        
+        layout.minimumLineSpacing = spacing
+        layout.minimumInteritemSpacing = spacing
+        layout.scrollDirection = .vertical
+        
+        layout.sectionInset = UIEdgeInsets(
+            top: verticalInset,
+            left: horizontalInset,
+            bottom: verticalInset,
+            right: horizontalInset
+        )
+        
+        let width: CGFloat = (view.bounds.width - spacing - horizontalInset * 2) / 2
+        let height: CGFloat = (view.bounds.height - spacing - verticalInset * 2) / 2.9
+        layout.itemSize = CGSize(width: width, height: height)
+        
+        return layout
     }
 }

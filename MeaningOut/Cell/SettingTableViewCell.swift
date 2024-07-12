@@ -82,14 +82,14 @@ extension SettingTableViewCell: BaseProtocol {
     }
     
     func configureUI() {
-        nameLabel.textColor = Design.ColorType.black
-        nameLabel.font = Design.FontType.secondary
+        nameLabel.textColor =  ColorType.black
+        nameLabel.font =  FontType.secondary
         
-        likeImage.image = Design.ImageType.like_selected
-        likeImage.tintColor = Design.ColorType.theme
+        likeImage.image =  ImageType.like_selected
+        likeImage.tintColor =  ColorType.theme
     
-        countLabel.textColor = Design.ColorType.black
-        countLabel.font = Design.FontType.tertiary
+        countLabel.textColor =  ColorType.black
+        countLabel.font =  FontType.tertiary
     }
 }
 

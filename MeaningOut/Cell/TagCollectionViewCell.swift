@@ -15,11 +15,11 @@ final class TagCollectionViewCell: UICollectionViewCell {
     var isClicked: Bool = false{
         didSet {
             if isClicked {
-                tagLabel.backgroundColor = Design.ColorType.black
-                tagLabel.textColor = Design.ColorType.white
+                tagLabel.backgroundColor = ColorType.black
+                tagLabel.textColor = ColorType.white
             }else{
-                tagLabel.backgroundColor = Design.ColorType.white
-                tagLabel.textColor = Design.ColorType.primary
+                tagLabel.backgroundColor = ColorType.white
+                tagLabel.textColor = ColorType.primary
             }
         }
     }
@@ -55,8 +55,8 @@ extension TagCollectionViewCell: BaseProtocol {
     }
     
     func configureUI() {
-        tagLabel.textColor = Design.ColorType.black
-        tagLabel.font = Design.FontType.secondary
+        tagLabel.textColor = ColorType.black
+        tagLabel.font = FontType.secondary
         tagLabel.textAlignment = .center
         tagLabel.clipsToBounds = true
     }

@@ -8,37 +8,29 @@
 import Foundation
 
 final class NicknameViewModel{
-    typealias ViewDetailType = ViewType.ViewDetailType
     
     var inputViewDidLoadTrigger: Observable<Void?> = Observable(nil)
-    var inputViewType: Observable<ViewDetailType?> = Observable(nil)
-    var outputProfileImage: Observable<String?> = Observable("")
     var inputNickname: Observable<String> = Observable("")
     var outputNicknameText: Observable<String> = Observable("")
     var outputNicknameValid: Observable<Bool> = Observable(false)
     var inputSaveButton: Observable<Void?> = Observable(nil)
     var outputSaveButton: Observable<Void?> = Observable(nil)
     
+    var viewType: ViewType = .nickname(.add)
+    var profileImage: String?
+    
     init(){
-       print(self, #function)
        transform()
     }
     
     private func transform(){
         inputViewDidLoadTrigger.bind { value in
-            
             if UserManager.profileImage.isEmpty {
-                self.outputProfileImage.value = Design.ProfileType.randomTitle
+                self.profileImage = ProfileType.randomTitle
             }else{
-                self.outputProfileImage.value = UserManager.profileImage
+                self.profileImage = UserManager.profileImage
             }
         } 
-        
-        inputViewType.bind { value in
-            if value == .edit {
-                self.inputNickname.value = UserManager.nickname
-            }
-        }
         
         inputNickname.bind { value in
             do {
@@ -62,9 +54,8 @@ final class NicknameViewModel{
         }
         
         inputSaveButton.bind { value in
-            guard let viewType = self.inputViewType.value else { return }
             if self.outputNicknameValid.value {
-                self.saveUserDefaultsData(viewType)
+                self.saveUserDefaultsData(self.viewType)
                 self.outputSaveButton.value = ()
             }
         }
@@ -94,18 +85,18 @@ extension NicknameViewModel {
         return true
     }
     
-    private func saveUserDefaultsData(_ type: ViewDetailType){
-        switch type {
+    private func saveUserDefaultsData(_ type: ViewType){
+        switch type.detail {
         case .add:
             UserManager.isUser = true
-            if let image = outputProfileImage.value {
-                UserManager.profileImage = image
-            }
             UserManager.nickname = inputNickname.value
             UserManager.joinDate = Date().toString()
+            if let image = profileImage {
+                UserManager.profileImage = image
+            }
         case .edit:
             UserManager.nickname = inputNickname.value
-            if let image = outputProfileImage.value {
+            if let image = profileImage {
                 UserManager.profileImage = image
             }
         }

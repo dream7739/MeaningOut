@@ -9,7 +9,7 @@ import UIKit
 import WebKit
 import SnapKit
 
-final class DetailView: UIViewController {
+final class DetailViewController: UIViewController {
     private let webView = WKWebView()
     private let indicator = UIActivityIndicatorView(style: .large)
     private let emptyView = EmptyView(type: .link)
@@ -29,7 +29,7 @@ final class DetailView: UIViewController {
     }
 }
 
-extension DetailView {
+extension DetailViewController {
     private func configureWebView(){
         guard let link = viewModel.inputShopResult.value?.link,
         let url = URL(string: link) else {
@@ -46,9 +46,9 @@ extension DetailView {
             var image: UIImage
             
             if value {
-                image = Design.ImageType.like_selected ?? UIImage()
+                image = ImageType.like_selected ?? UIImage()
             }else{
-                image = Design.ImageType.like_unselected ?? UIImage()
+                image = ImageType.like_unselected ?? UIImage()
             }
             
             self.navigationItem.rightBarButtonItem?.image = image
@@ -63,7 +63,7 @@ extension DetailView {
     }
 }
 
-extension DetailView: BaseProtocol {
+extension DetailViewController: BaseProtocol {
     func configureHierarchy() {
         view.addSubview(webView)
         view.addSubview(indicator)
@@ -86,7 +86,7 @@ extension DetailView: BaseProtocol {
     
     func configureUI() {
         webView.navigationDelegate = self
-        indicator.color = Design.ColorType.secondary
+        indicator.color = ColorType.secondary
         indicator.hidesWhenStopped = true
         emptyView.isHidden = true
         let like = UIBarButtonItem(
@@ -95,12 +95,12 @@ extension DetailView: BaseProtocol {
             target: self,
             action: #selector(self.likeButtonClicked)
         )
-        like.tintColor = Design.ColorType.theme
+        like.tintColor = ColorType.theme
         navigationItem.rightBarButtonItem = like
     }
 }
 
-extension DetailView : WKNavigationDelegate {
+extension DetailViewController : WKNavigationDelegate {
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
         indicator.startAnimating()
     }

@@ -9,26 +9,21 @@ import UIKit
 
 enum CustomLayout {
     case sort(_ view: UIView)
-    case product(_ view: UIView)
     case profile(_ view: UIView)
     
     var spacing: CGFloat {
         switch self {
         case .sort:
             return 10
-        case .product:
-            return 20
         case .profile:
             return 10
         }
     }
-    
+        
     var inset: (vertical: CGFloat, horizontal: CGFloat) {
         switch self {
         case .sort:
             return (5, 20)
-        case .product:
-            return (20, 20)
         case .profile:
             return (20, 30)
         }
@@ -36,7 +31,7 @@ enum CustomLayout {
     
     var itemSize: CGSize {
         switch self {
-        case .sort, .product:
+        case .sort:
             return .zero
         case .profile(let view):
             let width = (view.bounds.width - (spacing * 2) - (inset.horizontal * 2)) / 3
@@ -48,8 +43,6 @@ enum CustomLayout {
         switch self {
         case .sort:
             return .horizontal
-        case .product:
-            return .vertical
         case .profile:
             return .vertical
         }

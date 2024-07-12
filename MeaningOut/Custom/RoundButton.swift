@@ -12,7 +12,7 @@ final class RoundButton: UIButton {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setTitleColor(.white, for: .normal)
-        backgroundColor = Design.ColorType.theme
+        backgroundColor = ColorType.theme
         layer.cornerRadius = 20
         clipsToBounds = true
     }

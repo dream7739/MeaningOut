@@ -47,10 +47,10 @@ extension RoundProfileView: BaseProtocol {
     }
     
     func configureUI(){
-        cameraImage.image = Design.ImageType.photo
+        cameraImage.image = ImageType.photo
         cameraImage.contentMode = .center
         cameraImage.tintColor = .white
-        cameraImage.backgroundColor = Design.ColorType.theme
+        cameraImage.backgroundColor = ColorType.theme
         cameraImage.layer.cornerRadius = 13
         cameraImage.clipsToBounds = true
     }

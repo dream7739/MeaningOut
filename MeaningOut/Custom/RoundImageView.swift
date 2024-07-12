@@ -26,13 +26,13 @@ final class RoundImageView: UIImageView {
     
     func setRegular(){
         layer.borderWidth = 1
-        layer.borderColor = Design.ColorType.tertiary.cgColor
+        layer.borderColor = ColorType.tertiary.cgColor
         alpha = 0.5
     }
     
     func setHighLight(){
         layer.borderWidth = 3
-        layer.borderColor = Design.ColorType.theme.cgColor
+        layer.borderColor = ColorType.theme.cgColor
         alpha = 1.0
     }
     

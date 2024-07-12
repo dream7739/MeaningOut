@@ -26,10 +26,10 @@ final class ResultCollectionViewCell: UICollectionViewCell {
     var isClicked: Bool = false {
         didSet {
             if isClicked {
-                likeImage.image = Design.ImageType.like_selected
+                likeImage.image = ImageType.like_selected
             }else{
-                likeView.backgroundColor = Design.ColorType.black.withAlphaComponent(0.3)
-                likeImage.image = Design.ImageType.like_unselected
+                likeView.backgroundColor = ColorType.black.withAlphaComponent(0.3)
+                likeImage.image = ImageType.like_unselected
             }
         }
     }
@@ -150,21 +150,21 @@ extension ResultCollectionViewCell: BaseProtocol {
         itemImage.clipsToBounds = true
         itemImage.contentMode = .scaleAspectFill
         
-        companyLabel.font = Design.FontType.quaternary
-        companyLabel.textColor = Design.ColorType.secondary
+        companyLabel.font = FontType.quaternary
+        companyLabel.textColor = ColorType.secondary
         
-        nameLabel.font = Design.FontType.tertiary
-        nameLabel.textColor = Design.ColorType.black
+        nameLabel.font = FontType.tertiary
+        nameLabel.textColor = ColorType.black
         nameLabel.numberOfLines = 2
         
         priceLabel.font = .systemFont(ofSize: 16, weight: .heavy)
-        priceLabel.textColor = Design.ColorType.black
+        priceLabel.textColor = ColorType.black
         
-        likeView.backgroundColor = Design.ColorType.black.withAlphaComponent(0.3)
+        likeView.backgroundColor = ColorType.black.withAlphaComponent(0.3)
         likeView.layer.cornerRadius = 7
         
-        likeImage.image = Design.ImageType.like_unselected
-        likeImage.tintColor = Design.ColorType.white
+        likeImage.image = ImageType.like_unselected
+        likeImage.tintColor = ColorType.white
         
         likeButton.backgroundColor = .clear
     }

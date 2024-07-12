@@ -8,50 +8,36 @@
 import UIKit
 import SnapKit
 
-final class ProfileView: UIViewController {
-    
+final class ProfileViewController: UIViewController {
     private let profileView = RoundProfileView()
     private lazy var collectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: CustomLayout.profile(view).get()
     )
     
-    let viewModel = ProfileViewModel()
-    lazy var input = viewModel.input
-    lazy var output = viewModel.output
+    var viewType: ViewType = .profile(.add)
+    var profileImage: String?
+    var profileImageSender: ((String?) -> Void)?
+    var selectedIndexPath: IndexPath?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
-        configureNav(input.viewType.value!)
+        configureNav(viewType)
         configureHierarchy()
         configureLayout()
+        configureUI()
         configureCollectionView()
-        bindData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        input.profileImageSender.value?(output.profileImage.value)
+        profileImageSender?(profileImage)
     }
     
 }
 
-extension ProfileView {
-    private func bindData(){
-        output.profileImage.bind { value in
-            if let value {
-                self.profileView.profileImage.image = UIImage(named: value)
-            }
-        }
-        
-        output.selectedIndexPath.bind { _ in
-            self.collectionView.reloadData()
-        }
-        
-        input.viewDidLoadTrigger.value = ()
-    }
-    
+extension ProfileViewController {
     private func configureCollectionView(){
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -59,7 +45,7 @@ extension ProfileView {
     }
 }
 
-extension ProfileView: BaseProtocol {
+extension ProfileViewController: BaseProtocol {
     func configureHierarchy() {
         view.addSubview(profileView)
         view.addSubview(collectionView)
@@ -78,23 +64,29 @@ extension ProfileView: BaseProtocol {
         }
     }
     
+    func configureUI() {
+        if let profileImage {
+            profileView.profileImage.image = UIImage(named: profileImage)
+        }
+    }
+    
 }
 
-extension ProfileView: UICollectionViewDelegate, UICollectionViewDataSource {
+extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return Design.ProfileType.allCases.count
+        return ProfileType.allCases.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProfileCollectionViewCell.identifier, for: indexPath) as? ProfileCollectionViewCell else { return UICollectionViewCell()
         }
         
-        let data = Design.ProfileType.allCases[indexPath.row]
+        let data = ProfileType.allCases[indexPath.row]
         
         cell.configureData(data: data)
         
-        guard let selectedIndexPath = output.selectedIndexPath.value else{
-            if output.profileImage.value == data.rawValue {
+        guard let selectedIndexPath = selectedIndexPath else{
+            if profileImage == data.rawValue {
                 cell.isClicked = true
             }else{
                 cell.isClicked = false
@@ -112,8 +104,10 @@ extension ProfileView: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        output.profileImage.value = Design.ProfileType.allCases[indexPath.item].rawValue
-        output.selectedIndexPath.value = indexPath
+        profileImage = ProfileType.allCases[indexPath.item].rawValue
+        profileView.profileImage.image = UIImage(named: profileImage ?? "")
+        selectedIndexPath = indexPath
+        collectionView.reloadData()
     }
 }
 

@@ -9,7 +9,7 @@ import UIKit
 import RealmSwift
 import SnapKit
 
-final class ResultView: UIViewController {
+final class ResultViewController: UIViewController {
     
     private let resultLabel = UILabel()
     private let emptyView = EmptyView(type: .result)
@@ -21,7 +21,7 @@ final class ResultView: UIViewController {
     )
     private lazy var resultCollectionView = UICollectionView(
         frame: .zero,
-        collectionViewLayout: CustomLayout.product(view).get()
+        collectionViewLayout: productLayout()
     )
     
     let viewModel = ResultViewModel()
@@ -58,7 +58,7 @@ final class ResultView: UIViewController {
     }
 }
 
-extension ResultView {
+extension ResultViewController {
     private func configureCollectionView(){
         tagCollectionView.delegate = self
         tagCollectionView.dataSource = self
@@ -120,7 +120,7 @@ extension ResultView {
     }
 }
 
-extension ResultView: BaseProtocol {
+extension ResultViewController: BaseProtocol {
     
     func configureHierarchy() {
         view.addSubview(resultLabel)
@@ -159,13 +159,13 @@ extension ResultView: BaseProtocol {
     
     func configureUI() {
         resultLabel.font = .boldSystemFont(ofSize: 15)
-        resultLabel.textColor = Design.ColorType.theme
+        resultLabel.textColor = ColorType.theme
         emptyView.isHidden = true
         networkView.isHidden = true
     }
 }
 
-extension ResultView: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension ResultViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == tagCollectionView {
             return Display.SortOption.allCases.count
@@ -208,7 +208,7 @@ extension ResultView: UICollectionViewDataSource, UICollectionViewDelegateFlowLa
         if collectionView == tagCollectionView {
             let label = PaddingLabel()
             label.text = Display.SortOption.allCases[indexPath.item].title
-            label.font = Design.FontType.secondary
+            label.font = FontType.secondary
             
             let size = label.intrinsicContentSize
             return CGSize(width: size.width, height: size.height)
@@ -231,14 +231,14 @@ extension ResultView: UICollectionViewDataSource, UICollectionViewDelegateFlowLa
             }
         }else if collectionView == resultCollectionView {
             guard let data = viewModel.outputSearchResult.value?.items[indexPath.item] else { return }
-            let detailVC = DetailView()
+            let detailVC = DetailViewController()
             detailVC.viewModel.inputShopResult.value = data
             transition(detailVC, .push)
         }
     }
 }
 
-extension ResultView: UICollectionViewDataSourcePrefetching {
+extension ResultViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         for idx in indexPaths {
             guard let value = viewModel.outputSearchResult.value else { return }
