@@ -11,36 +11,20 @@ final class NetworkView: UIView {
     private let networkImage = UIImageView()
     private let titleLabel = UILabel()
     private let descriptionLabel = UILabel()
-    private let retryButton = UIButton()
+    let retryButton = UIButton()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureHierarchy()
         configureLayout()
         configureUI()
-        retryButton.addTarget(
-            self,
-            action: #selector(retryButtonClicked),
-            for: .touchUpInside
-        )
-
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    @objc
-    private func retryButtonClicked(){
-        NotificationCenter.default.post(
-            name: ShopNotification.network,
-            object: nil,
-            userInfo: nil
-        )
-    }
-    
-}
 
+}
 
 extension NetworkView: BaseProtocol {
     func configureHierarchy(){

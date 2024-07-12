@@ -75,9 +75,8 @@ extension SearchViewController {
     
     private func configureSearch(){
         navigationItem.searchController = searchController
-        searchController.searchBar.searchTextField.placeholder = Display.Placeholder.search.rawValue
-        searchController.searchBar.tintColor = ColorType.black
         searchController.searchBar.delegate = self
+        searchController.configureDesign()
     }
     
     private func configureTableView(){
@@ -131,8 +130,6 @@ extension SearchViewController: BaseProtocol {
     }
     
     func configureUI() {
-        searchController.searchBar.searchTextField.backgroundColor = ColorType.tertiary.withAlphaComponent(0.1)
-        
         recentLabel.text = "최근 검색"
         recentLabel.font = .systemFont(ofSize: 16, weight: .black)
         

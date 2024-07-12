@@ -61,9 +61,7 @@ extension EmptyView: BaseProtocol {
     
     func configureUI(){
         backgroundColor = .white
-        
         emptyImage.image = ImageType.empty
-        
         descriptionLabel.font = .systemFont(ofSize: 16, weight: .heavy)
         descriptionLabel.textAlignment = .center
     }

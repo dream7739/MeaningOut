@@ -33,7 +33,7 @@ final class UnderLineTextField : UITextField {
         }
     }
     
-    func setLineColor(type: UnderLineTextField.TextFieldType){
+    func setLineColor(type: TextFieldType){
         switch type {
         case .normal:
             underline.backgroundColor = ColorType.tertiary

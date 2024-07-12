@@ -9,7 +9,7 @@ import UIKit
 
 final class RoundImageView: UIImageView {
     
-    init(type: RoundImageView.ImageType){
+    init(type: ImageType){
         super.init(frame: .zero)
         contentMode = .scaleAspectFill
         clipsToBounds = true

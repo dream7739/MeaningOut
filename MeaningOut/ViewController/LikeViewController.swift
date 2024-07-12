@@ -13,7 +13,7 @@ final class LikeViewController: UIViewController {
     private let resultLabel = UILabel()
     private let searchController = UISearchController(searchResultsController: nil)
     private let emptyView = EmptyView(type: .like)
-    lazy var resultCollectionView = UICollectionView(
+    lazy private var resultCollectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: productLayout()
     )
@@ -34,11 +34,13 @@ final class LikeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(likeButtonClicked),
-                                               name: ShopNotification.like,
-                                               object: nil)
-        viewModel.inputViewDidLoadTrigger.value = ()
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(likeButtonClicked),
+            name: ShopNotification.like,
+            object: nil
+        )
+        resultCollectionView.reloadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -49,6 +51,7 @@ final class LikeViewController: UIViewController {
 
 extension LikeViewController {
     private func bindData(){
+        print(#function)
         viewModel.ouputLikeResult.bind { value in
             self.resultCollectionView.reloadData()
         }
@@ -63,6 +66,7 @@ extension LikeViewController {
             self.resultLabel.text = value.formatted() + "개의 좋아요한 상품"
         }
         
+        viewModel.inputViewDidLoadTrigger.value = ()
     }
     
     private func configureCollectionView(){
@@ -76,9 +80,7 @@ extension LikeViewController {
     private func configureSearchController(){
         navigationItem.searchController = searchController
         searchController.searchResultsUpdater = self
-        searchController.searchBar.setValue("취소", forKey: "cancelButtonText")
-        searchController.searchBar.tintColor = ColorType.black
-        searchController.searchBar.searchTextField.placeholder = Display.Placeholder.search.rawValue
+        searchController.configureDesign()
     }
     
     @objc
@@ -130,7 +132,6 @@ extension LikeViewController: UISearchResultsUpdating {
 
 
 extension LikeViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         return viewModel.ouputLikeResult.value?.count ?? 0
@@ -142,28 +143,20 @@ extension LikeViewController: UICollectionViewDataSource, UICollectionViewDelega
         }
         
         cell.indexPath = indexPath
+        cell.isClicked = true
         cell.keyword = viewModel.inputSearchText.value
+        
         let item = Shop.init(managedObject: data[indexPath.item])
         cell.configureData(item)
         
         return cell
-        
     }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let spacing: CGFloat = 20
-        let horizontalInset: CGFloat = 20
-        let verticalInset: CGFloat = 10
-        let width: CGFloat = (view.bounds.width - spacing - horizontalInset * 2) / 2
-        let height: CGFloat = (view.bounds.height - spacing - verticalInset * 2) / 2.9
-        return CGSize(width: width, height: height)
-        
-    }
+
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let list = viewModel.ouputLikeResult.value else { return }
-        let vc = DetailViewController()
-        vc.viewModel.inputShopResult.value = Shop.init(managedObject: list[indexPath.item])
-        navigationController?.pushViewController(vc, animated: true)
+        let detailVC = DetailViewController()
+        detailVC.viewModel.inputShopResult.value = Shop.init(managedObject: list[indexPath.item])
+        transition(detailVC, .push)
     }
 }

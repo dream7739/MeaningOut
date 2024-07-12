@@ -30,7 +30,6 @@ final class LikeViewModel {
         }
         
         inputLikeButtonClicked.bind { value in
-
             if !self.inputLikeIsClicked.value {
                 guard let item = self.ouputLikeResult.value else { return }
                 self.deleteLikeRealm(item[self.inputLikeIndexPath.value.item])

@@ -113,4 +113,8 @@ extension ResultViewModel {
             repository.deleteLike(productId)
         }
     }
+    
+    func isExistLikeRealm(_ id: Int) -> Bool{
+        return repository.isExistLike(id: id)
+    }
 }

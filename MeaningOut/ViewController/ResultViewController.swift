@@ -35,6 +35,7 @@ final class ResultViewController: UIViewController {
         configureUI()
         configureCollectionView()
         bindData()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -43,12 +44,6 @@ final class ResultViewController: UIViewController {
                                                selector: #selector(likeButtonClicked),
                                                name: ShopNotification.like,
                                                object: nil)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(retryButtonClicked),
-                                               name: ShopNotification.network,
-                                               object: nil)
-        
-        //TODO: - 좋아요 개선: DetailVC에서 좋아요가 변경된 것을 어떻게 알 수 있을까?
         resultCollectionView.reloadData()
     }
     
@@ -97,7 +92,7 @@ extension ResultViewController {
             }
         }
         
-        viewModel.inputSortOptionIndex.closure?(IndexPath(item: 0, section: 0))
+        viewModel.inputSortOptionIndex.value = (IndexPath(item: 0, section: 0))
     }
     
     @objc
@@ -115,7 +110,7 @@ extension ResultViewController {
     }
     
     @objc
-    private func retryButtonClicked(notification: Notification){
+    private func retryButtonClicked(){
         viewModel.inputRetryButtonClick.value = ()
     }
 }
@@ -162,6 +157,8 @@ extension ResultViewController: BaseProtocol {
         resultLabel.textColor = ColorType.theme
         emptyView.isHidden = true
         networkView.isHidden = true
+        
+        networkView.retryButton.addTarget(self, action: #selector(retryButtonClicked), for: .touchUpInside)
     }
 }
 
@@ -199,6 +196,11 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
             cell.indexPath = indexPath
             cell.keyword = viewModel.inputSearchText.value
             cell.configureData(data[indexPath.item])
+            
+            if let id = Int(data[indexPath.item].productId) {
+                cell.isClicked = viewModel.isExistLikeRealm(id)
+            }
+            
             return cell
         }
         

@@ -27,6 +27,11 @@ final class DetailViewController: UIViewController {
         configureWebView()
         bindData()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.inputViewDidLoadTrigger.value = ()
+    }
 }
 
 extension DetailViewController {

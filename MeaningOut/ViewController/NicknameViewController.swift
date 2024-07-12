@@ -18,16 +18,12 @@ final class NicknameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        bindData()
         configureView()
         configureNav(viewModel.viewType)
         configureHierarchy()
         configureLayout()
+        bindData()
         configureUI()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
     }
     
     override func viewDidAppear(_ animated: Bool) {
