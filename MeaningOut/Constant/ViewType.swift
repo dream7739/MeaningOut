@@ -14,7 +14,7 @@ enum ViewType{
     case search
     case result(_ title: String)
     case like
-    case detail
+    case detail(_ title: String)
     case setting
     
     enum ViewDetailType {
@@ -28,9 +28,9 @@ enum ViewType{
             return "PROFILE SETTING"
         case .search:
             return "\(UserManager.nickname)`s MEANING OUT"
-        case .onboard, .detail:
+        case .onboard:
             return ""
-        case .result(let title):
+        case .result(let title), .detail(let title):
             return title
         case .setting:
             return "SETTING"

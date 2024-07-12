@@ -231,8 +231,8 @@ extension ResultView: UICollectionViewDataSource, UICollectionViewDelegateFlowLa
             }
         }else if collectionView == resultCollectionView {
             guard let data = viewModel.outputSearchResult.value?.items[indexPath.item] else { return }
-            let detailVC = DetailViewController()
-            detailVC.data = data
+            let detailVC = DetailView()
+            detailVC.viewModel.inputShopResult.value = data
             transition(detailVC, .push)
         }
     }

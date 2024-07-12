@@ -9,29 +9,30 @@ import UIKit
 import WebKit
 import SnapKit
 
-final class DetailViewController: UIViewController {
+final class DetailView: UIViewController {
     private let webView = WKWebView()
     private let indicator = UIActivityIndicatorView(style: .large)
     private let emptyView = EmptyView(type: .link)
-    
-    private let repository = RealmRepository()
-    private var isClicked: Bool = false
-    var data: Shop?
+
+    let viewModel = DetailViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
-        configureNav(.detail)
+        let title = viewModel.inputShopResult.value?.titleDescription ?? ""
+        configureNav(.detail(title))
         configureHierarchy()
         configureLayout()
         configureUI()
-        
-        guard let data else { return }
-        
-        navigationItem.title = data.titleDescription
-        addLikeBarButton()
-        
-        guard let url = URL(string: data.link) else {
+        configureWebView()
+        bindData()
+    }
+}
+
+extension DetailView {
+    private func configureWebView(){
+        guard let link = viewModel.inputShopResult.value?.link,
+        let url = URL(string: link) else {
             emptyView.isHidden = false
             return
         }
@@ -39,44 +40,30 @@ final class DetailViewController: UIViewController {
         let request = URLRequest(url: url)
         webView.load(request)
     }
-}
-
-extension DetailViewController {
-    private func addLikeBarButton(){
-        guard let data else { return }
-  
-        let image: UIImage
-        
-        if repository.isExistLike(id: Int(data.productId)!){
-            isClicked = true
-            image = Design.ImageType.like_selected ?? UIImage()
-        }else{
-            isClicked = false
-            image = Design.ImageType.like_unselected ?? UIImage()
+    
+    private func bindData(){
+        viewModel.outputLikeisClicked.bind { value in
+            var image: UIImage
+            
+            if value {
+                image = Design.ImageType.like_selected ?? UIImage()
+            }else{
+                image = Design.ImageType.like_unselected ?? UIImage()
+            }
+            
+            self.navigationItem.rightBarButtonItem?.image = image
         }
-       
-        let likeButton = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(likeButtonClicked))
-        likeButton.tintColor = Design.ColorType.theme
-        navigationItem.rightBarButtonItem = likeButton
+        
+        viewModel.inputViewDidLoadTrigger.value = ()
     }
     
     @objc
     private func likeButtonClicked(){
-        guard let data else { return }
-        
-        isClicked.toggle()
-        
-        if isClicked {
-            repository.addLike(data.managedObject())
-            navigationItem.rightBarButtonItem?.image = Design.ImageType.like_selected ?? UIImage()
-        }else{
-            repository.deleteLike(Int(data.productId)!)
-            navigationItem.rightBarButtonItem?.image = Design.ImageType.like_unselected ?? UIImage()
-        }
+        viewModel.inputLikeButtonClicked.value = ()
     }
 }
 
-extension DetailViewController: BaseProtocol {
+extension DetailView: BaseProtocol {
     func configureHierarchy() {
         view.addSubview(webView)
         view.addSubview(indicator)
@@ -102,10 +89,18 @@ extension DetailViewController: BaseProtocol {
         indicator.color = Design.ColorType.secondary
         indicator.hidesWhenStopped = true
         emptyView.isHidden = true
+        let like = UIBarButtonItem(
+            image: UIImage(),
+            style: .plain,
+            target: self,
+            action: #selector(self.likeButtonClicked)
+        )
+        like.tintColor = Design.ColorType.theme
+        navigationItem.rightBarButtonItem = like
     }
 }
 
-extension DetailViewController : WKNavigationDelegate {
+extension DetailView : WKNavigationDelegate {
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
         indicator.startAnimating()
     }

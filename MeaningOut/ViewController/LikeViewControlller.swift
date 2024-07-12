@@ -176,9 +176,9 @@ extension LikeViewControlller: UICollectionViewDataSource, UICollectionViewDeleg
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = DetailViewController()
+        let vc = DetailView()
         let data = list[indexPath.item]
-        vc.data = Shop.init(managedObject: data)
+        vc.viewModel.inputShopResult.value = Shop.init(managedObject: data)
         navigationController?.pushViewController(vc, animated: true)
     }
 }
