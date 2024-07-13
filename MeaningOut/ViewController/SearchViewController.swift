@@ -30,19 +30,6 @@ final class SearchViewController: UIViewController {
         bindData()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(deleteButtonClicked),
-                                               name: ShopNotification.delete,
-                                               object: nil)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        NotificationCenter.default.removeObserver(self)
-    }
-    
 }
 
 extension SearchViewController {
@@ -91,13 +78,6 @@ extension SearchViewController {
     private func resetButtonClicked(){
         viewModel.inputResetButtonClick.value = ()
     }
-    
-    @objc 
-    private func deleteButtonClicked(notification: Notification){
-        guard let indexPath = notification.userInfo?[ShopNotificationKey.indexPath] as? IndexPath else { return }
-        viewModel.inputDeleteButtonClick.value = indexPath.row
-    }
-    
 }
 
 extension SearchViewController: BaseProtocol {
@@ -152,6 +132,12 @@ extension SearchViewController: UISearchBarDelegate {
     }
 }
 
+extension SearchViewController: SearchDeleteDelegate {
+    func deleteButtonClicked(_ indexPath: IndexPath) {
+        viewModel.inputDeleteButtonClick.value = indexPath.row
+    }
+}
+
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return UserManager.savedList.count
@@ -163,6 +149,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         }
         cell.configureData(UserManager.savedList[indexPath.row])
         cell.indexPath = indexPath
+        cell.delegate = self
         return cell
     }
     

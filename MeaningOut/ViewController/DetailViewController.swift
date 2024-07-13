@@ -30,8 +30,9 @@ final class DetailViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.inputViewDidLoadTrigger.value = ()
+        viewModel.inputViewWillAppearTrigger.value = ()
     }
+    
 }
 
 extension DetailViewController {
@@ -59,7 +60,7 @@ extension DetailViewController {
             self.navigationItem.rightBarButtonItem?.image = image
         }
         
-        viewModel.inputViewDidLoadTrigger.value = ()
+        viewModel.inputViewWillAppearTrigger.value = ()
     }
     
     @objc

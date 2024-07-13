@@ -8,13 +8,18 @@
 import UIKit
 import SnapKit
 
+protocol SearchDeleteDelegate {
+    func deleteButtonClicked(_ indexPath: IndexPath)
+}
+
 final class SearchTableViewCell: UITableViewCell {
 
     private let timeImage = UIImageView()
     private let recentLabel = UILabel()
     private let deleteButton = UIButton()
     private let deleteImage = UIImageView()
-        
+    
+    var delegate: SearchDeleteDelegate?
     var indexPath: IndexPath?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -39,11 +44,7 @@ extension SearchTableViewCell {
     @objc
     func deleteButtonClicked(){
         guard let indexPath else { return }
-        NotificationCenter.default.post(
-            name: ShopNotification.delete,
-            object: nil,
-            userInfo: [ShopNotificationKey.indexPath : indexPath]
-        )
+        delegate?.deleteButtonClicked(indexPath)
     }
 }
 

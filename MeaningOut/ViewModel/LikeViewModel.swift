@@ -9,7 +9,7 @@ import Foundation
 import RealmSwift
 
 final class LikeViewModel {
-    var inputViewDidLoadTrigger: Observable<Void?> = Observable(nil)
+    var inputViewWillAppearTrigger: Observable<Void?> = Observable(nil)
     var ouputLikeResult: Observable<Results<Like>?> = Observable(nil)
     var outputLikeResultCount: Observable<Int> = Observable(0)
     var inputLikeButtonClicked: Observable<Void?> = Observable(nil)
@@ -24,7 +24,7 @@ final class LikeViewModel {
     }
     
     func transform(){
-        inputViewDidLoadTrigger.bind { _ in
+        inputViewWillAppearTrigger.bind { _ in
             self.ouputLikeResult.value = self.fetchLikeListRealm()
             self.outputLikeResultCount.value = self.ouputLikeResult.value?.count ?? 0
         }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class TagButton: UIButton {
+final class OptionButton: UIButton {
     
     var isClicked: Bool = false{
         didSet {

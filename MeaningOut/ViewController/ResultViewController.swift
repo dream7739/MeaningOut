@@ -6,16 +6,15 @@
 //
 
 import UIKit
-import RealmSwift
 import SnapKit
 
 final class ResultViewController: UIViewController {
     private let resultLabel = UILabel()
     private let tagStackView = UIStackView()
-    private let simSortButton = TagButton(type: .system)
-    private let dateSortButton = TagButton(type: .system)
-    private let ascSortButton = TagButton(type: .system)
-    private let descSortButton = TagButton(type: .system)
+    private let simSortButton = OptionButton(type: .system)
+    private let dateSortButton = OptionButton(type: .system)
+    private let ascSortButton = OptionButton(type: .system)
+    private let descSortButton = OptionButton(type: .system)
     private lazy var sortButtonList = [simSortButton, dateSortButton, ascSortButton, descSortButton]
     private let emptyView = EmptyView(type: .result)
     private let networkView = NetworkView()
@@ -37,20 +36,12 @@ final class ResultViewController: UIViewController {
         configureCollectionView()
         bindData()
     }
-    
+   
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(likeButtonClicked),
-                                               name: ShopNotification.like,
-                                               object: nil)
         resultCollectionView.reloadData()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        NotificationCenter.default.removeObserver(self)
-    }
 }
 
 extension ResultViewController {
@@ -115,19 +106,6 @@ extension ResultViewController {
         viewModel.inputSortOptionIndex.value = 0
     }
     
-    @objc
-    private func likeButtonClicked(notification: Notification){
-        guard let item = notification.userInfo?[ShopNotificationKey.indexPath] as? (IndexPath, Bool) else { return }
-        
-        let indexPath = item.0
-        let isClicked = item.1
-        
-        guard let result = viewModel.outputSearchResult.value?.items else { return }
-        let data = result[indexPath.item]
-        viewModel.inputLikeSelectedIndex.value = indexPath
-        viewModel.inputLikeIsClicked.value = isClicked
-        viewModel.inputLikeButtonClicked.value = (data)
-    }
     
     @objc
     private func retryButtonClicked(){
@@ -187,7 +165,7 @@ extension ResultViewController: BaseProtocol {
         }
         
         resultCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(tagStackView.snp.bottom)
+            make.top.equalTo(tagStackView.snp.bottom).offset(4)
             make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
         }
         
@@ -220,7 +198,7 @@ extension ResultViewController: BaseProtocol {
         )
     }
     
-    @objc func tagButtonClicked(_ sender: TagButton){
+    @objc func tagButtonClicked(_ sender: OptionButton){
         sortButtonList.forEach { button in
             if button.tag == sender.tag {
                 button.isClicked = true
@@ -234,6 +212,18 @@ extension ResultViewController: BaseProtocol {
     
 }
 
+extension ResultViewController: ResultLikeDelegate {
+    func likeButtonClicked(_ indexPath: IndexPath, _ isClicked: Bool) {
+        let indexPath = indexPath
+        let isClicked = isClicked
+        
+        guard let data = viewModel.outputSearchResult.value?.items[indexPath.item] else { return }
+        viewModel.inputLikeSelectedIndex.value = indexPath
+        viewModel.inputLikeIsClicked.value = isClicked
+        viewModel.inputLikeButtonClicked.value = (data)
+    }
+}
+
 extension ResultViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.outputSearchResult.value?.items.count ?? 0
@@ -245,6 +235,7 @@ extension ResultViewController: UICollectionViewDataSource, UICollectionViewDele
             return UICollectionViewCell()
         }
         
+        cell.delegate = self
         cell.indexPath = indexPath
         cell.keyword = viewModel.inputSearchText.value
         cell.configureData(data[indexPath.item])

@@ -9,6 +9,10 @@ import UIKit
 import Kingfisher
 import SnapKit
 
+protocol ResultLikeDelegate {
+    func likeButtonClicked(_ indexPath: IndexPath, _ isClicked: Bool)
+}
+
 final class ResultCollectionViewCell: UICollectionViewCell {
     
     private let itemImage = UIImageView()
@@ -19,6 +23,7 @@ final class ResultCollectionViewCell: UICollectionViewCell {
     private let likeImage = UIImageView()
     private let likeButton = UIButton()
     
+    var delegate: ResultLikeDelegate?
     var keyword: String?
     var indexPath: IndexPath?
     var isClicked: Bool = false {
@@ -75,16 +80,9 @@ extension ResultCollectionViewCell {
         guard let indexPath else { return }
         
         isClicked.toggle()
+        
+        delegate?.likeButtonClicked(indexPath, isClicked)
 
-        let info: [String: (IndexPath, Bool)] = [
-            ShopNotificationKey.indexPath: (indexPath, isClicked)
-        ]
-
-        NotificationCenter.default.post(
-            name: ShopNotification.like,
-            object: nil,
-            userInfo: info
-        )
     }
 }
 

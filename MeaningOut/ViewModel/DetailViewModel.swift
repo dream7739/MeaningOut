@@ -8,7 +8,7 @@
 import Foundation
 
 final class DetailViewModel {
-    var inputViewDidLoadTrigger: Observable<Void?> = Observable(nil)
+    var inputViewWillAppearTrigger: Observable<Void?> = Observable(nil)
     var inputShopResult: Observable<Shop?> = Observable(nil)
     var outputLikeisClicked: Observable<Bool> = Observable(false)
     var inputLikeButtonClicked: Observable<Void?> = Observable(nil)
@@ -20,7 +20,7 @@ final class DetailViewModel {
     }
     
     func transform(){
-        inputViewDidLoadTrigger.bind { value in
+        inputViewWillAppearTrigger.bind { value in
             guard let data = self.inputShopResult.value,
                   let id = Int(data.productId) else { return }
             

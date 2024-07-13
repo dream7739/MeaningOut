@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import RealmSwift
 import SnapKit
 
 final class LikeViewController: UIViewController {
@@ -34,24 +33,13 @@ final class LikeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(likeButtonClicked),
-            name: ShopNotification.like,
-            object: nil
-        )
-        resultCollectionView.reloadData()
+        viewModel.inputViewWillAppearTrigger.value = ()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        NotificationCenter.default.removeObserver(self)
-    }
 }
 
 extension LikeViewController {
     private func bindData(){
-        print(#function)
         viewModel.ouputLikeResult.bind { value in
             self.resultCollectionView.reloadData()
         }
@@ -65,8 +53,6 @@ extension LikeViewController {
             
             self.resultLabel.text = value.formatted() + "개의 좋아요한 상품"
         }
-        
-        viewModel.inputViewDidLoadTrigger.value = ()
     }
     
     private func configureCollectionView(){
@@ -83,12 +69,12 @@ extension LikeViewController {
         searchController.configureDesign()
     }
     
-    @objc
-    private func likeButtonClicked(notification: Notification){
-        guard let item = notification.userInfo?[ShopNotificationKey.indexPath] as? (IndexPath, Bool) else { return }
-        
-        viewModel.inputLikeIndexPath.value = item.0
-        viewModel.inputLikeIsClicked.value = item.1
+}
+
+extension LikeViewController: ResultLikeDelegate {
+    func likeButtonClicked(_ indexPath: IndexPath, _ isClicked: Bool) {
+        viewModel.inputLikeIndexPath.value = indexPath
+        viewModel.inputLikeIsClicked.value = isClicked
         
         viewModel.inputLikeButtonClicked.value = ()
     }
@@ -142,6 +128,7 @@ extension LikeViewController: UICollectionViewDataSource, UICollectionViewDelega
             return UICollectionViewCell()
         }
         
+        cell.delegate = self
         cell.indexPath = indexPath
         cell.isClicked = true
         cell.keyword = viewModel.inputSearchText.value
