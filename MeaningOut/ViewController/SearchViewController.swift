@@ -20,7 +20,7 @@ final class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
-        configureNav(.search)
+        configureNav(NavigationTitle.search)
         configureHierarchy()
         configureLayout()
         configureUI()

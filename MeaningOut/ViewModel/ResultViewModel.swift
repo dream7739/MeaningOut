@@ -8,8 +8,10 @@
 import Foundation
 
 final class ResultViewModel {
+    typealias SortOption = ResultViewController.SortOption
+
     var inputSearchText: Observable<String?> = Observable(nil)
-    var inputSortOptionIndex: Observable<IndexPath> = Observable(IndexPath(item: 0, section: 0))
+    var inputSortOptionIndex: Observable<Int> = Observable(0)
     var inputSearchRequest: Observable<ShopRequest?> = Observable(nil)
     var outputSearchResult: Observable<ShopResult?> = Observable(nil)
     var inputRetryButtonClick: Observable<Void?> = Observable(nil)
@@ -30,7 +32,7 @@ final class ResultViewModel {
         inputSearchText.bind { value in
             guard let value else { return }
             
-            let sort = Display.SortOption.allCases[self.inputSortOptionIndex.value.item].title
+            let sort = SortOption.allCases[self.inputSortOptionIndex.value].title
             
             self.inputSearchRequest.value = ShopRequest(
                 query: value,
@@ -41,7 +43,7 @@ final class ResultViewModel {
         }
         
         inputSortOptionIndex.bind { value in
-            self.inputSearchRequest.value?.sort = Display.SortOption.allCases[value.item].sortParam
+            self.inputSearchRequest.value?.sort = SortOption.allCases[value].sortParam
             self.inputSearchRequest.value?.start = 1
             self.callNaverShopAPI()
         }

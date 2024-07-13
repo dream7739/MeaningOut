@@ -13,7 +13,7 @@ final class APIManager {
     static let shared = APIManager()
     
     func request<T: Decodable>(model: T.Type, request: APIRequest,
-                               completion: @escaping (Result<T, Validation.Network>) -> Void){
+                               completion: @escaping (Result<T, NetworkError>) -> Void){
         
         guard var component = URLComponents(string: request.baseURL + request.endPoint) else {
             completion(.failure(.invalidURL))

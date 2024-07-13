@@ -30,7 +30,7 @@ final class SettingTableViewCell: UITableViewCell {
 }
 
 extension SettingTableViewCell {
-    func configureData(_ data: Display.Setting){
+    func configureData(_ data: SettingViewController.SettingOption){
         nameLabel.text = data.title
         
         if data == .cart {

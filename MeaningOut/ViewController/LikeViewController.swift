@@ -23,7 +23,7 @@ final class LikeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
-        configureNav(.like)
+        configureNav(NavigationTitle.like)
         configureHierarchy()
         configureLayout()
         configureUI()

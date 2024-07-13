@@ -19,7 +19,14 @@ final class NicknameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
-        configureNav(viewModel.viewType)
+        
+        switch viewModel.viewType {
+        case .add:
+            configureNav(NavigationTitle.profile)
+        case .edit:
+            configureNav(NavigationTitle.editProfile)
+        }
+        
         configureHierarchy()
         configureLayout()
         bindData()
@@ -50,7 +57,7 @@ extension NicknameViewController {
         }
         
         viewModel.outputSaveButton.bind { _ in
-            switch self.viewModel.viewType.detail {
+            switch self.viewModel.viewType {
             case .add:
                 self.transitionScene(ShopTabBarController())
             case .edit:
@@ -69,7 +76,7 @@ extension NicknameViewController {
             self.viewModel.profileImage = profile
             self.profileView.profileImage.image = UIImage(named: profile ?? "")
         }
-        vc.viewType = .profile(viewModel.viewType.detail)
+        vc.viewType = viewModel.viewType
         vc.profileImage = viewModel.profileImage
         transition(vc, .push)
     }
@@ -123,7 +130,7 @@ extension NicknameViewController: BaseProtocol {
             profileView.profileImage.image = UIImage(named: profileImage)
         }
         
-        switch viewModel.viewType.detail {
+        switch viewModel.viewType {
         case .add:
             nicknameField.text = ""
         case .edit:
@@ -133,7 +140,7 @@ extension NicknameViewController: BaseProtocol {
             completeButton.isHidden = true
         }
         
-        nicknameField.placeholder = Display.Placeholder.nickname.rawValue
+        nicknameField.placeholder = "닉네임을 입력해주세요 :)"
         nicknameField.clearButtonMode = .whileEditing
         validLabel.font = FontType.tertiary
         completeButton.setTitle("완료", for: .normal)

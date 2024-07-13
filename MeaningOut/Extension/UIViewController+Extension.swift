@@ -14,8 +14,8 @@ extension UIViewController {
         view.backgroundColor = .white
     }
     
-    func configureNav(_ navigation: ViewType){
-        navigationItem.title = navigation.title
+    func configureNav(_ title: String){
+        navigationItem.title = title
         
         navigationController?.navigationBar.titleTextAttributes = [
             NSAttributedString.Key.font: FontType.gmarketMedium!

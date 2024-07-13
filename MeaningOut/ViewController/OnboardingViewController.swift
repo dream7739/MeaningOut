@@ -16,7 +16,7 @@ final class OnboardingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
-        configureNav(.onboard)
+        configureNav("")
         configureHierarchy()
         configureLayout()
         configureUI()
@@ -33,7 +33,7 @@ extension OnboardingViewController {
     @objc 
     private func startButtonClicked(){
         let nicknameVC = NicknameViewController()
-        nicknameVC.viewModel.viewType = .nickname(.add)
+        nicknameVC.viewModel.viewType = .add
         transition(nicknameVC, .push)
     }
 }

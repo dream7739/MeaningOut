@@ -20,7 +20,7 @@ final class DetailViewController: UIViewController {
         super.viewDidLoad()
         configureView()
         let title = viewModel.inputShopResult.value?.titleDescription ?? ""
-        configureNav(.detail(title))
+        configureNav(title)
         configureHierarchy()
         configureLayout()
         configureUI()
@@ -124,7 +124,7 @@ extension DetailViewController : WKNavigationDelegate {
         configureFailLoad(with: .failNavigation)
     }
     
-    func configureFailLoad(with error: Validation.Web){
+    func configureFailLoad(with error: WebLoadError){
         indicator.stopAnimating()
         emptyView.isHidden = false
         emptyView.descriptionLabel.text = ""

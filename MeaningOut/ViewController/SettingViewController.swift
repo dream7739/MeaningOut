@@ -21,7 +21,7 @@ final class SettingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
-        configureNav(.setting)
+        configureNav(NavigationTitle.setting)
         configureHierarchy()
         configureLayout()
         configureUI()
@@ -39,9 +39,30 @@ final class SettingViewController: UIViewController {
     }
 }
 
-
-
 extension SettingViewController {
+    enum SettingOption: Int, CaseIterable {
+        case cart
+        case questition
+        case voc
+        case noti
+        case reset
+        
+        var title: String {
+            switch self {
+            case .cart:
+                return "나의 장바구니 목록"
+            case .questition:
+                return "자주 묻는 질문"
+            case .voc:
+                return "1:1 문의"
+            case .noti:
+                return "알림 설정"
+            case .reset:
+                return "탈퇴하기"
+            }
+        }
+    }
+    
     private func configureTableView(){
         tableView.delegate = self
         tableView.dataSource = self
@@ -54,7 +75,7 @@ extension SettingViewController {
     @objc
     private func headerViewClicked(){
         let nicknameVC = NicknameViewController()
-        nicknameVC.viewModel.viewType = .nickname(.edit)
+        nicknameVC.viewModel.viewType = .edit
         transition(nicknameVC, .push)
     }
 }
@@ -142,12 +163,12 @@ extension SettingViewController: BaseProtocol {
 
 extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Display.Setting.allCases.count
+        return SettingOption.allCases.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SettingTableViewCell.identifier, for: indexPath) as! SettingTableViewCell
-        let data = Display.Setting.allCases[indexPath.row]
+        let data = SettingOption.allCases[indexPath.row]
         cell.selectionStyle = .none
         cell.configureData(data)
         return cell
@@ -163,3 +184,4 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
 }
+

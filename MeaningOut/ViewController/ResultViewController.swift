@@ -10,15 +10,16 @@ import RealmSwift
 import SnapKit
 
 final class ResultViewController: UIViewController {
-    
     private let resultLabel = UILabel()
+    private let tagStackView = UIStackView()
+    private let simSortButton = TagButton(type: .system)
+    private let dateSortButton = TagButton(type: .system)
+    private let ascSortButton = TagButton(type: .system)
+    private let descSortButton = TagButton(type: .system)
+    private lazy var sortButtonList = [simSortButton, dateSortButton, ascSortButton, descSortButton]
     private let emptyView = EmptyView(type: .result)
     private let networkView = NetworkView()
     
-    private lazy var tagCollectionView = UICollectionView(
-        frame: .zero,
-        collectionViewLayout: CustomLayout.sort(view).get()
-    )
     private lazy var resultCollectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: productLayout()
@@ -29,13 +30,12 @@ final class ResultViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
-        configureNav(.result(viewModel.inputSearchText.value ?? ""))
+        configureNav(viewModel.inputSearchText.value ?? "")
         configureHierarchy()
         configureLayout()
         configureUI()
         configureCollectionView()
         bindData()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -54,11 +54,31 @@ final class ResultViewController: UIViewController {
 }
 
 extension ResultViewController {
-    private func configureCollectionView(){
-        tagCollectionView.delegate = self
-        tagCollectionView.dataSource = self
-        tagCollectionView.register(TagCollectionViewCell.self, forCellWithReuseIdentifier: TagCollectionViewCell.identifier)
+    enum SortOption: Int, CaseIterable {
+        case sim = 0
+        case date = 1
+        case dsc = 2
+        case asc = 3
         
+        var title: String {
+            switch self {
+            case .sim:
+                return "정확도"
+            case .date:
+                return "날짜순"
+            case .dsc:
+                return "가격높은순"
+            case .asc:
+                return "가격낮은순"
+            }
+        }
+        
+        var sortParam: String {
+            return String(describing: self)
+        }
+    }
+    
+    private func configureCollectionView(){
         resultCollectionView.delegate = self
         resultCollectionView.dataSource = self
         resultCollectionView.prefetchDataSource = self
@@ -92,7 +112,7 @@ extension ResultViewController {
             }
         }
         
-        viewModel.inputSortOptionIndex.value = (IndexPath(item: 0, section: 0))
+        viewModel.inputSortOptionIndex.value = 0
     }
     
     @objc
@@ -119,7 +139,12 @@ extension ResultViewController: BaseProtocol {
     
     func configureHierarchy() {
         view.addSubview(resultLabel)
-        view.addSubview(tagCollectionView)
+        view.addSubview(tagStackView)
+        
+        sortButtonList.forEach {
+            tagStackView.addArrangedSubview($0)
+        }
+        
         view.addSubview(resultCollectionView)
         view.addSubview(emptyView)
         view.addSubview(networkView)
@@ -139,14 +164,30 @@ extension ResultViewController: BaseProtocol {
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
         
-        tagCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(resultLabel.snp.bottom).offset(4)
-            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(44)
+        tagStackView.snp.makeConstraints { make in
+            make.top.equalTo(resultLabel.snp.bottom).offset(8)
+            make.leading.equalTo(view.safeAreaLayoutGuide).inset(20)
+            make.height.equalTo(36)
+        }
+        
+        simSortButton.snp.makeConstraints { make in
+            make.width.equalTo(60)
+        }
+        
+        dateSortButton.snp.makeConstraints { make in
+            make.width.equalTo(60)
+        }
+        
+        ascSortButton.snp.makeConstraints { make in
+            make.width.equalTo(90)
+        }
+        
+        descSortButton.snp.makeConstraints { make in
+            make.width.equalTo(90)
         }
         
         resultCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(tagCollectionView.snp.bottom)
+            make.top.equalTo(tagStackView.snp.bottom)
             make.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
         }
         
@@ -155,88 +196,71 @@ extension ResultViewController: BaseProtocol {
     func configureUI() {
         resultLabel.font = .boldSystemFont(ofSize: 15)
         resultLabel.textColor = ColorType.theme
+        tagStackView.axis = .horizontal
+        tagStackView.spacing = 4
+        
+        for idx in 0..<sortButtonList.count {
+            let tagButton = sortButtonList[idx]
+            
+            if idx == 0 {
+                tagButton.isClicked = true
+            }
+            
+            tagButton.tag = idx
+            tagButton.setTitle(SortOption.allCases[idx].title, for: .normal)
+            tagButton.addTarget(self, action: #selector(tagButtonClicked), for: .touchUpInside)
+        }
+        
         emptyView.isHidden = true
         networkView.isHidden = true
-        
-        networkView.retryButton.addTarget(self, action: #selector(retryButtonClicked), for: .touchUpInside)
+        networkView.retryButton.addTarget(
+            self,
+            action: #selector(retryButtonClicked),
+            for: .touchUpInside
+        )
     }
+    
+    @objc func tagButtonClicked(_ sender: TagButton){
+        sortButtonList.forEach { button in
+            if button.tag == sender.tag {
+                button.isClicked = true
+            }else{
+                button.isClicked = false
+            }
+        }
+        
+        viewModel.inputSortOptionIndex.value = sender.tag
+    }
+    
 }
 
 extension ResultViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == tagCollectionView {
-            return Display.SortOption.allCases.count
-        }else{
-            return viewModel.outputSearchResult.value?.items.count ?? 0
-        }
+        return viewModel.outputSearchResult.value?.items.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if collectionView == tagCollectionView {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagCollectionViewCell.identifier, for: indexPath) as? TagCollectionViewCell else {
-                return UICollectionViewCell()
-            }
-            
-            let data = Display.SortOption.allCases[indexPath.item]
-            cell.configureData(data)
-            
-            if indexPath == viewModel.inputSortOptionIndex.value {
-                cell.isClicked = true
-            }else {
-                cell.isClicked = false
-            }
-            
-            return cell
-        }else{
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ResultCollectionViewCell.identifier, for: indexPath) as? ResultCollectionViewCell,
-                  let data = viewModel.outputSearchResult.value?.items else {
-                return UICollectionViewCell()
-            }
-            
-            cell.indexPath = indexPath
-            cell.keyword = viewModel.inputSearchText.value
-            cell.configureData(data[indexPath.item])
-            
-            if let id = Int(data[indexPath.item].productId) {
-                cell.isClicked = viewModel.isExistLikeRealm(id)
-            }
-            
-            return cell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ResultCollectionViewCell.identifier, for: indexPath) as? ResultCollectionViewCell,
+              let data = viewModel.outputSearchResult.value?.items else {
+            return UICollectionViewCell()
         }
+        
+        cell.indexPath = indexPath
+        cell.keyword = viewModel.inputSearchText.value
+        cell.configureData(data[indexPath.item])
+        
+        if let id = Int(data[indexPath.item].productId) {
+            cell.isClicked = viewModel.isExistLikeRealm(id)
+        }
+        
+        return cell
         
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if collectionView == tagCollectionView {
-            let label = PaddingLabel()
-            label.text = Display.SortOption.allCases[indexPath.item].title
-            label.font = FontType.secondary
-            
-            let size = label.intrinsicContentSize
-            return CGSize(width: size.width, height: size.height)
-        }else{
-            let spacing: CGFloat = 20
-            let horizontalInset: CGFloat = 20
-            let verticalInset: CGFloat = 10
-            let width: CGFloat = (view.bounds.width - spacing - horizontalInset * 2) / 2
-            let height: CGFloat = (view.bounds.height - spacing - verticalInset * 2) / 2.9
-            return CGSize(width: width, height: height)
-        }
-        
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if collectionView == tagCollectionView {
-            if viewModel.inputSortOptionIndex.value != indexPath {
-                viewModel.inputSortOptionIndex.value = indexPath
-                tagCollectionView.reloadData()
-            }
-        }else if collectionView == resultCollectionView {
-            guard let data = viewModel.outputSearchResult.value?.items[indexPath.item] else { return }
-            let detailVC = DetailViewController()
-            detailVC.viewModel.inputShopResult.value = data
-            transition(detailVC, .push)
-        }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) { guard let data = viewModel.outputSearchResult.value?.items[indexPath.item] else { return }
+        let detailVC = DetailViewController()
+        detailVC.viewModel.inputShopResult.value = data
+        transition(detailVC, .push)
     }
 }
 

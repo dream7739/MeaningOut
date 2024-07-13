@@ -11,6 +11,6 @@ extension UISearchController {
     func configureDesign(){
         searchBar.setValue("취소", forKey: "cancelButtonText")
         searchBar.tintColor = ColorType.black
-        searchBar.searchTextField.placeholder = Display.Placeholder.search.rawValue
+        searchBar.searchTextField.placeholder = "브랜드, 상품 등을 입력하세요"
     }
 }

@@ -12,18 +12,48 @@ final class ProfileViewController: UIViewController {
     private let profileView = RoundProfileView()
     private lazy var collectionView = UICollectionView(
         frame: .zero,
-        collectionViewLayout: CustomLayout.profile(view).get()
+        collectionViewLayout: profileLayout()
     )
     
-    var viewType: ViewType = .profile(.add)
+    private func profileLayout() -> UICollectionViewLayout{
+        let layout = UICollectionViewFlowLayout()
+        
+        let spacing: CGFloat = 10
+        let verticalInset: CGFloat = 20
+        let horizontalInset: CGFloat = 30
+        let width = (view.bounds.width - (spacing * 2) - (horizontalInset * 2)) / 3
+        
+        layout.minimumLineSpacing = spacing
+        layout.minimumInteritemSpacing = spacing
+        layout.scrollDirection = .vertical
+        layout.itemSize = CGSize(width: width, height: width)
+        layout.sectionInset = UIEdgeInsets(
+            top: verticalInset,
+            left: horizontalInset,
+            bottom: verticalInset,
+            right: horizontalInset
+        )
+        
+        return layout
+    }
+    
+    var viewType: ViewType = .add
     var profileImage: String?
     var profileImageSender: ((String?) -> Void)?
-    var selectedIndexPath: IndexPath?
+    private var selectedIndexPath: IndexPath?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
-        configureNav(viewType)
+        
+        switch viewType {
+        case .add:
+            configureNav(NavigationTitle.profile)
+        case .edit:
+            configureNav(NavigationTitle.editProfile)
+
+        }
+        
         configureHierarchy()
         configureLayout()
         configureUI()

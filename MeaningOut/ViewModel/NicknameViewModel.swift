@@ -16,7 +16,7 @@ final class NicknameViewModel{
     var inputSaveButton: Observable<Void?> = Observable(nil)
     var outputSaveButton: Observable<Void?> = Observable(nil)
     
-    var viewType: ViewType = .nickname(.add)
+    var viewType: ViewType = .add
     var profileImage: String?
     
     init(){
@@ -36,18 +36,18 @@ final class NicknameViewModel{
             do {
                 self.outputNicknameValid.value = try self.validateUserInput(value)
                 self.outputNicknameText.value = "사용 가능한 닉네임입니다 :)"
-            }catch Validation.Nickname.isEmpty {
+            }catch NicknameError.isEmpty {
                 self.outputNicknameValid.value = false
-                self.outputNicknameText.value =  Validation.Nickname.isEmpty.description
-            }catch Validation.Nickname.countLimit {
+                self.outputNicknameText.value =  NicknameError.isEmpty.description
+            }catch NicknameError.countLimit {
                 self.outputNicknameValid.value = false
-                self.outputNicknameText.value =  Validation.Nickname.countLimit.description
-            }catch Validation.Nickname.isNumber{
+                self.outputNicknameText.value =  NicknameError.countLimit.description
+            }catch NicknameError.isNumber{
                 self.outputNicknameValid.value = false
-                self.outputNicknameText.value = Validation.Nickname.isNumber.description
-            }catch Validation.Nickname.isSpecialChar {
+                self.outputNicknameText.value = NicknameError.isNumber.description
+            }catch NicknameError.isSpecialChar {
                 self.outputNicknameValid.value = false
-                self.outputNicknameText.value = Validation.Nickname.isSpecialChar.description
+                self.outputNicknameText.value = NicknameError.isSpecialChar.description
             }catch {
                 print(#function, "error occured")
             }
@@ -67,26 +67,26 @@ extension NicknameViewModel {
     @discardableResult
     private func validateUserInput(_ input: String) throws -> Bool {
         guard !input.isEmpty else{
-            throw Validation.Nickname.isEmpty
+            throw NicknameError.isEmpty
         }
         
         guard input.count >= 2 && input.count <= 10 else {
-            throw Validation.Nickname.countLimit
+            throw NicknameError.countLimit
         }
         
         guard (input.range(of:  #"[@#$%]"#, options: .regularExpression) == nil) else {
-            throw Validation.Nickname.isSpecialChar
+            throw NicknameError.isSpecialChar
         }
         
         guard (input.range(of: #"[0-9]"#, options: .regularExpression) == nil) else {
-            throw Validation.Nickname.isNumber
+            throw NicknameError.isNumber
         }
         
         return true
     }
     
-    private func saveUserDefaultsData(_ type: ViewType){
-        switch type.detail {
+    private func saveUserDefaultsData(_ viewType: ViewType){
+        switch viewType {
         case .add:
             UserManager.isUser = true
             UserManager.nickname = inputNickname.value

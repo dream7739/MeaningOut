@@ -7,31 +7,31 @@
 
 import UIKit
 
-final class PaddingLabel: UILabel {
-    let topInset: CGFloat = 8
-    let bottomInset: CGFloat = 8
-    let leftInset: CGFloat = 10.0
-    let rightInset: CGFloat = 10.0
- 
+final class TagButton: UIButton {
+    
+    var isClicked: Bool = false{
+        didSet {
+            if isClicked {
+                backgroundColor = ColorType.black
+                tintColor = ColorType.white
+            }else{
+                backgroundColor = ColorType.white
+                tintColor = ColorType.primary
+            }
+        }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         layer.cornerRadius = 16
         layer.borderWidth = 1
         layer.borderColor = ColorType.tertiary.cgColor
+        tintColor = ColorType.primary
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func drawText(in rect: CGRect) {
-        let inset = UIEdgeInsets(top: topInset, left: leftInset, bottom: bottomInset, right: rightInset)
-        super.drawText(in: rect.inset(by: inset))
-    }
-    
-    override var intrinsicContentSize: CGSize {
-        let size = super.intrinsicContentSize
-        return CGSize(width: size.width + leftInset + rightInset, height: size.height + topInset + bottomInset)
-    }
 }
 
