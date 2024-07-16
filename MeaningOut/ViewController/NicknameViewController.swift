@@ -13,9 +13,8 @@ final class NicknameViewController: UIViewController {
     private let nicknameField = UnderLineTextField()
     private let validLabel = UILabel()
     private let completeButton = RoundButton()
-    
     let viewModel = NicknameViewModel()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
@@ -37,44 +36,52 @@ final class NicknameViewController: UIViewController {
         super.viewDidAppear(animated)
         nicknameField.becomeFirstResponder()
     }
+    
+    deinit {
+        print("Nickname ViewController Deinit")
+    }
 }
 
 extension NicknameViewController {
     private func bindData(){
         
-        viewModel.outputNicknameText.bind { value in
-            self.validLabel.text = value
-        }
-        
-        viewModel.outputNicknameValid.bind { value in
-            if value {
-                self.nicknameField.setLineColor(type: .valid)
-                self.validLabel.textColor = ColorType.black
-            }else{
-                self.nicknameField.setLineColor(type: .inValid)
-                self.validLabel.textColor = ColorType.theme
-            }
-        }
-        
-        viewModel.outputSaveButton.bind { _ in
-            switch self.viewModel.viewType {
-            case .add:
-                self.transitionScene(ShopTabBarController())
-            case .edit:
-                self.transition(self, .pop)
-            }
-        }
-        
         viewModel.inputViewDidLoadTrigger.value = ()
-
+        
+        viewModel.outputNicknameText.bind { [weak self] value in
+            self?.validLabel.text = value
+        }
+        
+        viewModel.outputNicknameValid.bind { [weak self] value in
+            if value {
+                self?.nicknameField.setLineColor(type: .valid)
+                self?.validLabel.textColor = ColorType.black
+            }else{
+                self?.nicknameField.setLineColor(type: .inValid)
+                self?.validLabel.textColor = ColorType.theme
+            }
+        }
+        
+        viewModel.outputSaveButton.bind { [weak self] _ in
+            if let type = self?.viewModel.viewType {
+                switch type {
+                case .add:
+                    self?.transitionScene(ShopTabBarController())
+                case .edit:
+                    if self != nil {
+                        self!.transition(self!, .pop)
+                    }
+                }
+            }
+            
+        }
     }
     
     @objc
     private func profileImageClicked(){
         let vc = ProfileViewController()
-        vc.profileImageSender = { profile in
-            self.viewModel.profileImage = profile
-            self.profileView.profileImage.image = UIImage(named: profile ?? "")
+        vc.profileImageSender = { [weak self] profile in
+            self?.viewModel.profileImage = profile
+            self?.profileView.profileImage.image = UIImage(named: profile ?? "")
         }
         vc.viewType = viewModel.viewType
         vc.profileImage = viewModel.profileImage

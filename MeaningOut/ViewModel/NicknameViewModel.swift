@@ -20,43 +20,48 @@ final class NicknameViewModel{
     var profileImage: String?
     
     init(){
-       transform()
+        print("Nickname ViewModel init")
+        transform()
+    }
+    
+    deinit {
+        print("Nickname ViewModel Deinit")
     }
     
     private func transform(){
-        inputViewDidLoadTrigger.bind { value in
+        inputViewDidLoadTrigger.bind { [weak self] value in
             if UserManager.profileImage.isEmpty {
-                self.profileImage = ProfileType.randomTitle
+                self?.profileImage = ProfileType.randomTitle
             }else{
-                self.profileImage = UserManager.profileImage
+                self?.profileImage = UserManager.profileImage
             }
-        } 
+        }
         
-        inputNickname.bind { value in
+        inputNickname.bind { [weak self] value in
             do {
-                self.outputNicknameValid.value = try self.validateUserInput(value)
-                self.outputNicknameText.value = "사용 가능한 닉네임입니다 :)"
+                self?.outputNicknameValid.value = try self?.validateUserInput(value) ?? false
+                self?.outputNicknameText.value = "사용 가능한 닉네임입니다 :)"
             }catch NicknameError.isEmpty {
-                self.outputNicknameValid.value = false
-                self.outputNicknameText.value =  NicknameError.isEmpty.description
+                self?.outputNicknameValid.value = false
+                self?.outputNicknameText.value =  NicknameError.isEmpty.description
             }catch NicknameError.countLimit {
-                self.outputNicknameValid.value = false
-                self.outputNicknameText.value =  NicknameError.countLimit.description
+                self?.outputNicknameValid.value = false
+                self?.outputNicknameText.value =  NicknameError.countLimit.description
             }catch NicknameError.isNumber{
-                self.outputNicknameValid.value = false
-                self.outputNicknameText.value = NicknameError.isNumber.description
+                self?.outputNicknameValid.value = false
+                self?.outputNicknameText.value = NicknameError.isNumber.description
             }catch NicknameError.isSpecialChar {
-                self.outputNicknameValid.value = false
-                self.outputNicknameText.value = NicknameError.isSpecialChar.description
+                self?.outputNicknameValid.value = false
+                self?.outputNicknameText.value = NicknameError.isSpecialChar.description
             }catch {
                 print(#function, "error occured")
             }
         }
         
-        inputSaveButton.bind { value in
-            if self.outputNicknameValid.value {
-                self.saveUserDefaultsData(self.viewType)
-                self.outputSaveButton.value = ()
+        inputSaveButton.bind { [weak self] value in
+            if let _ = self?.outputNicknameValid.value {
+                self?.saveUserDefaultsData(self?.viewType ?? .add)
+                self?.outputSaveButton.value = ()
             }
         }
     }
@@ -103,3 +108,4 @@ extension NicknameViewModel {
     }
     
 }
+
