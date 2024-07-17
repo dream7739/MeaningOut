@@ -18,35 +18,40 @@ final class LikeViewModel {
     var inputSearchText: Observable<String> = Observable("")
     
     private let repository = RealmRepository()
-
+ 
     init(){
+        print("Like ViewModel init")
         transform()
     }
     
+    deinit {
+        print("Like ViewModel Deinit")
+    }
+    
     func transform(){
-        inputViewWillAppearTrigger.bind { _ in
-            self.ouputLikeResult.value = self.fetchLikeListRealm()
-            self.outputLikeResultCount.value = self.ouputLikeResult.value?.count ?? 0
+        inputViewWillAppearTrigger.bind { [weak self] _ in
+            self?.ouputLikeResult.value = self?.fetchLikeListRealm()
+            self?.outputLikeResultCount.value = self?.ouputLikeResult.value?.count ?? 0
         }
         
-        inputLikeButtonClicked.bind { value in
-            if !self.inputLikeIsClicked.value {
-                guard let item = self.ouputLikeResult.value else { return }
-                self.deleteLikeRealm(item[self.inputLikeIndexPath.value.item])
-                self.ouputLikeResult.value = self.fetchLikeListRealm()
-                self.outputLikeResultCount.value = self.ouputLikeResult.value?.count ?? 0
+        inputLikeButtonClicked.bind { [weak self] value in
+            if !(self?.inputLikeIsClicked.value ?? false) {
+                guard let item = self?.ouputLikeResult.value else { return }
+                self?.deleteLikeRealm(item[self?.inputLikeIndexPath.value.item ?? 0])
+                self?.ouputLikeResult.value = self?.fetchLikeListRealm()
+                self?.outputLikeResultCount.value = self?.ouputLikeResult.value?.count ?? 0
 
             }
         }
         
-        inputSearchText.bind { value in
+        inputSearchText.bind { [weak self] value in
             if value.isEmpty {
-             self.ouputLikeResult.value = self.fetchLikeListRealm()
+             self?.ouputLikeResult.value = self?.fetchLikeListRealm()
             }else{
-                self.ouputLikeResult.value = self.fetchLikeListRealm(value)
+                self?.ouputLikeResult.value = self?.fetchLikeListRealm(value)
             }
             
-            self.outputLikeResultCount.value = self.ouputLikeResult.value?.count ?? 0
+            self?.outputLikeResultCount.value = self?.ouputLikeResult.value?.count ?? 0
         }
     }
 }

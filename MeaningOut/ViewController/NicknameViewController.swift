@@ -37,8 +37,17 @@ final class NicknameViewController: UIViewController {
         nicknameField.becomeFirstResponder()
     }
     
+    init(){
+        super.init(nibName: nil, bundle: nil)
+        print("NicknameVC init")
+    }
+    
     deinit {
-        print("Nickname ViewController Deinit")
+        print("NicknameVC Deinit")
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 

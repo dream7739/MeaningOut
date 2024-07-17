@@ -37,6 +37,19 @@ final class SettingViewController: UIViewController {
             with: .none
         )
     }
+    
+    init(){
+        super.init(nibName: nil, bundle: nil)
+        print("SettingVC Init")
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        print("SettingVC Deinit")
+    }
 }
 
 extension SettingViewController {
@@ -176,10 +189,10 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 4 {
-            showAlert("탈퇴하기", "탈퇴를 하면 데이터가 모두 초기화됩니다. 탈퇴 하시겠습니까?") { _ in
-                self.viewModel.inputLeaveClicked.value = ()
+            showAlert("탈퇴하기", "탈퇴를 하면 데이터가 모두 초기화됩니다. 탈퇴 하시겠습니까?") {[weak self] _ in
+                self?.viewModel.inputLeaveClicked.value = ()
                 let onboardingViewController = UINavigationController(rootViewController: OnboardingViewController())
-                self.transitionScene(onboardingViewController)
+                self?.transitionScene(onboardingViewController)
             }
         }
     }

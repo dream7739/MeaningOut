@@ -16,27 +16,32 @@ final class DetailViewModel {
     private let repository = RealmRepository()
     
     init(){
+        print("Detail ViewModel init")
         transform()
     }
     
+    deinit {
+        print("Detail ViewModel Deinit")
+    }
+    
     func transform(){
-        inputViewWillAppearTrigger.bind { value in
-            guard let data = self.inputShopResult.value,
+        inputViewWillAppearTrigger.bind { [weak self] value in
+            guard let data = self?.inputShopResult.value,
                   let id = Int(data.productId) else { return }
             
-            self.outputLikeisClicked.value = self.isExistRealmItem(id)
+            self?.outputLikeisClicked.value = self?.isExistRealmItem(id) ?? false
         }
         
-        inputLikeButtonClicked.bind { value in
-            self.outputLikeisClicked.value.toggle()
+        inputLikeButtonClicked.bind { [weak self] value in
+            self?.outputLikeisClicked.value.toggle()
             
-            guard let data = self.inputShopResult.value,
+            guard let data = self?.inputShopResult.value,
                   let id = Int(data.productId) else { return }
             
-            if self.outputLikeisClicked.value {
-                self.addItemToRealm(data)
+            if self?.outputLikeisClicked.value ?? false {
+                self?.addItemToRealm(data)
             }else{
-                self.deleteItemFromRealm(id)
+                self?.deleteItemFromRealm(id)
             }
         }
     }

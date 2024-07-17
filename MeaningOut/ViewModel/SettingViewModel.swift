@@ -14,12 +14,17 @@ final class SettingViewModel {
     var inputLeaveClicked: Observable<Void?> = Observable(nil)
 
     init(){
+        print("Setting ViewModel init")
         transform()
     }
     
+    deinit {
+        print("Setting ViewModel Deinit")
+    }
+    
     func transform(){
-        inputLeaveClicked.bind { _ in
-            self.resetAllUserData()
+        inputLeaveClicked.bind { [weak self] _ in
+            self?.resetAllUserData()
         }
     }
 }

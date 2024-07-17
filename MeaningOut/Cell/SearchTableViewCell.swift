@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-protocol SearchDeleteDelegate {
+protocol SearchDeleteDelegate: AnyObject {
     func deleteButtonClicked(_ indexPath: IndexPath)
 }
 
@@ -19,7 +19,7 @@ final class SearchTableViewCell: UITableViewCell {
     private let deleteButton = UIButton()
     private let deleteImage = UIImageView()
     
-    var delegate: SearchDeleteDelegate?
+    weak var delegate: SearchDeleteDelegate?
     var indexPath: IndexPath?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

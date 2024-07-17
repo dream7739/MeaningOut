@@ -9,7 +9,7 @@ import UIKit
 import Kingfisher
 import SnapKit
 
-protocol ResultLikeDelegate {
+protocol ResultLikeDelegate: AnyObject {
     func likeButtonClicked(_ indexPath: IndexPath, _ isClicked: Bool)
 }
 
@@ -23,7 +23,7 @@ final class ResultCollectionViewCell: UICollectionViewCell {
     private let likeImage = UIImageView()
     private let likeButton = UIButton()
     
-    var delegate: ResultLikeDelegate?
+    weak var delegate: ResultLikeDelegate?
     var keyword: String?
     var indexPath: IndexPath?
     var isClicked: Bool = false {
@@ -75,7 +75,7 @@ extension ResultCollectionViewCell {
         itemImage.kf.cancelDownloadTask()
     }
     
-    @objc 
+    @objc
     func likeButtonClicked(){
         guard let indexPath else { return }
         

@@ -26,6 +26,19 @@ final class ResultViewController: UIViewController {
     
     let viewModel = ResultViewModel()
     
+    init(){
+        super.init(nibName: nil, bundle: nil)
+        print("ResultVC init")
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        print("ResultVC Deinit")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
@@ -77,29 +90,29 @@ extension ResultViewController {
     }
     
     private func bindData(){
-        viewModel.outputNetworkConnect.bind { value in
-            self.networkView.isHidden = value
+        viewModel.outputNetworkConnect.bind { [weak self] value in
+            self?.networkView.isHidden = value
         }
         
-        viewModel.outputEmptyResult.bind { value in
-            self.emptyView.isHidden = !value
+        viewModel.outputEmptyResult.bind { [weak self] value in
+            self?.emptyView.isHidden = !value
         }
         
-        viewModel.outputSearchResult.bind { value in
+        viewModel.outputSearchResult.bind { [weak self] value in
             if let value {
-                self.resultLabel.text = value.totalDescription
-                self.resultCollectionView.reloadData()
+                self?.resultLabel.text = value.totalDescription
+                self?.resultCollectionView.reloadData()
                 
-                if self.viewModel.inputSearchRequest.value?.start == 1{
-                    self.resultCollectionView.scrollToItem(
+                if self?.viewModel.inputSearchRequest.value?.start == 1{
+                    self?.resultCollectionView.scrollToItem(
                         at: IndexPath(item: -1, section: 0),
                         at: .top,
                         animated: false
                     )
                 }
             }else{
-                self.emptyView.isHidden = false
-                self.showToast("결과를 가져오는데 실패하였습니다.")
+                self?.emptyView.isHidden = false
+                self?.showToast("결과를 가져오는데 실패하였습니다.")
             }
         }
         

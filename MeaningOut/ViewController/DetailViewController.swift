@@ -33,6 +33,18 @@ final class DetailViewController: UIViewController {
         viewModel.inputViewWillAppearTrigger.value = ()
     }
     
+    init(){
+        super.init(nibName: nil, bundle: nil)
+        print("DetaiVC init")
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        print("DetailVC Deinit")
+    }
 }
 
 extension DetailViewController {
@@ -48,7 +60,7 @@ extension DetailViewController {
     }
     
     private func bindData(){
-        viewModel.outputLikeisClicked.bind { value in
+        viewModel.outputLikeisClicked.bind { [weak self] value in
             var image: UIImage
             
             if value {
@@ -57,7 +69,7 @@ extension DetailViewController {
                 image = ImageType.like_unselected ?? UIImage()
             }
             
-            self.navigationItem.rightBarButtonItem?.image = image
+            self?.navigationItem.rightBarButtonItem?.image = image
         }
         
         viewModel.inputViewWillAppearTrigger.value = ()
@@ -99,7 +111,7 @@ extension DetailViewController: BaseProtocol {
             image: UIImage(),
             style: .plain,
             target: self,
-            action: #selector(self.likeButtonClicked)
+            action: #selector(likeButtonClicked)
         )
         like.tintColor = ColorType.theme
         navigationItem.rightBarButtonItem = like

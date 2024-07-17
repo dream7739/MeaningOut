@@ -15,25 +15,31 @@ final class SearchViewModel {
     var outputDeleteUserList: Observable<Void?> = Observable(nil)
     
     init(){
+        print("SearchViewModel init")
         transform()
     }
     
+    deinit {
+        print("SearchViewModel deinit")
+    }
+    
     private func transform(){
-        inputSearchText.bind { value in
-            self.saveUserSearchList(value)
-            self.outputSearchText.value = ()
+        inputSearchText.bind { [weak self] value in
+            self?.saveUserSearchList(value)
+            self?.outputSearchText.value = ()
         }
         
-        inputResetButtonClick.bind { _ in
-            self.removeAllUserSearchList()
-            self.outputDeleteUserList.value = ()
+        inputResetButtonClick.bind { [weak self] _ in
+            self?.removeAllUserSearchList()
+            self?.outputDeleteUserList.value = ()
         }
         
-        inputDeleteButtonClick.bind{ value in
-            self.deleteUserSearchList(value)
-            self.outputDeleteUserList.value = ()
+        inputDeleteButtonClick.bind{ [weak self] value in
+            self?.deleteUserSearchList(value)
+            self?.outputDeleteUserList.value = ()
         }
     }
+
 }
 
 extension SearchViewModel {

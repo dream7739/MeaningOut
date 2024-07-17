@@ -25,16 +25,21 @@ final class ResultViewModel {
     private let repository = RealmRepository()
     
     init(){
+        print("Result ViewModel init")
         transform()
     }
     
+    deinit {
+        print("Result ViewModel Deinit")
+    }
+    
     func transform(){
-        inputSearchText.bind { value in
+        inputSearchText.bind { [weak self] value in
             guard let value else { return }
             
-            let sort = SortOption.allCases[self.inputSortOptionIndex.value].title
+            let sort = SortOption.allCases[self?.inputSortOptionIndex.value ?? 0].title
             
-            self.inputSearchRequest.value = ShopRequest(
+            self?.inputSearchRequest.value = ShopRequest(
                 query: value,
                 start: 1,
                 display: 30,
@@ -42,29 +47,29 @@ final class ResultViewModel {
             )
         }
         
-        inputSortOptionIndex.bind { value in
-            self.inputSearchRequest.value?.sort = SortOption.allCases[value].sortParam
-            self.inputSearchRequest.value?.start = 1
-            self.callNaverShopAPI()
+        inputSortOptionIndex.bind { [weak self] value in
+            self?.inputSearchRequest.value?.sort = SortOption.allCases[value].sortParam
+            self?.inputSearchRequest.value?.start = 1
+            self?.callNaverShopAPI()
         }
         
-        inputRetryButtonClick.bind { value in
-            self.callNaverShopAPI()
+        inputRetryButtonClick.bind { [weak self] value in
+            self?.callNaverShopAPI()
         }
         
-        inputLikeButtonClicked.bind { value in
+        inputLikeButtonClicked.bind { [weak self] value in
             guard let value else { return }
-            self.saveLikeListToRealm(value)
+            self?.saveLikeListToRealm(value)
         }
         
-        inputPrefetchResult.bind { value in
-            let start = self.inputSearchRequest.value!.start
-            let total = self.outputSearchResult.value!.total
-            
-            self.inputSearchRequest.value!.start += 30
+        inputPrefetchResult.bind { [weak self] value in
+            guard let start = self?.inputSearchRequest.value?.start,
+                  let total = self?.outputSearchResult.value?.total else { return }
+             
+            self?.inputSearchRequest.value!.start += 30
             
             if start <= 1000 && start <= total {
-                self.callNaverShopAPI()
+                self?.callNaverShopAPI()
             }
         }
         
@@ -120,3 +125,4 @@ extension ResultViewModel {
         return repository.isExistLike(id: id)
     }
 }
+

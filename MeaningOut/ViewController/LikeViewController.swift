@@ -36,22 +36,35 @@ final class LikeViewController: UIViewController {
         viewModel.inputViewWillAppearTrigger.value = ()
     }
     
+    init(){
+        super.init(nibName: nil, bundle: nil)
+        print("LikeVC init")
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        print("LikeVC Deinit")
+    }
+    
 }
 
 extension LikeViewController {
     private func bindData(){
-        viewModel.ouputLikeResult.bind { value in
-            self.resultCollectionView.reloadData()
+        viewModel.ouputLikeResult.bind { [weak self] value in
+            self?.resultCollectionView.reloadData()
         }
         
-        viewModel.outputLikeResultCount.bind { value in
+        viewModel.outputLikeResultCount.bind { [weak self] value in
             if value == 0 {
-                self.emptyView.isHidden = false
+                self?.emptyView.isHidden = false
             }else{
-                self.emptyView.isHidden = true
+                self?.emptyView.isHidden = true
             }
             
-            self.resultLabel.text = value.formatted() + "개의 좋아요한 상품"
+            self?.resultLabel.text = value.formatted() + "개의 좋아요한 상품"
         }
     }
     

@@ -30,33 +30,46 @@ final class SearchViewController: UIViewController {
         bindData()
     }
     
+    init(){
+        super.init(nibName: nil, bundle: nil)
+        print("SearchVC init")
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        print("SearchVC deinit")
+    }
+    
 }
 
 extension SearchViewController {
     private func bindData(){
-        viewModel.outputSearchText.bind { _ in
-            self.tableView.reloadData()
+        viewModel.outputSearchText.bind { [weak self] _ in
+            self?.tableView.reloadData()
             
             let resultVC = ResultViewController()
-            if let searchText = self.viewModel.inputSearchText.value {
+            if let searchText = self?.viewModel.inputSearchText.value {
                 resultVC.viewModel.inputSearchText.value = searchText
             }
-            self.transition(resultVC, .push)
+            self?.transition(resultVC, .push)
         }
         
-        viewModel.outputDeleteUserList.bind { _ in
-            self.configureEmptyView()
-            self.tableView.reloadData()
+        viewModel.outputDeleteUserList.bind { [weak self] _ in
+            self?.configureEmptyView()
+            self?.tableView.reloadData()
         }
     }
     
     private func configureEmptyView(){
         if UserManager.savedList.isEmpty {
-            self.emptyView.isHidden = false
-            self.searchController.searchBar.searchTextField.text = ""
-            self.searchController.isActive = false
+            emptyView.isHidden = false
+            searchController.searchBar.searchTextField.text = ""
+            searchController.isActive = false
         }else{
-            self.emptyView.isHidden = true
+            emptyView.isHidden = true
         }
     }
     
@@ -74,7 +87,7 @@ extension SearchViewController {
         tableView.rowHeight = 46
     }
     
-    @objc 
+    @objc
     private func resetButtonClicked(){
         viewModel.inputResetButtonClick.value = ()
     }

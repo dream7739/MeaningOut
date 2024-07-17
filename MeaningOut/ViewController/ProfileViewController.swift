@@ -65,6 +65,18 @@ final class ProfileViewController: UIViewController {
         profileImageSender?(profileImage)
     }
     
+    init(){
+        super.init(nibName: nil, bundle: nil)
+        print("ProfileVC init")
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        print("ProfileVC Deinit")
+    }
 }
 
 extension ProfileViewController {
